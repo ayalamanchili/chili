@@ -6,7 +6,7 @@
 	<artifactId>office-master</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>office-master</name>
+	<name>chili-master</name>
 	<url>http://somecompany.com</url>
 	<modules>
 		<module>../y-common-deps</module>
