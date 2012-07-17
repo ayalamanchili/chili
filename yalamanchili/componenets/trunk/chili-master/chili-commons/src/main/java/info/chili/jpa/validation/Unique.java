@@ -16,7 +16,6 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-
 /**
  *
  * @author ayalamanchili
@@ -27,7 +26,7 @@ import javax.validation.Payload;
 @Documented
 public @interface Unique {
 
-    String message() default "{com.omgo.security.domain.validator.constraints.uniques}";
+    String message() default "{not.unique}";
 
     Class<?>[] groups() default {};
 
@@ -43,4 +42,7 @@ public @interface Unique {
      * name is "id"
      */
     String property() default "id";
+
+    String emfName() default "emf";
+    //TODO add entitymanager name
 }
