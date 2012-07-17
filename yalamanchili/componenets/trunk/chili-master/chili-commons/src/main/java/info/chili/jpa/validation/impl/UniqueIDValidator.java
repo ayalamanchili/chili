@@ -37,8 +37,8 @@ public class UniqueIDValidator implements ConstraintValidator<Unique, Serializab
         String query = String.format("from %s where %s = '%s' ", entityClass.getName(), uniqueField, property.toString());
         EntityManagerFactory emf = (EntityManagerFactory) SpringContext.getBean(emfName);
         Query findRecords = emf.createEntityManager().createQuery(query);
-        System.out.println("-------qqqqq---:" + findRecords.getResultList().size());
         if (findRecords.getResultList().size() > 0) {
+            cvContext.buildConstraintViolationWithTemplate(entityClass.getSimpleName() + "." + uniqueField + ".unique.msg").addConstraintViolation();
             return false;
         } else {
             return true;
