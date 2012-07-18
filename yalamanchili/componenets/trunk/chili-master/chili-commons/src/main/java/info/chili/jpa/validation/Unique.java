@@ -26,7 +26,7 @@ import javax.validation.Payload;
 @Documented
 public @interface Unique {
 
-    String message() default "{not.unique}";
+    String message() default "{not.unique.msg}";
 
     Class<?>[] groups() default {};
 
