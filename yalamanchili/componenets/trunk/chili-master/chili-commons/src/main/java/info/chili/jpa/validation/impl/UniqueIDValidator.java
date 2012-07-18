@@ -34,11 +34,12 @@ public class UniqueIDValidator implements ConstraintValidator<Unique, Serializab
 
     @Override
     public boolean isValid(Serializable property, ConstraintValidatorContext cvContext) {
-        String query = String.format("from %s where %s = '%s' ", entityClass.getName(), uniqueField, property.toString());
+        String query = String.format("select count(*) from " + entityClass.getCanonicalName() + " where " + uniqueField + "='" + property + "'");
         EntityManagerFactory emf = (EntityManagerFactory) SpringContext.getBean(emfName);
         Query findRecords = emf.createEntityManager().createQuery(query);
-        if (findRecords.getResultList().size() > 0) {
-            cvContext.buildConstraintViolationWithTemplate(entityClass.getSimpleName() + "." + uniqueField + ".unique.msg").addConstraintViolation();
+        Long count = (Long) findRecords.getResultList().get(0);
+        if (count > 0) {
+            cvContext.buildConstraintViolationWithTemplate("{" + entityClass.getSimpleName() + "." + uniqueField + ".unique.msg}").addConstraintViolation();
             return false;
         } else {
             return true;
