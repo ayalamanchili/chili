@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UniqueIDValidator implements ConstraintValidator<Unique, Serializable> {
 
+    private boolean enabled = true;
     private Class<?> entityClass;
     private String uniqueField;
     private String emfName;
@@ -34,15 +35,27 @@ public class UniqueIDValidator implements ConstraintValidator<Unique, Serializab
 
     @Override
     public boolean isValid(Serializable property, ConstraintValidatorContext cvContext) {
-        String query = String.format("select count(*) from " + entityClass.getCanonicalName() + " where LOWER(" + uniqueField + ")='" + property.toString().toLowerCase() + "'");
-        EntityManagerFactory emf = (EntityManagerFactory) SpringContext.getBean(emfName);
-        Query findRecords = emf.createEntityManager().createQuery(query);
-        Long count = (Long) findRecords.getResultList().get(0);
-        if (count > 0) {
-            return false;
+        if (isEnabled()) {
+            String query = String.format("select count(*) from " + entityClass.getCanonicalName() + " where LOWER(" + uniqueField + ")='" + property.toString().toLowerCase() + "'");
+            EntityManagerFactory emf = (EntityManagerFactory) SpringContext.getBean(emfName);
+            Query findRecords = emf.createEntityManager().createQuery(query);
+            Long count = (Long) findRecords.getResultList().get(0);
+            if (count > 0) {
+                return false;
+            } else {
+                return true;
+            }
         } else {
             return true;
         }
         //TODO close em
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
