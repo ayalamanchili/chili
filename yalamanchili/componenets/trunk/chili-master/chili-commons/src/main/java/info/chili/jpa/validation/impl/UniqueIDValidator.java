@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UniqueIDValidator implements ConstraintValidator<Unique, Serializable> {
 
-    private boolean enabled = true;
+    private static boolean enabled = true;
     private Class<?> entityClass;
     private String uniqueField;
     private String emfName;
@@ -51,11 +51,15 @@ public class UniqueIDValidator implements ConstraintValidator<Unique, Serializab
         //TODO close em
     }
 
-    public boolean isEnabled() {
+    public static boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public static void enable() {
+        enabled = true;
+    }
+
+    public static void disable() {
+        enabled = false;
     }
 }
