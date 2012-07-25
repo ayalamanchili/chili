@@ -13,61 +13,65 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ListBoxField extends Composite {
 
-	/** The panel. */
-	CellPanel panel;
+    /**
+     * The panel.
+     */
+    CellPanel panel;
+    /**
+     * The label.
+     */
+    Label label = new Label();
+    /**
+     * The listbox.
+     */
+    ListBox listbox = new ListBox();
 
-	/** The label. */
-	Label label = new Label();
+    @UiConstructor
+    public ListBoxField(String labelName) {
+        panel = new VerticalPanel();
+        initWidget(panel);
+        label.setText(labelName);
+        label.ensureDebugId(labelName + "_LB");
+        configure();
+        addWidgets();
+    }
 
-	/** The listbox. */
-	ListBox listbox = new ListBox();
+    public ListBoxField(String labelName, Alignment alignment) {
+        switch (alignment) {
+            case HORIZONTAL:
+                panel = new HorizontalPanel();
+                break;
+            case VERTICAL:
+                panel = new VerticalPanel();
+                break;
+        }
+        initWidget(panel);
+        label.setText(labelName);
+        configure();
+        addWidgets();
+    }
 
-	@UiConstructor
-	public ListBoxField(String labelName) {
-		panel = new VerticalPanel();
-		initWidget(panel);
-		label.setText(labelName);
-                label.ensureDebugId(labelName + "_LB");
-		configure();
-		addWidgets();
-	}
+    protected void configure() {
+    }
 
-	public ListBoxField(String labelName, Alignment alignment) {
-		switch (alignment) {
-		case HORIZONTAL:
-			panel = new HorizontalPanel();
-			break;
-		case VERTICAL:
-			panel = new VerticalPanel();
-			break;
-		}
-		initWidget(panel);
-		label.setText(labelName);
-		configure();
-		addWidgets();
-	}
+    protected void addWidgets() {
+        panel.add(label);
+        panel.add(listbox);
+    }
 
-	protected void configure() {
-	}
+    public Long getValue() {
+        return new Long(listbox.getValue(listbox.getSelectedIndex()));
+    }
 
-	protected void addWidgets() {
-		panel.add(label);
-		panel.add(listbox);
-	}
+    public void addValue(Long value, String item) {
+        listbox.addItem(item, value.toString());
+    }
 
-	public Long getValue() {
-		return new Long(listbox.getValue(listbox.getSelectedIndex()));
-	}
+    public void addChangeHandler(ChangeHandler changeHandler) {
+        listbox.addChangeHandler(changeHandler);
+    }
 
-	public void addValue(Long value, String item) {
-		listbox.addItem(item, value.toString());
-	}
-
-	public void addChangeHandler(ChangeHandler changeHandler) {
-		listbox.addChangeHandler(changeHandler);
-	}
-
-	public ListBox getListBox() {
-		return listbox;
-	}
+    public ListBox getListBox() {
+        return listbox;
+    }
 }

@@ -9,16 +9,16 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class ALComposite extends Composite {
 
-	protected abstract void addListeners();
+    protected abstract void addListeners();
 
-	protected abstract void configure();
+    protected abstract void configure();
 
-	protected abstract void addWidgets();
+    protected abstract void addWidgets();
 
-	protected void init(Widget widget) {
-		initWidget(widget);
-		addListeners();
-		configure();
-		addWidgets();
-	}
+    protected void init(Widget widget) {
+        initWidget(widget);
+        addListeners();
+        configure();
+        addWidgets();
+    }
 }

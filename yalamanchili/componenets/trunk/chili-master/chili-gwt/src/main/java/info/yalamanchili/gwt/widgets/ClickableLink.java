@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.Label;
  * The Class ClickableLink.
  */
 public class ClickableLink extends Label {
-    
+
     public ClickableLink(String name) {
         this.setText(name);
         this.setTitle(name);

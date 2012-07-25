@@ -6,9 +6,12 @@ package info.yalamanchili.gwt.utils;
  */
 public enum Alignment {
 
-	/** The HORIZONTAL. */
-	HORIZONTAL,
-
-	/** The VERTICAL. */
-	VERTICAL
+    /**
+     * The HORIZONTAL.
+     */
+    HORIZONTAL,
+    /**
+     * The VERTICAL.
+     */
+    VERTICAL
 }

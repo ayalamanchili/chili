@@ -10,80 +10,78 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
 public abstract class AbstractStatusPanel extends ALComposite implements ClickHandler {
-	private static AbstractStatusPanel statusPanel;
 
-	public static AbstractStatusPanel instance() {
-		return statusPanel;
-	}
+    private static AbstractStatusPanel statusPanel;
 
-	protected FlexTable statusBar = new FlexTable();
-	protected Label userLink = new Label("Welcome Guest");
-	// TODO use cleint bundle? and ui binder
-	Image logo = new Image("images/logo.gif");
+    public static AbstractStatusPanel instance() {
+        return statusPanel;
+    }
+    protected FlexTable statusBar = new FlexTable();
+    protected Label userLink = new Label("Welcome Guest");
+    // TODO use cleint bundle? and ui binder
+    Image logo = new Image("images/logo.gif");
+    protected ClickableLink loginLink = new ClickableLink("login");
+    protected ClickableLink logoutLink = new ClickableLink("logout");
+    protected ClickableLink createUserLink = new ClickableLink("create user");
 
-	protected ClickableLink loginLink = new ClickableLink("login");
-	protected ClickableLink logoutLink = new ClickableLink("logout");
+    public AbstractStatusPanel() {
+        statusPanel = this;
+        init(statusBar);
+        setUser();
+    }
 
-	protected ClickableLink createUserLink = new ClickableLink("create user");
+    protected abstract void setUser();
 
-	public AbstractStatusPanel() {
-		statusPanel = this;
-		init(statusBar);
-		setUser();
-	}
+    public abstract void logoutSuccessfull();
 
-	protected abstract void setUser();
+    @Override
+    protected void addListeners() {
+        loginLink.addClickHandler(this);
+        createUserLink.addClickHandler(this);
+        logoutLink.addClickHandler(this);
+    }
 
-	public abstract void logoutSuccessfull();
+    @Override
+    protected void configure() {
+        statusBar.setStyleName("y-gwt-AbstracttatusPanel");
+        logo.setStyleName("y-gwt-AbstractStatusPanel-LogoImage");
+        statusBar.getFlexCellFormatter().setRowSpan(0, 0, 2);
+        statusBar.getCellFormatter().addStyleName(1, 3, "y-gwt-AbstractStatusPanel-UserLink");
+        statusBar.getCellFormatter().addStyleName(1, 2, "y-gwt-AbstractStatusPanel-LoginLink");
+        statusBar.getCellFormatter().addStyleName(0, 0, "y-gwt-AbstractStatusPanel-LogoLink");
+        statusBar.getCellFormatter().addStyleName(1, 1, "y-gwt-AbstractStatusPanel-CreateUserLink");
 
-	@Override
-	protected void addListeners() {
-		loginLink.addClickHandler(this);
-		createUserLink.addClickHandler(this);
-		logoutLink.addClickHandler(this);
-	}
+        statusBar.getCellFormatter().setHorizontalAlignment(0, 3, HasHorizontalAlignment.ALIGN_RIGHT);
+        statusBar.getCellFormatter().setHorizontalAlignment(1, 2, HasHorizontalAlignment.ALIGN_RIGHT);
+        statusBar.getCellFormatter().setHorizontalAlignment(1, 1, HasHorizontalAlignment.ALIGN_CENTER);
 
-	@Override
-	protected void configure() {
-		statusBar.setStyleName("y-gwt-AbstracttatusPanel");
-		logo.setStyleName("y-gwt-AbstractStatusPanel-LogoImage");
-		statusBar.getFlexCellFormatter().setRowSpan(0, 0, 2);
-		statusBar.getCellFormatter().addStyleName(1, 3, "y-gwt-AbstractStatusPanel-UserLink");
-		statusBar.getCellFormatter().addStyleName(1, 2, "y-gwt-AbstractStatusPanel-LoginLink");
-		statusBar.getCellFormatter().addStyleName(0, 0, "y-gwt-AbstractStatusPanel-LogoLink");
-		statusBar.getCellFormatter().addStyleName(1, 1, "y-gwt-AbstractStatusPanel-CreateUserLink");
+    }
 
-		statusBar.getCellFormatter().setHorizontalAlignment(0, 3, HasHorizontalAlignment.ALIGN_RIGHT);
-		statusBar.getCellFormatter().setHorizontalAlignment(1, 2, HasHorizontalAlignment.ALIGN_RIGHT);
-		statusBar.getCellFormatter().setHorizontalAlignment(1, 1, HasHorizontalAlignment.ALIGN_CENTER);
+    @Override
+    protected void addWidgets() {
+        statusBar.setWidget(0, 0, logo);
+        // statusBar.setWidget(1, 1, createUserLink);
+        statusBar.setWidget(0, 3, userLink);
+        statusBar.setWidget(1, 2, loginLink);
+    }
 
-	}
+    protected abstract void loginClicked();
 
-	@Override
-	protected void addWidgets() {
-		statusBar.setWidget(0, 0, logo);
-		// statusBar.setWidget(1, 1, createUserLink);
-		statusBar.setWidget(0, 3, userLink);
-		statusBar.setWidget(1, 2, loginLink);
-	}
+    protected abstract void logoutClicked();
 
-	protected abstract void loginClicked();
+    protected abstract void createUserClicked();
 
-	protected abstract void logoutClicked();
+    @Override
+    public void onClick(ClickEvent event) {
+        if (event.getSource().equals(loginLink)) {
+            loginClicked();
+        }
+        if (event.getSource().equals(logoutLink)) {
+            logoutClicked();
+        }
+        if (event.getSource().equals(createUserLink)) {
+            createUserClicked();
+        }
 
-	protected abstract void createUserClicked();
-
-	@Override
-	public void onClick(ClickEvent event) {
-		if (event.getSource().equals(loginLink)) {
-			loginClicked();
-		}
-		if (event.getSource().equals(logoutLink)) {
-			logoutClicked();
-		}
-		if (event.getSource().equals(createUserLink)) {
-			createUserClicked();
-		}
-
-	}
+    }
 }

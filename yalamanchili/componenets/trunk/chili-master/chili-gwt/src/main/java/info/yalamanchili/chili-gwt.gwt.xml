@@ -1,5 +1,5 @@
 <module>
-	<inherits name="com.google.gwt.user.User" />
-	<source path='gwt' />
-	<stylesheet src="chili-gwt.css" />
+    <inherits name="com.google.gwt.user.User" />
+    <source path='gwt' />
+    <stylesheet src="chili-gwt.css" />
 </module>

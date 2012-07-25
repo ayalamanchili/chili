@@ -7,32 +7,29 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 
 public class PasswordField extends BaseField {
 
-	protected PasswordTextBox password = new PasswordTextBox();
+    protected PasswordTextBox password = new PasswordTextBox();
 
-	@UiConstructor
-	public PasswordField(String labelName, String attributeName, String className) {
-		super(labelName, attributeName, className, false, false);
-		fieldPanel.insert(password, 1);
-                password.ensureDebugId(className + "_" + attributeName + "_PTB");
-	}
+    @UiConstructor
+    public PasswordField(String labelName, String attributeName, String className) {
+        super(labelName, attributeName, className, false, false);
+        fieldPanel.insert(password, 1);
+        password.ensureDebugId(className + "_" + attributeName + "_PTB");
+    }
 
-	public String getPassword() {
-		return password.getText();
-	}
+    public String getPassword() {
+        return password.getText();
+    }
 
-	@Override
-	protected void configureAddMainWidget() {
-		// TODO Auto-generated method stub
+    @Override
+    protected void configureAddMainWidget() {
+        // TODO Auto-generated method stub
+    }
 
-	}
+    public void setReadOnly(Boolean readOnly) {
+    }
 
-	public void setReadOnly(Boolean readOnly) {
-	}
-
-	@Override
-	public void validate() {
-		// TODO Auto-generated method stub
-
-	}
-
+    @Override
+    public void validate() {
+        // TODO Auto-generated method stub
+    }
 }

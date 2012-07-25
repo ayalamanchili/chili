@@ -13,56 +13,56 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  * The Class ALSyncCallback.
  */
 public abstract class ALSyncCallback<T> implements AsyncCallback<T> {
-	Logger logger = Logger.getLogger(ALSyncCallback.class.getName());
-	/** The loading widget. */
-	protected LoadingWidget loadingWidget = new LoadingWidget();
 
-	/**
-	 * Instantiates a new aL sync callback.
-	 */
-	public ALSyncCallback() {
-		loadingWidget.show();
-	}
+    Logger logger = Logger.getLogger(ALSyncCallback.class.getName());
+    /**
+     * The loading widget.
+     */
+    protected LoadingWidget loadingWidget = new LoadingWidget();
 
-	/**
-	 * On response.
-	 * 
-	 * @param response
-	 *            the response
-	 */
-	public abstract void onResponse(T response);
+    /**
+     * Instantiates a new aL sync callback.
+     */
+    public ALSyncCallback() {
+        loadingWidget.show();
+    }
 
-	/**
-	 * Post response.
-	 * 
-	 * @param response
-	 *            the response
-	 */
-	public abstract void postResponse(T response);
+    /**
+     * On response.
+     *
+     * @param response the response
+     */
+    public abstract void onResponse(T response);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.Throwable
-	 * )
-	 */
-	public void onFailure(Throwable arg0) {
-		new ResponseStatusWidget().show("call to server failed");
-		loadingWidget.hide();
-		logger.log(Level.SEVERE, arg0.getLocalizedMessage());
-	}
+    /**
+     * Post response.
+     *
+     * @param response the response
+     */
+    public abstract void postResponse(T response);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
-	 */
-	public void onSuccess(T arg0) {
-		loadingWidget.hide();
-		onResponse(arg0);
-		postResponse(arg0);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.Throwable
+     * )
+     */
+    public void onFailure(Throwable arg0) {
+        new ResponseStatusWidget().show("call to server failed");
+        loadingWidget.hide();
+        logger.log(Level.SEVERE, arg0.getLocalizedMessage());
+    }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
+     */
+    public void onSuccess(T arg0) {
+        loadingWidget.hide();
+        onResponse(arg0);
+        postResponse(arg0);
+    }
 }

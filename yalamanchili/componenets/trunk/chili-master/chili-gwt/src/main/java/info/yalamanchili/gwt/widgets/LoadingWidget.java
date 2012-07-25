@@ -10,36 +10,38 @@ import com.google.gwt.user.client.ui.PopupPanel;
  */
 public class LoadingWidget extends PopupPanel {
 
-	/** The loading. */
-	Label loading = new Label("Loading...");
+    /**
+     * The loading.
+     */
+    Label loading = new Label("Loading...");
 
-	/**
-	 * Instantiates a new loading widget.
-	 */
-	public LoadingWidget() {
-		super(true);
-		setWidget(loading);
-	}
+    /**
+     * Instantiates a new loading widget.
+     */
+    public LoadingWidget() {
+        super(true);
+        setWidget(loading);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.google.gwt.user.client.ui.PopupPanel#show()
-	 */
-	public void show() {
-		int left = Window.getClientWidth() / 3;
-		this.setPopupPosition(left, 0);
-		addStyleName("y-gwt-ResponseStatusBar");
-		super.show();
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.google.gwt.user.client.ui.PopupPanel#show()
+     */
+    public void show() {
+        int left = Window.getClientWidth() / 3;
+        this.setPopupPosition(left, 0);
+        addStyleName("y-gwt-ResponseStatusBar");
+        super.show();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.google.gwt.user.client.ui.PopupPanel#hide()
-	 */
-	public void hide() {
-		removeStyleName("y-gwt-ResponseStatusBar");
-		super.hide();
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.google.gwt.user.client.ui.PopupPanel#hide()
+     */
+    public void hide() {
+        removeStyleName("y-gwt-ResponseStatusBar");
+        super.hide();
+    }
 }
