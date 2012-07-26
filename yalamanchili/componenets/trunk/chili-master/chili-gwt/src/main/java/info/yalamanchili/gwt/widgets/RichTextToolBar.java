@@ -1,4 +1,19 @@
 package info.yalamanchili.gwt.widgets;
+/*
+ * This software is published under the Apchae 2.0 licenses.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * Author: Erik Scholtz 
+ * Web: http://blog.elitecoderz.net
+ */
 
 import java.util.HashMap;
 
@@ -18,20 +33,19 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RichTextArea;
-import com.google.gwt.user.client.ui.RichTextArea.Formatter;
 import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.RichTextArea.Formatter;
 
 public class RichTextToolBar extends Composite {
 
     /**
      * Local CONSTANTS *
      */
-    // ImageMap and CSS related
+    //ImageMap and CSS related
     private static final String HTTP_STATIC_ICONS_GIF = "http://blog.elitecoderz.net/wp-includes/js/tinymce/themes/advanced/img/icons.gif";
     private static final String CSS_ROOT_NAME = "RichTextToolbar";
-    // Color and Fontlists - First Value (key) is the Name to display, Second
-    // Value (value) is the HTML-Definition
+    //Color and Fontlists - First Value (key) is the Name to display, Second Value (value) is the HTML-Definition
     public final static HashMap<String, String> GUI_COLORLIST = new HashMap<String, String>();
 
     static {
@@ -52,7 +66,7 @@ public class RichTextToolBar extends Composite {
         GUI_FONTLIST.put("Trebuchet", "Trebuchet");
         GUI_FONTLIST.put("Verdana", "Verdana");
     }
-    // HTML Related (styles made by SPAN and DIV)
+    //HTML Related (styles made by SPAN and DIV)
     private static final String HTML_STYLE_CLOSE_SPAN = "</span>";
     private static final String HTML_STYLE_CLOSE_DIV = "</div>";
     private static final String HTML_STYLE_OPEN_BOLD = "<span style=\"font-weight: bold;\">";
@@ -63,7 +77,7 @@ public class RichTextToolBar extends Composite {
     private static final String HTML_STYLE_OPEN_ALIGNCENTER = "<div style=\"text-align: center;\">";
     private static final String HTML_STYLE_OPEN_ALIGNRIGHT = "<div style=\"text-align: right;\">";
     private static final String HTML_STYLE_OPEN_INDENTRIGHT = "<div style=\"margin-left: 40px;\">";
-    // HTML Related (styles made by custom HTML-Tags)
+    //HTML Related (styles made by custom HTML-Tags)
     private static final String HTML_STYLE_OPEN_SUBSCRIPT = "<sub>";
     private static final String HTML_STYLE_CLOSE_SUBSCRIPT = "</sub>";
     private static final String HTML_STYLE_OPEN_SUPERSCRIPT = "<sup>";
@@ -72,9 +86,9 @@ public class RichTextToolBar extends Composite {
     private static final String HTML_STYLE_CLOSE_ORDERLIST = "</ol></li>";
     private static final String HTML_STYLE_OPEN_UNORDERLIST = "<ul><li>";
     private static final String HTML_STYLE_CLOSE_UNORDERLIST = "</ul></li>";
-    // HTML Related (styles without closing Tag)
+    //HTML Related (styles without closing Tag)
     private static final String HTML_STYLE_HLINE = "<hr style=\"width: 100%; height: 2px;\">";
-    // GUI Related stuff
+    //GUI Related stuff
     private static final String GUI_DIALOG_INSERTURL = "Enter a link URL:";
     private static final String GUI_DIALOG_IMAGEURL = "Enter an image URL:";
     private static final String GUI_LISTNAME_COLORS = "Colors";
@@ -101,18 +115,16 @@ public class RichTextToolBar extends Composite {
     /**
      * Private Variables *
      */
-    // The main (Vertical)-Panel and the two inner (Horizontal)-Panels
+    //The main (Vertical)-Panel and the two inner (Horizontal)-Panels
     private VerticalPanel outer;
     private HorizontalPanel topPanel;
     private HorizontalPanel bottomPanel;
-    // The RichTextArea this Toolbar referes to and the Interfaces to access the
-    // RichTextArea
+    //The RichTextArea this Toolbar referes to and the Interfaces to access the RichTextArea
     private RichTextArea styleText;
     private Formatter styleTextFormatter;
-    // We use an internal class of the ClickHandler and the KeyUpHandler to be
-    // private to others with these events
+    //We use an internal class of the ClickHandler and the KeyUpHandler to be private to others with these events
     private EventHandler evHandler;
-    // The Buttons of the Menubar
+    //The Buttons of the Menubar
     private ToggleButton bold;
     private ToggleButton italic;
     private ToggleButton underline;
@@ -139,31 +151,29 @@ public class RichTextToolBar extends Composite {
      * Constructor of the Toolbar *
      */
     public RichTextToolBar(RichTextArea richtext) {
-        // Initialize the main-panel
+        //Initialize the main-panel
         outer = new VerticalPanel();
 
-        // Initialize the two inner panels
+        //Initialize the two inner panels
         topPanel = new HorizontalPanel();
         bottomPanel = new HorizontalPanel();
         topPanel.setStyleName(CSS_ROOT_NAME);
         bottomPanel.setStyleName(CSS_ROOT_NAME);
 
-        // Save the reference to the RichText area we refer to and get the
-        // interfaces to the stylings
+        //Save the reference to the RichText area we refer to and get the interfaces to the stylings
 
         styleText = richtext;
         styleTextFormatter = styleText.getFormatter();
 
-        // Set some graphical options, so this toolbar looks how we like it.
+        //Set some graphical options, so this toolbar looks how we like it.
         topPanel.setHorizontalAlignment(HorizontalPanel.ALIGN_LEFT);
         bottomPanel.setHorizontalAlignment(HorizontalPanel.ALIGN_LEFT);
 
-        // Add the two inner panels to the main panel
+        //Add the two inner panels to the main panel
         outer.add(topPanel);
         outer.add(bottomPanel);
 
-        // Some graphical stuff to the main panel and the initialisation of the
-        // new widget
+        //Some graphical stuff to the main panel and the initialisation of the new widget
         outer.setWidth("100%");
         outer.setStyleName(CSS_ROOT_NAME);
         initWidget(outer);
@@ -171,12 +181,11 @@ public class RichTextToolBar extends Composite {
         //
         evHandler = new EventHandler();
 
-        // Add KeyUp and Click-Handler to the RichText, so that we can actualize
-        // the toolbar if neccessary
+        //Add KeyUp and Click-Handler to the RichText, so that we can actualize the toolbar if neccessary
         styleText.addKeyUpHandler(evHandler);
         styleText.addClickHandler(evHandler);
 
-        // Now lets fill the new toolbar with life
+        //Now lets fill the new toolbar with life
         buildTools();
     }
 
@@ -260,7 +269,7 @@ public class RichTextToolBar extends Composite {
                 }
             } else if (event.getSource().equals(indentleft)) {
                 if (isHTMLMode()) {
-                    // TODO nothing can be done here at the moment
+                    //TODO nothing can be done here at the moment
                 } else {
                     styleTextFormatter.leftIndent();
                 }
@@ -275,7 +284,7 @@ public class RichTextToolBar extends Composite {
                 }
             } else if (event.getSource().equals(breaklink)) {
                 if (isHTMLMode()) {
-                    // TODO nothing can be done here at the moment
+                    //TODO nothing can be done here at the moment
                 } else {
                     styleTextFormatter.removeLink();
                 }
@@ -296,7 +305,7 @@ public class RichTextToolBar extends Composite {
                 }
             } else if (event.getSource().equals(removeformatting)) {
                 if (isHTMLMode()) {
-                    // TODO nothing can be done here at the moment
+                    //TODO nothing can be done here at the moment
                 } else {
                     styleTextFormatter.removeFormat();
                 }
@@ -307,7 +316,7 @@ public class RichTextToolBar extends Composite {
                     styleText.setHTML(styleText.getText());
                 }
             } else if (event.getSource().equals(styleText)) {
-                // Change invoked by the richtextArea
+                //Change invoked by the richtextArea
             }
             updateStatus();
         }
@@ -319,16 +328,13 @@ public class RichTextToolBar extends Composite {
         public void onChange(ChangeEvent event) {
             if (event.getSource().equals(fontlist)) {
                 if (isHTMLMode()) {
-                    changeHtmlStyle("<span style=\"font-family: " + fontlist.getValue(fontlist.getSelectedIndex())
-                            + ";\">", HTML_STYLE_CLOSE_SPAN);
+                    changeHtmlStyle("<span style=\"font-family: " + fontlist.getValue(fontlist.getSelectedIndex()) + ";\">", HTML_STYLE_CLOSE_SPAN);
                 } else {
                     styleTextFormatter.setFontName(fontlist.getValue(fontlist.getSelectedIndex()));
                 }
             } else if (event.getSource().equals(colorlist)) {
                 if (isHTMLMode()) {
-                    changeHtmlStyle(
-                            "<span style=\"color: " + colorlist.getValue(colorlist.getSelectedIndex()) + ";\">",
-                            HTML_STYLE_CLOSE_SPAN);
+                    changeHtmlStyle("<span style=\"color: " + colorlist.getValue(colorlist.getSelectedIndex()) + ";\">", HTML_STYLE_CLOSE_SPAN);
                 } else {
                     styleTextFormatter.setForeColor(colorlist.getValue(colorlist.getSelectedIndex()));
                 }
@@ -338,8 +344,7 @@ public class RichTextToolBar extends Composite {
 
     /**
      * Native JavaScript that returns the selected text and position of the
-     * start
-     *
+     * start *
      */
     public static native JsArrayString getSelection(Element elem) /*-{
      var txt = "";
@@ -374,14 +379,12 @@ public class RichTextToolBar extends Composite {
         String txbuffer = styleText.getText();
         Integer startpos = Integer.parseInt(tx.get(1));
         String selectedText = tx.get(0);
-        styleText.setText(txbuffer.substring(0, startpos) + startTag + selectedText + stopTag
-                + txbuffer.substring(startpos + selectedText.length()));
+        styleText.setText(txbuffer.substring(0, startpos) + startTag + selectedText + stopTag + txbuffer.substring(startpos + selectedText.length()));
     }
 
     /**
      * Private method with a more understandable name to get if HTML mode is on
-     * or not
-     *
+     * or not *
      */
     private Boolean isHTMLMode() {
         return texthtml.isDown();
@@ -389,8 +392,7 @@ public class RichTextToolBar extends Composite {
 
     /**
      * Private method to set the toggle buttons and disable/enable buttons which
-     * do not work in html-mode
-     *
+     * do not work in html-mode *
      */
     private void updateStatus() {
         if (styleTextFormatter != null) {
@@ -417,7 +419,7 @@ public class RichTextToolBar extends Composite {
      * Initialize the options on the toolbar *
      */
     private void buildTools() {
-        // Init the TOP Panel forst
+        //Init the TOP Panel forst
         topPanel.add(bold = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 0, 20, 20, GUI_HOVERTEXT_BOLD));
         topPanel.add(italic = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 60, 20, 20, GUI_HOVERTEXT_ITALIC));
         topPanel.add(underline = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 140, 20, 20, GUI_HOVERTEXT_UNDERLINE));
@@ -441,12 +443,11 @@ public class RichTextToolBar extends Composite {
         topPanel.add(insertline = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 360, 20, 20, GUI_HOVERTEXT_HLINE));
         topPanel.add(insertimage = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 380, 20, 20, GUI_HOVERTEXT_IMAGE));
         topPanel.add(new HTML("&nbsp;"));
-        topPanel.add(removeformatting = createPushButton(HTTP_STATIC_ICONS_GIF, 20, 460, 20, 20,
-                GUI_HOVERTEXT_REMOVEFORMAT));
+        topPanel.add(removeformatting = createPushButton(HTTP_STATIC_ICONS_GIF, 20, 460, 20, 20, GUI_HOVERTEXT_REMOVEFORMAT));
         topPanel.add(new HTML("&nbsp;"));
         topPanel.add(texthtml = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 260, 20, 20, GUI_HOVERTEXT_SWITCHVIEW));
 
-        // Init the BOTTOM Panel
+        //Init the BOTTOM Panel
         bottomPanel.add(fontlist = createFontList());
         bottomPanel.add(new HTML("&nbsp;"));
         bottomPanel.add(colorlist = createColorList());
@@ -455,8 +456,7 @@ public class RichTextToolBar extends Composite {
     /**
      * Method to create a Toggle button for the toolbar *
      */
-    private ToggleButton createToggleButton(String url, Integer top, Integer left, Integer width, Integer height,
-            String tip) {
+    private ToggleButton createToggleButton(String url, Integer top, Integer left, Integer width, Integer height, String tip) {
         Image extract = new Image(url, left, top, width, height);
         ToggleButton tb = new ToggleButton(extract);
         tb.setHeight(height + "px");
