@@ -31,4 +31,53 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <chili.version>1.1-SNAPSHOT</chili.version>
     </properties>
+    <!-- download artifacts from this repo -->
+    <repositories>
+        <repository>
+            <id>yalamanchili</id>
+            <url> http://yalamanchili.googlecode.com/svn/maven2  </url>
+        </repository>
+        <repository>
+            <id>yalamanchili.info</id>
+            <name>yalamanchili.info</name>
+            <url>http://yalamanchili.info:8080/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+    <!-- download plugins from this repo -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>yalamanchili.info</id>
+            <name>yalamanchili.info</name>
+            <url>http://yalamanchili.info:8080/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <distributionManagement>
+        <!-- Publish the versioned releases here -->
+        <repository>
+            <id>yalamanchili.info</id>
+            <name>yalamanchili.info</name>
+            <url>http://yalamanchili.info:8080/nexus/content/repositories/releases</url>
+        </repository>
+
+        <!-- Publish the versioned releases here -->
+        <snapshotRepository>
+            <id>yalamanchili.info</id>
+            <name>yalamanchili.info</name>
+            <url>http://yalamanchili.info:8080/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

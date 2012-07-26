@@ -165,7 +165,7 @@
             </releases>
             <snapshots>
                 <enabled>true</enabled>
-                <updatePolicy>true</updatePolicy>
+                <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
         <!-- TODO temp fix for snapshots not being downloaded from repo-->
@@ -178,7 +178,7 @@
             </releases>
             <snapshots>
                 <enabled>true</enabled>
-                <updatePolicy>true</updatePolicy>
+                <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>        
     </repositories>
@@ -193,7 +193,7 @@
             </releases>
             <snapshots>
                 <enabled>true</enabled>
-                <updatePolicy>true</updatePolicy>
+                <updatePolicy>always</updatePolicy>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
@@ -204,7 +204,6 @@
             <name>yalamanchili.info</name>
             <url>http://yalamanchili.info:8080/nexus/content/repositories/releases</url>
         </repository>
-
         <!-- Publish the versioned releases here -->
         <snapshotRepository>
             <id>yalamanchili.info</id>
