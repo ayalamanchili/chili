@@ -12,7 +12,7 @@ public class PasswordField extends BaseField {
     @UiConstructor
     public PasswordField(String labelName, String attributeName, String className) {
         super(labelName, attributeName, className, false, false);
-        fieldPanel.insert(password, 1);
+        fieldPanel.insert(password, 0);
         password.ensureDebugId(className + "_" + attributeName + "_PTB");
     }
 
