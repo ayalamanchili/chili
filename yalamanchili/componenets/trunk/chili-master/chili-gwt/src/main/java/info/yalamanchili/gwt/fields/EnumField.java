@@ -31,12 +31,16 @@ public class EnumField extends BaseField {
     }
 
     public String getValue() {
-        // TODO check if index is > 0 else null
-        return listBox.getItemText(listBox.getSelectedIndex());
+        if (listBox.getSelectedIndex() > 0) {
+            return listBox.getItemText(listBox.getSelectedIndex());
+        } else {
+            return null;
+        }
     }
 
     @Override
     protected void configureAddMainWidget() {
+        listBox.insertItem("SELECT", 0);
         listBox.ensureDebugId(className + "_" + attributeName + "_LB");
         fieldPanel.insert(listBox, 0);
     }

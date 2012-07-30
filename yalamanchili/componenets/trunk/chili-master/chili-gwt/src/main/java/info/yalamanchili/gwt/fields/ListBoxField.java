@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-
+//TODO depreciate this and merge with DropDownField 
 public class ListBoxField extends Composite {
 
     /**
