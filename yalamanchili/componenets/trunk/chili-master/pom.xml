@@ -8,8 +8,6 @@
     <name>chili-master</name>
     <url>http://somecompany.com</url>
     <modules>
-        <module>../y-common-deps</module>
-        <module>../yalamanchili-commons</module>
         <module>chili-common-deps</module>
         <module>chili-commons</module>
         <module>chili-gwt</module>
