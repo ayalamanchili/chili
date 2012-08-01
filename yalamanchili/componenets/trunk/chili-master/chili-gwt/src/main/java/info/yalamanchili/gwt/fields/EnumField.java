@@ -31,9 +31,7 @@ public class EnumField extends BaseField {
     }
     
     public void selectValue(String value) {
-        logger.info("finding:" + value);
         for (int i = 0; i < listBox.getItemCount(); i++) {
-            logger.info(listBox.getItemText(i));
             if (listBox.getItemText(i) != null && listBox.getItemText(i).equalsIgnoreCase(value)) {
                 listBox.setSelectedIndex(i);
             }
