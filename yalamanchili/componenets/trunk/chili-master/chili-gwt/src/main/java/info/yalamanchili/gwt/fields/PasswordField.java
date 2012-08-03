@@ -10,8 +10,8 @@ public class PasswordField extends BaseField {
     protected PasswordTextBox password = new PasswordTextBox();
 
     @UiConstructor
-    public PasswordField(String labelName, String attributeName, String className) {
-        super(labelName, attributeName, className, false, false);
+    public PasswordField(String labelName, String attributeName, String className, boolean required) {
+        super(labelName, attributeName, className, false, required);
         fieldPanel.insert(password, 0);
         password.ensureDebugId(className + "_" + attributeName + "_PTB");
     }

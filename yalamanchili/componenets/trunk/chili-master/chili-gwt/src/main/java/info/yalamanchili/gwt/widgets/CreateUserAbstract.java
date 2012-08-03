@@ -16,7 +16,7 @@ public abstract class CreateUserAbstract extends PopupPanel implements ClickHand
     protected StringField lastnameTF = new StringField("Last Name", "", "", false, false);
     // TODO rename to emailTF
     protected StringField usernameTF = new StringField("Email", "", "", false, true);
-    protected PasswordField passwordTF = new PasswordField("Password", "", "");
+    protected PasswordField passwordTF = new PasswordField("Password", "", "", true);
     protected Button create = new Button("Create User");
 
     public CreateUserAbstract() {
