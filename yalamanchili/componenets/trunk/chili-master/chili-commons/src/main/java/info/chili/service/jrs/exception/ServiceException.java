@@ -15,12 +15,12 @@ public class ServiceException extends RuntimeException {
         this.errors = errors;
     }
 
-    public ServiceException(StatusCode statusCode, String source, String reasonCode) {
-        this(statusCode, new info.chili.service.jrs.types.Error(source, reasonCode));
+    public ServiceException(StatusCode statusCode, String source, String reasonCode, String description) {
+        this(statusCode, new info.chili.service.jrs.types.Error(source, reasonCode, description));
     }
 
-    public ServiceException(StatusCode statusCode, String source, String reasonCode, Throwable e) {
-        this(e, statusCode, new info.chili.service.jrs.types.Error(source, reasonCode));
+    public ServiceException(StatusCode statusCode, String source, String reasonCode, String description, Throwable e) {
+        this(e, statusCode, new info.chili.service.jrs.types.Error(source, reasonCode, description));
     }
 
     public ServiceException(StatusCode statusCode, List<info.chili.service.jrs.types.Error> errs) {
