@@ -42,6 +42,7 @@ public class ResponseStatusWidget extends PopupPanel {
                 hide();
             }
         };
+        //TODO externalze this
         timer.schedule(3000);
     }
 
