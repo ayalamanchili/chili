@@ -30,6 +30,10 @@ public class DateUtils {
     }
 
     public static String getFormatedDate(String dateString, PredefinedFormat format) {
+        if (dateString == null || "".equals(dateString)) {
+            return null;
+        }
         return DateTimeFormat.getFormat(format).format(toDate(dateString));
+
     }
 }
