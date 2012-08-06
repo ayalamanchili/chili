@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.smartgwt.client.widgets.DateChooser;
 import com.smartgwt.client.widgets.events.DataChangedEvent;
 import com.smartgwt.client.widgets.events.DataChangedHandler;
+import info.yalamanchili.gwt.date.DateUtils;
 import info.yalamanchili.gwt.resources.ChiliImages;
 
 // TODO: Auto-generated Javadoc
@@ -67,8 +68,11 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
         }
     }
 
-    public void setValue(String date) {
-        dateField.setText(date);
+    public void setValue(String dateString) {
+        //need to set the datepicker date to support udpate
+        datePicker.setData(DateUtils.toDate(dateString));
+        String formatedDate = DateUtils.getFormatedDate(dateString, DateTimeFormat.PredefinedFormat.DATE_MEDIUM);
+        dateField.setText(formatedDate);
     }
 
     public void setReadOnly(Boolean readOnly) {

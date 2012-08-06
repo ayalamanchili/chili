@@ -15,13 +15,16 @@ public class DateUtils {
     }
 
     public static Date toDate(String dateString) {
+        if (dateString == null || dateString.isEmpty()) {
+            return null;
+        }
         DateTimeFormat formatter;
         if (dateString.length() == 29) {
             formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT);
         } else if (dateString.length() == 25) {
             formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT2);
         } else {
-            throw new RuntimeException("not supported date string format vaid ones are 1.yyyy-MM-dd'T'HH:mm:ss.SSSZZZ and 2.yyyy-MM-dd'T'HH:mm:ssZZZ");
+            throw new RuntimeException(dateString + " : is not supported date string format vaid ones are 1.yyyy-MM-dd'T'HH:mm:ss.SSSZZZ and 2.yyyy-MM-dd'T'HH:mm:ssZZZ:");
         }
         return formatter.parse(dateString);
     }
