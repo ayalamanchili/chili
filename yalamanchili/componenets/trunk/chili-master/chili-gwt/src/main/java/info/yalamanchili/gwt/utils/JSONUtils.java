@@ -14,8 +14,8 @@ public class JSONUtils {
     }
 
     public static JSONArray toJSONArray(JSONValue jsonValue) {
-        if (jsonValue == null) {
-            new JSONArray();
+        if (null == jsonValue) {
+            return new JSONArray();
         }
         JSONArray array = jsonValue.isArray();
         if (array == null) {
