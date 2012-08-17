@@ -7,8 +7,11 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.Window;
+import java.util.logging.Logger;
 
 public class IntegerField extends BaseFieldWithTextBox {
+
+    private Logger logger = Logger.getLogger(IntegerField.class.getName());
 
     @UiConstructor
     public IntegerField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
@@ -39,6 +42,11 @@ public class IntegerField extends BaseFieldWithTextBox {
     @Override
     // TODO add logic to accept backspace as valid
     public void onKeyPress(KeyPressEvent event) {
+        //TODO move to super class
+        //This is for support for firefox for special characters like enter,tab,etc...
+        if (event.getUnicodeCharCode() == 0) {
+            return;
+        }
         if (!Character.isDigit(event.getCharCode())) {
             setMessage("invalid value");
             textbox.cancelKey();
