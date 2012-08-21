@@ -46,6 +46,15 @@ public class SuggestBox extends Composite {
         panel.add(box);
     }
 
+    public SuggestBox(String name, List<String> inputs) {
+        initWidget(panel);
+        label.setText(name);
+        panel.add(label);
+        box.setTitle(name);
+        panel.add(box);
+        loadData(inputs);
+    }
+
     /**
      * Load data.
      *
