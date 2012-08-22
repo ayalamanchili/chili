@@ -18,4 +18,7 @@ public interface ChiliImages extends ClientBundle {
 
     @ClientBundle.Source("images/date-picker-icon.gif")
     ImageResource datePickerIcon();
+
+    @ClientBundle.Source("images/logo.gif")
+    ImageResource logo();
 }
