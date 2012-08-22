@@ -1,0 +1,20 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package info.yalamanchili.gwt.widgets;
+
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.user.client.ui.Image;
+
+/**
+ *
+ * @author ayalamanchili
+ */
+public class ClickableImage extends Image {
+
+    public ClickableImage(ImageResource imageResource) {
+        super(imageResource);
+        this.addStyleName("y-gwt-ClickableImage");
+    }
+}
