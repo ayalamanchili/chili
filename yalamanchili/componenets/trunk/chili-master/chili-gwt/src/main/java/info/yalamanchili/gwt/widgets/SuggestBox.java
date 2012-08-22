@@ -69,7 +69,7 @@ public class SuggestBox extends Composite {
      *
      * @return the text
      */
-    public String getText() {
+    public String getValue() {
         return box.getText();
     }
 }
