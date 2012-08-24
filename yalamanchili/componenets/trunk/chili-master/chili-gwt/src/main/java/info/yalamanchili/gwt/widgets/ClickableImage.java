@@ -13,8 +13,9 @@ import com.google.gwt.user.client.ui.Image;
  */
 public class ClickableImage extends Image {
 
-    public ClickableImage(ImageResource imageResource) {
+    public ClickableImage(String name, ImageResource imageResource) {
         super(imageResource);
+        super.setTitle(name);
         this.addStyleName("y-gwt-ClickableImage");
     }
 }
