@@ -13,6 +13,7 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.Window;
@@ -42,8 +43,8 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
     }
 
     @UiConstructor
-    public DateField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
-        super(labelName, attributeName, className, readOnly, isRequired);
+    public DateField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
+        super(constants, attributeName, className, readOnly, isRequired);
         configureAddMainWidget();
         setReadOnly(readOnly);
     }

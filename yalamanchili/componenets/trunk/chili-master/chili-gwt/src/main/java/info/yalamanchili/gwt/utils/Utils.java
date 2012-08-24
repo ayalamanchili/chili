@@ -49,6 +49,18 @@ public class Utils {
         }
     }
 
+    public static String getMoreInfoLabel(String attribute, String classCanonicalName, ConstantsWithLookup constants) {
+        if (constants == null) {
+            return attribute;
+        }
+        String key = classCanonicalName + "_" + attribute + "_info";
+        try {
+            return constants.getString(key);
+        } catch (MissingResourceException e) {
+            return attribute;
+        }
+    }
+
     /**
      * used to get UI display value from constants for the key
      */

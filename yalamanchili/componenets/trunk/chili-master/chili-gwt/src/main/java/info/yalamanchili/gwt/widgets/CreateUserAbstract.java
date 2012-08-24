@@ -12,11 +12,12 @@ import com.google.gwt.user.client.ui.PopupPanel;
 public abstract class CreateUserAbstract extends PopupPanel implements ClickHandler {
 
     FlowPanel panel = new FlowPanel();
-    protected StringField firstnameTF = new StringField("First Name", "", "", false, false);
-    protected StringField lastnameTF = new StringField("Last Name", "", "", false, false);
+    //TODO fix constructors
+    protected StringField firstnameTF = new StringField(null, "", "", false, false);
+    protected StringField lastnameTF = new StringField(null, "", "", false, false);
     // TODO rename to emailTF
-    protected StringField usernameTF = new StringField("Email", "", "", false, true);
-    protected PasswordField passwordTF = new PasswordField("Password", "", "", true);
+    protected StringField usernameTF = new StringField(null, "", "", false, true);
+    protected PasswordField passwordTF = new PasswordField(null, "", "", true);
     protected Button create = new Button("Create User");
 
     public CreateUserAbstract() {

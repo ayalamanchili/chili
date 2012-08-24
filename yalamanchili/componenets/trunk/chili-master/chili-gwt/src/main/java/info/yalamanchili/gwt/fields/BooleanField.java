@@ -1,5 +1,6 @@
 package info.yalamanchili.gwt.fields;
 
+import com.google.gwt.i18n.client.ConstantsWithLookup;
 import info.yalamanchili.gwt.composite.BaseField;
 
 import com.google.gwt.uibinder.client.UiConstructor;
@@ -14,8 +15,8 @@ public class BooleanField extends BaseField {
     }
 
     @UiConstructor
-    public BooleanField(String text, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
-        super(text, attributeName, className, readOnly, isRequired);
+    public BooleanField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
+        super(constants, attributeName, className, readOnly, isRequired);
         // box.setText(text);
         configureAddMainWidget();
         setReadOnly(readOnly);

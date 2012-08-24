@@ -3,6 +3,7 @@ package info.yalamanchili.gwt.composite;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.TextBox;
 
 //TODO move commons stuff to base field
@@ -14,11 +15,11 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
         return textbox;
     }
 
-    public BaseFieldWithTextBox(String labelName, String attributeName, String className, Boolean readOnly,
+    public BaseFieldWithTextBox(ConstantsWithLookup constants,
+            String attributeName, String className, Boolean readOnly,
             Boolean required) {
-        super(labelName, attributeName, className, readOnly, required);
+        super(constants, attributeName, className, readOnly, required);
         configureAddMainWidget();
-        textbox.setTitle(labelName);
         textbox.ensureDebugId(className + "_" + attributeName + "_TB");
         setReadOnly(readOnly);
     }

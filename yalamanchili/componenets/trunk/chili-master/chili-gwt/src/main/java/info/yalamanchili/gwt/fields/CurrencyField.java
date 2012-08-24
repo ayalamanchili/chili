@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.Window;
@@ -16,8 +17,8 @@ public class CurrencyField extends BaseFieldWithTextBox {
 
     protected static NumberFormat fmt = NumberFormat.getCurrencyFormat();
 
-    public CurrencyField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
-        super(labelName, attributeName, className, readOnly, isRequired);
+    public CurrencyField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
+        super(constants, attributeName, className, readOnly, isRequired);
     }
 
     public BigDecimal getCurrency() {

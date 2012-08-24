@@ -1,5 +1,6 @@
 package info.yalamanchili.gwt.fields;
 
+import com.google.gwt.i18n.client.ConstantsWithLookup;
 import info.yalamanchili.gwt.composite.BaseField;
 
 import com.google.gwt.uibinder.client.UiConstructor;
@@ -10,8 +11,8 @@ public class PasswordField extends BaseField {
     protected PasswordTextBox password = new PasswordTextBox();
 
     @UiConstructor
-    public PasswordField(String labelName, String attributeName, String className, boolean required) {
-        super(labelName, attributeName, className, false, required);
+    public PasswordField(ConstantsWithLookup constants, String attributeName, String className, boolean required) {
+        super(constants, attributeName, className, false, required);
         fieldPanel.insert(password, 0);
         password.ensureDebugId(className + "_" + attributeName + "_PTB");
     }

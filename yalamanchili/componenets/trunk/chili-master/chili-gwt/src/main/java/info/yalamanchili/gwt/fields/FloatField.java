@@ -5,14 +5,15 @@ import info.yalamanchili.gwt.composite.BaseFieldWithTextBox;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.Window;
 
 public class FloatField extends BaseFieldWithTextBox {
 
     @UiConstructor
-    public FloatField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
-        super(labelName, attributeName, className, readOnly, isRequired);
+    public FloatField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
+        super(constants, attributeName, className, readOnly, isRequired);
     }
 
     public Float getFloat() {

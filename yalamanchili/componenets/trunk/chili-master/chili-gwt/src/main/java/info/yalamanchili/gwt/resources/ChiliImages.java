@@ -16,7 +16,7 @@ public interface ChiliImages extends ClientBundle {
 
     public static final ChiliImages INSTANCE = GWT.create(ChiliImages.class);
 
-    @ClientBundle.Source("images/date-picker-icon.gif")
+    @ClientBundle.Source("images/date_picker_icon_16_16.png")
     ImageResource datePickerIcon();
 
     @ClientBundle.Source("images/logo.gif")
