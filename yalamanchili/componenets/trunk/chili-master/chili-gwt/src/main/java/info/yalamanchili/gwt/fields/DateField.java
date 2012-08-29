@@ -78,6 +78,7 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
 
     public void setReadOnly(Boolean readOnly) {
         dateField.setReadOnly(readOnly);
+        dateField.setEnabled(false);
     }
 
     @Override
