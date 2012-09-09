@@ -26,6 +26,7 @@ import com.smartgwt.client.widgets.events.DataChangedEvent;
 import com.smartgwt.client.widgets.events.DataChangedHandler;
 import info.yalamanchili.gwt.date.DateUtils;
 import info.yalamanchili.gwt.resources.ChiliImages;
+import java.util.logging.Logger;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -33,10 +34,12 @@ import info.yalamanchili.gwt.resources.ChiliImages;
  */
 public class DateField extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler, ClickHandler {
 
+    private static Logger logger = Logger.getLogger(DateField.class.getName());
     final TextBox dateField = new TextBox();
     final DateChooser datePicker = new DateChooser();
     Image datePickerIcon = new Image();
     PopupPanel popupPanel = new PopupPanel(true);
+    protected Date date = null;
 
     public DateChooser getDatePicker() {
         return datePicker;
@@ -50,16 +53,7 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
     }
 
     public Date getDate() {
-        Date dt = null;
-        if (datePicker.getData() == null) {
-            return null;
-        }
-        try {
-            dt = datePicker.getData();
-        } catch (Exception e) {
-            Window.alert("enter valid date");
-        }
-        return dt;
+        return date;
     }
 
     public void setDate(Date date) {
@@ -90,7 +84,7 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
         datePicker.addDataChangedHandler(new DataChangedHandler() {
             @Override
             public void onDataChanged(DataChangedEvent event) {
-                Date date = datePicker.getData();
+                date = datePicker.getData();
                 String dateString = DateTimeFormat.getFormat("d MMMM yyyy").format(date);
                 dateField.setText(dateString);
             }
