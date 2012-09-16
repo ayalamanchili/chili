@@ -20,7 +20,7 @@ public class JSONUtils {
         JSONArray array = jsonValue.isArray();
         if (array == null) {
             array = new JSONArray();
-            array.set(0, jsonValue.isObject());
+            array.set(0, jsonValue);
         }
         return array;
     }
