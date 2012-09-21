@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--  todo change to basefield -->
+	<declare-styleable name="BooleanField">
+		<attr name="readOnly" format="boolean" />
+	</declare-styleable>
+</resources>
