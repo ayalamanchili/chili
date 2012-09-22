@@ -110,7 +110,7 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
 
     @Override
     public void validate() {
-        // TODO Auto-generated method stub
+       clearMessage();
     }
 
     @Override

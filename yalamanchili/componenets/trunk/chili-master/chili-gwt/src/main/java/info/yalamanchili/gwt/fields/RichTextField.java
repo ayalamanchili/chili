@@ -46,7 +46,7 @@ public class RichTextField extends BaseField {
 
     @Override
     public void validate() {
-        // TODO Auto-generated method stub
+        clearMessage();
     }
 
     public void setReadOnly(Boolean readOnly) {

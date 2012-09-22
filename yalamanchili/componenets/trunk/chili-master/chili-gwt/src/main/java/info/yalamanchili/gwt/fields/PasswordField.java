@@ -31,6 +31,6 @@ public class PasswordField extends BaseField {
 
     @Override
     public void validate() {
-        // TODO Auto-generated method stub
+      clearMessage();
     }
 }
