@@ -16,95 +16,98 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public abstract class AbstractUpdateActivity extends AbstractCRUDActivity {
-	protected Button update;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		setContentView(contentViewId());
-		customizeTitle();
-		update = (Button) findViewById(updateButtonId());
-		update.setOnClickListener(this);
-		assignFields();
-	}
+    protected Button update;
 
-	@Override
-	public void onStart() {
-		super.onStart();
-		Log.d("ichili-android", "in update start");
-		try {
-			entity = new JSONObject(getIntent().getSerializableExtra("entity")
-					.toString());
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		populateFieldsFromEntity();
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        setContentView(contentViewId());
+        customizeTitle();
+        update = (Button) findViewById(updateButtonId());
+        update.setOnClickListener(this);
+        assignFields();
+    }
 
-	/* set the create panel id here */
-	protected abstract int contentViewId();
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("ichili-android", "in update start");
+        try {
+            entity = new JSONObject(getIntent().getSerializableExtra("entity")
+                    .toString());
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        populateFieldsFromEntity();
+    }
 
-	/* set the create button id here */
-	protected abstract int updateButtonId();
+    /* set the create panel id here */
+    protected abstract int contentViewId();
 
-	protected abstract void assignFields();
+    /* set the create button id here */
+    protected abstract int updateButtonId();
 
-	// TODO move to parent
-	public void customizeTitle() {
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, appTitleBarId());
-		TextView mytitletext = (TextView) findViewById(appTitleBArTextViewId());
-		mytitletext.setText(titleText());
-	}
+    protected abstract void assignFields();
 
-	/* set the custom title bar */
-	// TODO can be defined from main of welcome class
-	protected abstract int appTitleBarId();
+    // TODO move to parent
+    public void customizeTitle() {
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, appTitleBarId());
+        TextView mytitletext = (TextView) findViewById(appTitleBArTextViewId());
+        mytitletext.setText(titleText());
+    }
 
-	protected abstract int appTitleBArTextViewId();
+    /* set the custom title bar */
+    // TODO can be defined from main of welcome class
+    protected abstract int appTitleBarId();
 
-	/* set the custom title text */
-	protected abstract String titleText();
+    protected abstract int appTitleBArTextViewId();
 
-	public void onClick(View view) {
+    /* set the custom title text */
+    protected abstract String titleText();
 
-		if (view == update) {
-			preUpdate();
-			onUpdate();
-		}
-	}
+    public void onClick(View view) {
 
-	/* set the entity from the parent entity is exists */
-	/*
-	 * eg: if (getIntent().getSerializableExtra("entity") != null) { dealer =
-	 * (JSONObject) getIntent() .getSerializableExtra("entity"); } else { dealer
-	 * = new JSONObject(); }
-	 */
-	protected abstract void preUpdate();
+        if (view == update) {
+            preUpdate();
+            onUpdate();
+        }
+    }
 
-	protected void onUpdate() {
-		HttpRequest request = new HttpRequest(updateURL(),
-				populateEntityFromFields(entity).toString(),
-				headers());
-		new AsyncHttpPut(this) {
-			@Override
-			protected void onResponse(String result) {
-				Toast.makeText(AbstractUpdateActivity.this, "updated",
-						Toast.LENGTH_LONG);
-				finish();
-			}
+    /* set the entity from the parent entity is exists */
+    /*
+     * eg: if (getIntent().getSerializableExtra("entity") != null) { dealer =
+     * (JSONObject) getIntent() .getSerializableExtra("entity"); } else { dealer
+     * = new JSONObject(); }
+     */
+    protected abstract void preUpdate();
 
-			@Override
-			protected void onValidationErrors(String errorsString) {
-				processValidationErrors(errorsString);
-			}
-		}.execute(request);
-	}
+    protected abstract void postUpdateSuccess(String result);
 
-	protected abstract Map<String,String> headers();
-	
-	// TODO make this generic
-	protected abstract String updateURL();
+    protected void onUpdate() {
+        HttpRequest request = new HttpRequest(updateURL(),
+                populateEntityFromFields(entity).toString(),
+                headers());
+        new AsyncHttpPut(this) {
+            @Override
+            protected void onResponse(String result) {
+                Toast.makeText(AbstractUpdateActivity.this, "updated",
+                        Toast.LENGTH_LONG);
+                postUpdateSuccess(result);
+                finish();
+            }
 
+            @Override
+            protected void onValidationErrors(String errorsString) {
+                processValidationErrors(errorsString);
+            }
+        }.execute(request);
+    }
+
+    protected abstract Map<String, String> headers();
+
+    // TODO make this generic
+    protected abstract String updateURL();
 }

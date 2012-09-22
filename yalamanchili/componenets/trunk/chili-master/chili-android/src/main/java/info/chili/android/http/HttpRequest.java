@@ -4,49 +4,59 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpRequest {
-	protected String url;
-	protected String body;
-	protected Map<String, String> headers;
 
-	public HttpRequest(String url, String body, Map<String, String> headers) {
-		super();
-		this.url = url;
-		this.body = body;
-		this.headers = headers;
-	}
+    protected String url;
+    protected String body;
+    protected Map<String, String> headers;
 
-	public HttpRequest() {
-		super();
-	}
+    public HttpRequest(String url) {
+        this.url = url;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public HttpRequest(String url, Map<String, String> headers) {
+        this.url = url;
+        this.headers = headers;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public HttpRequest(String url, String body, Map<String, String> headers) {
+        super();
+        this.url = url;
+        this.body = body;
+        this.headers = headers;
+    }
 
-	public String getBody() {
-		return body;
-	}
+    public HttpRequest() {
+        super();
+    }
 
-	public void setBody(String body) {
-		this.body = body;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public Map<String, String> getHeaders() {
-		if (headers == null) {
-			headers = new HashMap<String, String>();
-		}
-		return headers;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public void setHeaders(Map<String, String> headers) {
-		this.headers = headers;
-	}
+    public String getBody() {
+        return body;
+    }
 
-	public void addHeader(String key, String value) {
-		getHeaders().put(key, value);
-	}
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public Map<String, String> getHeaders() {
+        if (headers == null) {
+            headers = new HashMap<String, String>();
+        }
+        return headers;
+    }
+
+    public void setHeaders(Map<String, String> headers) {
+        this.headers = headers;
+    }
+
+    public void addHeader(String key, String value) {
+        getHeaders().put(key, value);
+    }
 }

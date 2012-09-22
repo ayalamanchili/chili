@@ -61,6 +61,7 @@ public abstract class AbstractCreateActivity extends AbstractCRUDActivity {
 	}
 
 	protected abstract void preCreate();
+	protected abstract void postCreateSuccess(String result);
 
 	protected void onCreate() {
 		HttpRequest request = new HttpRequest(createURL(),
@@ -71,7 +72,9 @@ public abstract class AbstractCreateActivity extends AbstractCRUDActivity {
 			protected void onResponse(String result) {
 				Toast.makeText(AbstractCreateActivity.this, "created",
 						Toast.LENGTH_LONG);
-				finish();
+				postCreateSuccess(result);
+                                //TODO Should this be called here or at the impl activity
+                                finish();
 			}
 
 			@Override
