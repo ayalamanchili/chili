@@ -29,4 +29,8 @@ public class SpringContext implements ApplicationContextAware {
     public static Object getBean(String beanName) {
         return context.getBean(beanName);
     }
+
+    public static Object getBean(Class beanCls) {
+        return context.getBean(beanCls.getSimpleName().substring(0, 1).toLowerCase() + beanCls.getSimpleName().substring(1));
+    }
 }
