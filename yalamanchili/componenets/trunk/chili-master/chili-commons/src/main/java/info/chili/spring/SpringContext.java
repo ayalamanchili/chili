@@ -30,7 +30,7 @@ public class SpringContext implements ApplicationContextAware {
         return context.getBean(beanName);
     }
 
-    public static Object getBean(Class beanCls) {
-        return context.getBean(beanCls.getSimpleName().substring(0, 1).toLowerCase() + beanCls.getSimpleName().substring(1));
+    public static <T> T getBean(Class beanCls) {
+        return (T) context.getBean(beanCls.getSimpleName().substring(0, 1).toLowerCase() + beanCls.getSimpleName().substring(1));
     }
 }
