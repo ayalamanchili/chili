@@ -51,12 +51,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.smartgwt</groupId>
-            <artifactId>smartgwt</artifactId>
-            <version>3.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>yalamanchili</groupId>
             <artifactId>y-common-deps</artifactId>
             <version>1.1-SNAPSHOT</version>
@@ -65,7 +59,7 @@
         </dependency>
     </dependencies>
     <properties>
-        <gwtVersion>2.4.0</gwtVersion>
+        <gwtVersion>2.5.0-rc1</gwtVersion>
     </properties>
     <!-- download artifacts from this repo -->
     <repositories>

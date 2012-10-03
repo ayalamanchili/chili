@@ -13,17 +13,16 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiConstructor;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.datepicker.client.DatePicker;
 
-import com.smartgwt.client.widgets.DateChooser;
-import com.smartgwt.client.widgets.events.DataChangedEvent;
-import com.smartgwt.client.widgets.events.DataChangedHandler;
 import info.yalamanchili.gwt.date.DateUtils;
 import info.yalamanchili.gwt.resources.ChiliImages;
 import java.util.logging.Logger;
@@ -36,12 +35,12 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
 
     private static Logger logger = Logger.getLogger(DateField.class.getName());
     final TextBox dateField = new TextBox();
-    final DateChooser datePicker = new DateChooser();
+    final DatePicker datePicker = new DatePicker();
     Image datePickerIcon = new Image();
     PopupPanel popupPanel = new PopupPanel(true);
     protected Date date = null;
 
-    public DateChooser getDatePicker() {
+    public DatePicker getDatePicker() {
         return datePicker;
     }
 
@@ -59,13 +58,13 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
     public void setDate(Date date) {
         if (date != null) {
             dateField.setText(Utils.getShortDate(date));
-            datePicker.setData(date);
+            datePicker.setValue(date);
         }
     }
 
     public void setValue(String dateString) {
         //need to set the datepicker date to support udpate
-        datePicker.setData(DateUtils.toDate(dateString));
+        datePicker.setValue(DateUtils.toDate(dateString));
         String formatedDate = DateUtils.getFormatedDate(dateString, DateTimeFormat.PredefinedFormat.DATE_MEDIUM);
         dateField.setText(formatedDate);
     }
@@ -81,10 +80,10 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
     protected void configureAddMainWidget() {
         dateField.ensureDebugId(className + "_" + attributeName + "_TB");
         dateField.addKeyPressHandler(this);
-        datePicker.addDataChangedHandler(new DataChangedHandler() {
+        datePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
             @Override
-            public void onDataChanged(DataChangedEvent event) {
-                date = datePicker.getData();
+            public void onValueChange(ValueChangeEvent<Date> event) {
+                date = datePicker.getValue();
                 String dateString = DateTimeFormat.getFormat("d MMMM yyyy").format(date);
                 dateField.setText(dateString);
             }
@@ -110,7 +109,7 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
 
     @Override
     public void validate() {
-       clearMessage();
+        clearMessage();
     }
 
     @Override
