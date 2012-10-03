@@ -1,14 +1,10 @@
 package info.chili.beans;
 
-import info.yalamanchili.commons.DataType;
-import info.yalamanchili.commons.ReflectionUtils;
+import info.chili.commons.ReflectionUtils;
+import info.chili.commons.DataType;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.beanutils.PropertyUtils;
 
 public class BeanMapper {
 
