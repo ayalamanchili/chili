@@ -114,4 +114,8 @@ public class Utils {
         }
         return false;
     }
+
+    public static String getStringCamelCase(String string) {
+        return string.substring(0, 1).toLowerCase() + string.substring(1);
+    }
 }
