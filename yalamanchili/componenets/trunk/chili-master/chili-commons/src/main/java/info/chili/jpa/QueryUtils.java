@@ -25,13 +25,15 @@ public class QueryUtils {
         }
     }
 
-    public static Map<Long, String> getListBoxValues(Class<?> clazz, String[] columns, EntityManager em) {
+    public static Map<String, String> getListBoxValues(EntityManager em, Class<?> clazz, Integer start, Integer limit, String... columns) {
         String query = getListBoxResultsQueryString(clazz.getCanonicalName(), columns);
-        Map<Long, String> values = new HashMap<Long, String>();
-        Query getListBoxValues = em.createQuery(query);
-        for (Object obj : getListBoxValues.getResultList()) {
+        Map<String, String> values = new HashMap<String, String>();
+        Query getListBoxValuesQuery = em.createQuery(query);
+        getListBoxValuesQuery.setFirstResult(start);
+        getListBoxValuesQuery.setMaxResults(limit);
+        for (Object obj : getListBoxValuesQuery.getResultList()) {
             Object[] obs = (Object[]) obj;
-            values.put((Long) obs[0], (String) obs[1]);
+            values.put(obs[0].toString(), (String) obs[1]);
         }
         return values;
     }
@@ -41,8 +43,12 @@ public class QueryUtils {
         return query;
     }
 
-    public static String getListBoxResultsQueryString(String className, String[] columns) {
-        String query = "SELECT id,";
+    /**
+     * pass the columns names starting with primary key
+     *
+     */
+    public static String getListBoxResultsQueryString(String className, String... columns) {
+        String query = "SELECT ";
         for (String column : columns) {
             query = query.concat(column + ",");
         }
