@@ -15,23 +15,23 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class Entry {
 
-    protected String key;
+    protected String id;
     protected String value;
 
     public Entry() {
     }
 
-    public Entry(String key, String value) {
-        this.key = key;
+    public Entry(String id, String value) {
+        this.id = id;
         this.value = value;
     }
 
-    public String getKey() {
-        return key;
+    public String getId() {
+        return id;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getValue() {
@@ -44,6 +44,6 @@ public class Entry {
 
     @Override
     public String toString() {
-        return "Entry{" + "key=" + key + ", value=" + value + '}';
+        return "Entry{" + "id=" + id + ", value=" + value + '}';
     }
 }
