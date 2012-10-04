@@ -33,7 +33,12 @@ public class QueryUtils {
         getListBoxValuesQuery.setMaxResults(limit);
         for (Object obj : getListBoxValuesQuery.getResultList()) {
             Object[] obs = (Object[]) obj;
-            values.put(obs[0].toString(), (String) obs[1]);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 1; i < columns.length; i++) {
+                sb.append(obs[i].toString());
+                sb.append(" : ");
+            }
+            values.put(obs[0].toString(), sb.toString());
         }
         return values;
     }
