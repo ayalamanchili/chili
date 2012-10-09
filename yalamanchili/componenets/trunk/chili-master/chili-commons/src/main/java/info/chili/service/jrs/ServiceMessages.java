@@ -1,6 +1,7 @@
 package info.chili.service.jrs;
 
 import info.chili.service.jrs.types.Error;
+import info.chili.spring.SpringContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +33,9 @@ public class ServiceMessages {
 
     public boolean isNotEmpty() {
         return !errors.isEmpty();
+    }
+
+    public static ServiceMessages instance() {
+        return SpringContext.getBean(ServiceMessages.class);
     }
 }
