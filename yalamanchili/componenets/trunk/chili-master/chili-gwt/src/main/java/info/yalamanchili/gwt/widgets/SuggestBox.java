@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import info.yalamanchili.gwt.utils.Utils;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -61,7 +62,7 @@ public class SuggestBox extends Composite {
      *
      * @param inputs the inputs
      */
-    public void loadData(List<String> inputs) {
+    public void loadData(Collection<String> inputs) {
         data.addAll(inputs);
     }
 
@@ -73,4 +74,5 @@ public class SuggestBox extends Composite {
     public String getValue() {
         return box.getText();
     }
+
 }
