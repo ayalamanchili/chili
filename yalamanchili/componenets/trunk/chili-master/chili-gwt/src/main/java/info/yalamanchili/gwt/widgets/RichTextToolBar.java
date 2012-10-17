@@ -43,7 +43,7 @@ public class RichTextToolBar extends Composite {
      * Local CONSTANTS *
      */
     //ImageMap and CSS related
-    private static final String HTTP_STATIC_ICONS_GIF = "http://blog.elitecoderz.net/wp-includes/js/tinymce/themes/advanced/img/icons.gif";
+    private static final String HTTP_STATIC_ICONS_GIF = "http://yalamanchili.googlecode.com/files/richtext_toolbar_icons.gif";
     private static final String CSS_ROOT_NAME = "RichTextToolbar";
     //Color and Fontlists - First Value (key) is the Name to display, Second Value (value) is the HTML-Definition
     public final static HashMap<String, String> GUI_COLORLIST = new HashMap<String, String>();
