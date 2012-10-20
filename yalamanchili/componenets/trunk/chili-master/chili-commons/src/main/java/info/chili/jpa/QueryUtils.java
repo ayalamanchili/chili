@@ -25,7 +25,7 @@ public class QueryUtils {
         }
     }
 
-    public static Map<String, String> getListBoxValues(EntityManager em, Class<?> clazz, Integer start, Integer limit, String... columns) {
+    public static Map<String, String> getEntityStringMapByParams(EntityManager em, Class<?> clazz, Integer start, Integer limit, String... columns) {
         String query = getListBoxResultsQueryString(clazz.getCanonicalName(), columns);
         Map<String, String> values = new HashMap<String, String>();
         Query getListBoxValuesQuery = em.createQuery(query);
@@ -36,7 +36,7 @@ public class QueryUtils {
             StringBuilder sb = new StringBuilder();
             for (int i = 1; i < columns.length; i++) {
                 sb.append(obs[i].toString());
-                sb.append(" : ");
+                sb.append(" ");
             }
             values.put(obs[0].toString(), sb.toString());
         }
