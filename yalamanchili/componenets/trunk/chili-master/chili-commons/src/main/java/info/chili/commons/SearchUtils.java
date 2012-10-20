@@ -48,26 +48,22 @@ public class SearchUtils {
         List<String> filters = new ArrayList<String>();
         for (Field field : ReflectionUtils.getAllFields(entity.getClass())) {
             if (!DataType.DEFAULT.equals(ReflectionUtils.getDataType(field))) {
-                for (Method method : entity.getClass().getMethods()) {
-                    if (method.getName().compareToIgnoreCase("get" + field.getName()) == 0) {
-                        try {
-                            Object value = method.invoke(entity, null);
-                            if (value instanceof String && value != null) {
-                                filters.add(field.getName() + " LIKE '%" + value.toString().trim() + "%'");
-                            }
-                            if (value instanceof Long && value != null) {
-                                filters.add(field.getName() + " = " + value.toString().trim());
-                            }
-                            if (value instanceof Integer && value != null) {
-                                filters.add(field.getName() + " = " + value.toString().trim());
-                            }
-                            if (value instanceof Float && value != null) {
-                                filters.add(field.getName() + " = " + value.toString().trim());
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                Method getterMethod = ReflectionUtils.getGetterMethod(field, entity.getClass());
+                if (getterMethod != null) {
+                    Object value = ReflectionUtils.callGetterMethod(getterMethod, entity);
+                    if (value != null && !value.toString().isEmpty()) {
+                        if (value instanceof String) {
+                            filters.add(field.getName() + " LIKE '%" + value.toString().trim() + "%'");
                         }
-
+                        if (value instanceof Long) {
+                            filters.add(field.getName() + " = " + value.toString().trim());
+                        }
+                        if (value instanceof Integer) {
+                            filters.add(field.getName() + " = " + value.toString().trim());
+                        }
+                        if (value instanceof Float) {
+                            filters.add(field.getName() + " = " + value.toString().trim());
+                        }
                     }
                 }
             }
@@ -80,7 +76,8 @@ public class SearchUtils {
                 query = query.concat(" AND ");
             }
         }
-        log.info("query String" + query);
+        log.info(
+                "getSearchQueryString:" + query);
         return query;
     }
 
