@@ -1,5 +1,7 @@
 <module>
     <inherits name="com.google.gwt.user.User" />
+    <!--org.zenika date picker-->
+    <inherits name='org.zenika.widget.DatePickerModule'/>
     <source path='gwt' />
     <stylesheet src="chili-gwt.css" />
 </module>
