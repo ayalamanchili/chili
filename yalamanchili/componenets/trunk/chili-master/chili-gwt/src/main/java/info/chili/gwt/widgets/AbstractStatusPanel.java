@@ -47,6 +47,7 @@ public abstract class AbstractStatusPanel extends ALComposite implements ClickHa
     protected void configure() {
         statusBar.setStyleName("y-gwt-AbstracttatusPanel");
         logo.setStyleName("y-gwt-AbstractStatusPanel-LogoImage");
+        userLink.addStyleName("userLink");
         statusBar.getFlexCellFormatter().setRowSpan(0, 0, 2);
         statusBar.getCellFormatter().addStyleName(1, 3, "y-gwt-AbstractStatusPanel-UserLink");
         statusBar.getCellFormatter().addStyleName(1, 2, "y-gwt-AbstractStatusPanel-LoginLink");
