@@ -14,7 +14,7 @@
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
-                    <include>info/yalamanchili/**</include>
+                    <include>info/**</include>
                 </includes>
             </resource>
             <resource>
@@ -38,12 +38,6 @@
         </plugins>
     </build>
     <dependencies>
-        <dependency>
-            <groupId>info.yalamanchili.commons</groupId>
-            <artifactId>yalamanchili-commons</artifactId>
-            <version>1.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>

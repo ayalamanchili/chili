@@ -6,7 +6,7 @@ package info.chili.jpa.validation.impl;
 
 import info.chili.jpa.validation.Unique;
 import info.chili.spring.SpringContext;
-import info.yalamanchili.commons.ReflectionUtils;
+import info.chili.commons.ReflectionUtils;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.logging.Logger;
