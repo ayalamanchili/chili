@@ -8,7 +8,7 @@
     <name>chili-master</name>
     <url>http://somecompany.com</url>
     <modules>
-        <!--<module>chili-common-deps</module>-->
+        <module>chili-common-deps</module>
         <module>chili-commons</module>
         <module>chili-gwt</module>
     </modules>
