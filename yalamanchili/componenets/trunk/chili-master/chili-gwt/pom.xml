@@ -3,7 +3,7 @@
     <parent>
         <artifactId>chili-master</artifactId>
         <groupId>info.chili</groupId>
-        <version>1.1</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
     <groupId>info.chili</groupId>
     <artifactId>chili-gwt</artifactId>
@@ -60,8 +60,8 @@
         </plugins>
     </build>
     <scm>
-        <connection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/tags/chili-master/chili-master-1.1/chili-gwt</connection>
-        <url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/tags/chili-master/chili-master-1.1/chili-gwt</url>
+        <connection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-gwt</connection>
+        <url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-gwt</url>
     </scm>     
     <properties>
         <gwtVersion>2.5.0-rc1</gwtVersion>
