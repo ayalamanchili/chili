@@ -1,12 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <parent>
+        <artifactId>chili-master</artifactId>
+        <groupId>info.chili</groupId>
+        <version>1.1-SNAPSHOT</version>
+    </parent>
     <groupId>info.chili</groupId>
     <artifactId>chili-gwt</artifactId>
-    <version>1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-
     <name>chili-gwt</name>
     <url>http://maven.apache.org</url>
     <dependencies>
@@ -14,13 +16,6 @@
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
             <version>${gwtVersion}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>yalamanchili</groupId>
-            <artifactId>y-common-deps</artifactId>
-            <version>1.1-SNAPSHOT</version>
-            <type>pom</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -55,8 +50,20 @@
                 <artifactId>taglist-maven-plugin</artifactId>
                 <version>2.4</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.2.2</version>
+                <configuration>
+                    <tagBase>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/tags/chili-master/chili-gwt</tagBase>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+    <scm>
+        <connection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-gwt</connection>
+        <url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-gwt</url>
+    </scm>     
     <properties>
         <gwtVersion>2.5.0-rc1</gwtVersion>
     </properties>
