@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>info.chili</groupId>
     <artifactId>chili-common-deps</artifactId>
-    <version>1.1</version>
+    <version>1.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>chili-common-deps</name>
     <url>http://maven.apache.org</url>
@@ -196,8 +196,8 @@
         </plugins>
     </build>
     <scm>
-        <connection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/tags/chili-master/chili-common-deps/chili-common-deps-1.1</connection>
-        <url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/tags/chili-master/chili-common-deps/chili-common-deps-1.1</url>
+        <connection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-common-deps</connection>
+        <url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-common-deps</url>
     </scm>
     <!-- download artifacts from this repo -->
     <repositories>
