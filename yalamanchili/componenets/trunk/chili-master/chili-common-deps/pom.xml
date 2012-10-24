@@ -246,8 +246,6 @@
         </snapshotRepository>
     </distributionManagement>
     <properties>
-        <office.version>1.0-SNAPSHOT</office.version>
-        <chili.version>1.1-SNAPSHOT</chili.version>
         <arquillian.version>1.0.0.Alpha4</arquillian.version>
         <spring.version>3.1.1.RELEASE</spring.version>
         <spring.security.version>3.1.0.RELEASE</spring.security.version>
