@@ -118,4 +118,9 @@ public class Utils {
     public static String getStringCamelCase(String string) {
         return string.substring(0, 1).toLowerCase() + string.substring(1);
     }
+    
+    public static String getFileNameFromUrl(String url){
+        
+        return null;
+    }
 }
