@@ -4,75 +4,84 @@
  */
 package info.chili.gwt.widgets;
 
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
-import info.chili.gwt.utils.Utils;
+import com.google.gwt.user.client.ui.TextBox;
+import info.chili.gwt.composite.BaseField;
 import java.util.Collection;
-import java.util.List;
 
 /**
  *
- * @author ayalamanchili
+ * @author yalamanchili
  */
-public class SuggestBox extends Composite {
+public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler {
 
-    /**
-     * The panel.
-     */
-    FlowPanel panel = new FlowPanel();
-    /**
-     * The label.
-     */
-    Label label = new Label();
-    /**
-     * The data.
-     */
     MultiWordSuggestOracle data = new MultiWordSuggestOracle();
-    /**
-     * The box.
-     */
     com.google.gwt.user.client.ui.SuggestBox box = new com.google.gwt.user.client.ui.SuggestBox(data);
 
-    /**
-     * Instantiates a new aL suggest box.
-     *
-     * @param name the name
-     */
-    public SuggestBox(String name) {
-        initWidget(panel);
-        label.setText(name);
-        panel.add(label);
-        box.setTitle(name);
-        panel.add(box);
-    }
-    
-    public SuggestBox(String name, List<String> inputs) {
-        initWidget(panel);
-        label.setText(name);
-        panel.add(label);
-        box.setTitle(name);
-        panel.add(box);
-        loadData(inputs);
+    public SuggestBox(ConstantsWithLookup constants,
+            String attributeName, String className, Boolean readOnly,
+            Boolean required) {
+        super(constants, attributeName, className, readOnly, required);
+        configureAddMainWidget();
+        box.ensureDebugId(className + "_" + attributeName + "_TB");
+        setReadOnly(readOnly);
     }
 
-    /**
-     * Load data.
-     *
-     * @param inputs the inputs
-     */
+    protected void configureAddMainWidget() {
+        box.addStyleName("tfTextBox");
+        fieldPanel.insert(box, 0);
+        addListeners();
+    }
+
+    protected void addListeners() {
+        box.addKeyPressHandler(this);
+        box.addKeyUpHandler(this);
+    }
+
+    public void setReadOnly(Boolean readlOnly) {
+        if (readOnly) {
+            box.setEnabled(false);
+        }
+    }
+
+    public void validate() {
+    }
+
+    public void setValue(String value) {
+        box.setText(value);
+    }
+
     public void loadData(Collection<String> inputs) {
         data.addAll(inputs);
     }
 
-    /**
-     * Gets the text.
-     *
-     * @return the text
-     */
     public String getValue() {
-        return box.getText();
+        if (box.getText() != null) {
+            return box.getText();
+        } else {
+            return null;
+        }
     }
 
+    @Override
+    public void onKeyPress(KeyPressEvent event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onKeyUp(KeyUpEvent event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onKeyDown(KeyDownEvent event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
