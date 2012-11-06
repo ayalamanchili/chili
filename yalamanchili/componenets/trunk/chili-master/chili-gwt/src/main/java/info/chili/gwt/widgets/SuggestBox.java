@@ -72,16 +72,16 @@ public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandl
 
     @Override
     public void onKeyPress(KeyPressEvent event) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
 
     @Override
     public void onKeyUp(KeyUpEvent event) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
 
     @Override
     public void onKeyDown(KeyDownEvent event) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      
     }
 }
