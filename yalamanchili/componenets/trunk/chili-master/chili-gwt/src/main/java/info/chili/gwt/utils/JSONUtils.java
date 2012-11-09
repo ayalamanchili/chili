@@ -10,7 +10,7 @@ import java.util.Map;
 public class JSONUtils {
 
     public static String toString(JSONValue entity, String property) {
-        if (entity != null && entity.isObject() != null && entity.isObject().get(property) != null) {
+        if (entity != null && entity.isObject() != null && entity.isObject().get(property) != null && entity.isObject().get(property).isString()!=null) {
             return entity.isObject().get(property).isString().stringValue();
         } else {
             return "";
