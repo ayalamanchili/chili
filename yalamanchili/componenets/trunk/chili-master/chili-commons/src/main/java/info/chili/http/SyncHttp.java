@@ -95,7 +95,7 @@ public class SyncHttp {
 		return executeHttpCall(post, body, headers, newClient);
 	}
 
-	protected static String executeHttpCall(HttpEntityEnclosingRequestBase request, String body,
+	public static String executeHttpCall(HttpEntityEnclosingRequestBase request, String body,
 			Map<String, String> headers, boolean newClient) {
 		if (headers != null) {
 			for (String header : headers.keySet()) {
