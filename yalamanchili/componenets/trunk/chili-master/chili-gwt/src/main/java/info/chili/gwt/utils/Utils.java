@@ -91,29 +91,7 @@ public class Utils {
         return result;
     }
 
-    public static String getFileExtension(String filename) {
-        return filename.substring(filename.lastIndexOf(".") + 1, filename.length());
-    }
-
-    public static boolean isImage(String filename) {
-        String[] validImagesExtesions = {"JPG", "JPEG", "GIF", "PNG"};
-        for (String ext : validImagesExtesions) {
-            if (ext.equalsIgnoreCase(getFileExtension(filename))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean isDocument(String filename) {
-        String[] validImagesExtesions = {"PDF", "DOC", "DOCX", "TXT", "RTF"};
-        for (String ext : validImagesExtesions) {
-            if (ext.equalsIgnoreCase(getFileExtension(filename))) {
-                return true;
-            }
-        }
-        return false;
-    }
+  
 
     public static String getStringCamelCase(String string) {
         return string.substring(0, 1).toLowerCase() + string.substring(1);
