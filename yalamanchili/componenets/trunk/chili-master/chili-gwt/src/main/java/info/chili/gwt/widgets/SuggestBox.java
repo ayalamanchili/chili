@@ -72,16 +72,13 @@ public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandl
 
     @Override
     public void onKeyPress(KeyPressEvent event) {
-       
     }
 
     @Override
     public void onKeyUp(KeyUpEvent event) {
-       
     }
 
     @Override
     public void onKeyDown(KeyDownEvent event) {
-      
     }
 }
