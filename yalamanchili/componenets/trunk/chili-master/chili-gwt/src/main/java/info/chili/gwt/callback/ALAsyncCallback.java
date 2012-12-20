@@ -37,6 +37,7 @@ public abstract class ALAsyncCallback<T> implements AsyncCallback<T> {
         loadingWidget.show();
     }
 
+    @Override
     public void onFailure(Throwable err) {
         logger.info(err.getLocalizedMessage());
         loadingWidget.hide();
@@ -46,10 +47,10 @@ public abstract class ALAsyncCallback<T> implements AsyncCallback<T> {
                 JSONValue errors = JSONParser.parseLenient(err.getMessage());
                 processErrors(errors);
             } catch (Exception e) {
-                new ResponseStatusWidget().show("Call Failed");
+                new ResponseStatusWidget().show(getFailureMessage());
             }
         } else {
-            new ResponseStatusWidget().show("Call Failed");
+            new ResponseStatusWidget().show(getFailureMessage());
         }
     }
 
@@ -79,5 +80,9 @@ public abstract class ALAsyncCallback<T> implements AsyncCallback<T> {
 
     public void setIsCompleted(Boolean isCompleted) {
         this.isCompleted = isCompleted;
+    }
+    
+    public String getFailureMessage(){
+        return "Call Failed";
     }
 }
