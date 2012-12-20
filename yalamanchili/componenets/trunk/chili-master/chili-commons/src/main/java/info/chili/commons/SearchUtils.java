@@ -24,6 +24,9 @@ public class SearchUtils {
     private static final Log log = LogFactory.getLog(SearchUtils.class);
 
     public static String getSearchQueryString(Class cls, String searchString) {
+        if (searchString.isEmpty()) {
+            return null;
+        }
         StringBuilder query = new StringBuilder();
         query.append("FROM " + cls.getCanonicalName() + " WHERE ");
         String[] fields = ReflectionUtils.getBeanProperties(cls, DataType.STRING);
