@@ -52,6 +52,7 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
     }
 
     public String getValue() {
+        //TODO use getValue() insted of getText() since getText return blaml stirng if nothing is entered
         if (textbox.getText() != null) {
             return textbox.getText();
         } else {
