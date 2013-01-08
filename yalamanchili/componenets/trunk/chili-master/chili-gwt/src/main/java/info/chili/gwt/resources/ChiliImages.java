@@ -24,4 +24,7 @@ public interface ChiliImages extends ClientBundle {
 
     @ClientBundle.Source("images/info-icon.png")
     ImageResource fieldInfoIcon();
+
+    @ClientBundle.Source("images/field-error-icon.png")
+    ImageResource fieldErrorIcon();
 }

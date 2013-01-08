@@ -36,10 +36,12 @@ public abstract class BaseField extends Composite implements BlurHandler {
         label.ensureDebugId(className + "_" + attributeName + "_L");
         message.addStyleName("tfErrorMessage");
         message.ensureDebugId(className + "_" + attributeName + "_L");
+        errorIcon.setVisible(false);
     }
 
     protected void addWidgets() {
         panel.add(label);
+        fieldPanel.add(errorIcon);
         fieldPanel.add(fieldInfoIcon);
         fieldPanel.add(message);
         panel.add(fieldPanel);
@@ -57,6 +59,7 @@ public abstract class BaseField extends Composite implements BlurHandler {
     protected HorizontalPanel fieldPanel = new HorizontalPanel();
     protected HTML label = new HTML();
     protected ClickableImage fieldInfoIcon = new ClickableImage("learn more", ChiliImages.INSTANCE.fieldInfoIcon());
+     protected ClickableImage errorIcon = new ClickableImage("error", ChiliImages.INSTANCE.fieldErrorIcon());
     protected HTML message = new HTML();
     protected Boolean isValid = false;
     protected Boolean readOnly = false;
@@ -80,9 +83,11 @@ public abstract class BaseField extends Composite implements BlurHandler {
 
     public void setMessage(String text) {
         message.setHTML(text);
+        errorIcon.setVisible(true);
     }
 
     public void clearMessage() {
+        errorIcon.setVisible(false);
         message.setHTML("");
     }
 
@@ -106,6 +111,7 @@ public abstract class BaseField extends Composite implements BlurHandler {
 
     @Override
     public void onBlur(BlurEvent event) {
+        clearMessage();
         validate();
     }
 }

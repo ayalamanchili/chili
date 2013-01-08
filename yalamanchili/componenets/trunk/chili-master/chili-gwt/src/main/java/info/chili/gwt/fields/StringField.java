@@ -43,6 +43,7 @@ public class StringField extends BaseFieldWithTextBox {
 
     @Override
     public void validate() {
+        //TODO remove all for clear message?
         clearMessage();
         // TODO implement this
     }

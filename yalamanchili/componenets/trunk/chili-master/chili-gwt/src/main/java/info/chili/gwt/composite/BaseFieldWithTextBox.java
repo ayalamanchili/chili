@@ -37,6 +37,7 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
         textbox.addBlurHandler(this);
     }
 
+    @Override
     public void setReadOnly(Boolean readlOnly) {
         textbox.setReadOnly(readOnly);
         if (readOnly) {
@@ -44,6 +45,7 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
         }
     }
 
+    @Override
     public void validate() {
     }
 
