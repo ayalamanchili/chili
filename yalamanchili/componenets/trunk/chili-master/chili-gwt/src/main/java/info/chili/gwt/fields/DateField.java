@@ -43,6 +43,8 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
         super(constants, attributeName, className, readOnly, isRequired);
         configureAddMainWidget();
         setReadOnly(readOnly);
+        datePicker.addBlurHandler(this);
+        dateField.addBlurHandler(this);
     }
 
     public Date getDate() {
