@@ -9,6 +9,7 @@ import info.chili.spring.SpringContext;
 import info.chili.commons.ReflectionUtils;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -64,10 +65,10 @@ public class UniqueIDValidator implements ConstraintValidator<Unique, Serializab
 
     public String getUniqueQueryString(Serializable entityInstance) {
         StringBuilder queryString = new StringBuilder();
-        queryString.append("select count(*) from " + entityClass.getCanonicalName() + " where ");
+        queryString.append("select count(*) from ").append(entityClass.getCanonicalName()).append(" where ");
         int i = 0;
         for (String field : uniqueFields) {
-            queryString.append("LOWER(" + field + ") ='" + ReflectionUtils.callGetter(entityInstance, field) + "'");
+            queryString.append("LOWER(").append(field).append(") ='").append(ReflectionUtils.callGetter(entityInstance, field)).append("'");
             i++;
             if (i < uniqueFields.length) {
                 queryString.append(" and ");
@@ -75,9 +76,9 @@ public class UniqueIDValidator implements ConstraintValidator<Unique, Serializab
         }
         Object id = ReflectionUtils.callGetter(entityInstance, idName);
         if (id != null) {
-            queryString.append(" and id !=" + id.toString());
+            queryString.append(" and id !=").append(id.toString());
         }
-        logger.info("unique validator query:" + queryString.toString());
+        logger.log(Level.INFO, "unique validator query:{0}", queryString.toString());
         return queryString.toString();
     }
 
