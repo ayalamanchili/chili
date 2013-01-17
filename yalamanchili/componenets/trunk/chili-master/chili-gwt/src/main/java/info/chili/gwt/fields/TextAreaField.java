@@ -55,6 +55,10 @@ public class TextAreaField extends BaseField implements KeyPressHandler, KeyUpHa
             textArea.setEnabled(false);
         }
     }
+    
+    public void setVisibleLines(int lines){
+        textArea.setVisibleLines(lines);
+    }
 
     public void validate() {
     }

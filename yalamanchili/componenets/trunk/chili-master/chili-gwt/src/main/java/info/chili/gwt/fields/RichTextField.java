@@ -50,6 +50,6 @@ public class RichTextField extends BaseField {
     }
 
     public void setReadOnly(Boolean readOnly) {
-        area.setEnabled(readOnly);
+        area.setEnabled(!readOnly);
     }
 }
