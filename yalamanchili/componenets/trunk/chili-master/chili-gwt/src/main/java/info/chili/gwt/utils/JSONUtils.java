@@ -31,8 +31,8 @@ public class JSONUtils {
 
     public static Map<Integer, String> convertKeyValuePairs(String jsonString) {
         if (jsonString != null && !jsonString.isEmpty()) {
-            JSONObject listObject = (JSONObject) JSONParser.parseLenient(jsonString);
-            if (listObject.get("entry") != null) {
+            JSONObject listObject = JSONParser.parseLenient(jsonString).isObject();
+            if (listObject != null && listObject.get("entry") != null) {
                 JSONArray entities = JSONUtils.toJSONArray(listObject.get("entry"));
                 return convertJSONArrayToKayValueMap(entities);
             }
