@@ -10,7 +10,7 @@ import java.util.Map;
 public class JSONUtils {
 
     public static String toString(JSONValue entity, String property) {
-        if (entity != null && entity.isObject() != null && entity.isObject().get(property) != null && entity.isObject().get(property).isString()!=null) {
+        if (entity != null && entity.isObject() != null && entity.isObject().get(property) != null && entity.isObject().get(property).isString() != null) {
             return entity.isObject().get(property).isString().stringValue();
         } else {
             return "";
@@ -30,10 +30,12 @@ public class JSONUtils {
     }
 
     public static Map<Integer, String> convertKeyValuePairs(String jsonString) {
-        JSONObject listObject = (JSONObject) JSONParser.parseLenient(jsonString);
-        if (listObject.get("entry") != null) {
-            JSONArray entities = JSONUtils.toJSONArray(listObject.get("entry"));
-            return convertJSONArrayToKayValueMap(entities);
+        if (jsonString != null && !jsonString.isEmpty()) {
+            JSONObject listObject = (JSONObject) JSONParser.parseLenient(jsonString);
+            if (listObject.get("entry") != null) {
+                JSONArray entities = JSONUtils.toJSONArray(listObject.get("entry"));
+                return convertJSONArrayToKayValueMap(entities);
+            }
         }
         return null;
     }
