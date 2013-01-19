@@ -1,9 +1,11 @@
 package info.chili.gwt.composite;
 
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.TextBox;
@@ -62,6 +64,18 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
         } else {
             return null;
         }
+    }
+
+    @Override
+    public void onKeyPress(KeyPressEvent event) {
+    }
+
+    @Override
+    public void onKeyUp(KeyUpEvent arg0) {
+    }
+
+    @Override
+    public void onKeyDown(KeyDownEvent arg0) {
     }
 
     protected void allowDigitsOnly(KeyPressEvent event) {

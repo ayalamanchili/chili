@@ -41,18 +41,7 @@ public class IntegerField extends BaseFieldWithTextBox {
     }
 
     @Override
-    // TODO add logic to accept backspace as valid
     public void onKeyPress(KeyPressEvent event) {
         allowDigitsOnly(event);
-    }
-
-    @Override
-    public void onKeyUp(KeyUpEvent arg0) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void onKeyDown(KeyDownEvent arg0) {
-        // TODO Auto-generated method stub
     }
 }
