@@ -1,14 +1,18 @@
 package info.chili.gwt.composite;
 
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.TextBox;
+import java.util.logging.Logger;
 
 //TODO move commons stuff to base field
 public abstract class BaseFieldWithTextBox extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler {
 
+    private Logger logger = Logger.getLogger(BaseFieldWithTextBox.class.getName());
     protected TextBox textbox = new TextBox();
 
     public TextBox getTextbox() {
@@ -57,6 +61,23 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
             return textbox.getValue();
         } else {
             return null;
+        }
+    }
+
+    protected void allowDigitsOnly(KeyPressEvent event) {
+        event.getNativeEvent().getKeyCode();
+        //This is for support for firefox for special characters like enter,tab,etc...
+        if (event.getUnicodeCharCode() == 0) {
+            return;
+        }
+        if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE || event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER || event.getNativeEvent().getKeyCode() == KeyCodes.KEY_TAB) {
+            return;
+        }
+        if (!Character.isDigit(event.getCharCode())) {
+            setMessage("invalid value");
+            textbox.cancelKey();
+        } else {
+            clearMessage();
         }
     }
 }

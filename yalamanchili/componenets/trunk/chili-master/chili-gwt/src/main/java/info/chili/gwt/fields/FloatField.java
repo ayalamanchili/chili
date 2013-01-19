@@ -39,14 +39,7 @@ public class FloatField extends BaseFieldWithTextBox {
     @Override
     // TODO add logic to accept backspace as valid
     public void onKeyPress(KeyPressEvent event) {
-        Integer eventValue = (int) event.getCharCode();
-        if (!(Character.isDigit(event.getCharCode()) || eventValue.equals(new Integer(46)))) {
-            setMessage("invalid value");
-            textbox.cancelKey();
-        } else {
-            clearMessage();
-        }
-
+         allowDigitsOnly(event);
     }
 
     @Override
