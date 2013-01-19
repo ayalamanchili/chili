@@ -9,12 +9,16 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.TextBox;
+import info.chili.gwt.listeners.GenericListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 //TODO move commons stuff to base field
 public abstract class BaseFieldWithTextBox extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler {
 
     private Logger logger = Logger.getLogger(BaseFieldWithTextBox.class.getName());
+    protected List<GenericListener> enterKeyPressedListeners = new ArrayList<GenericListener>();
     protected TextBox textbox = new TextBox();
 
     public TextBox getTextbox() {
@@ -71,11 +75,18 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
     }
 
     @Override
-    public void onKeyUp(KeyUpEvent arg0) {
+    public void onKeyUp(KeyUpEvent event) {
+        if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER) {
+            enterKeyPressed();
+        }
     }
 
     @Override
     public void onKeyDown(KeyDownEvent arg0) {
+    }
+
+    public void addEnterKeyPressesListener(GenericListener listner) {
+        this.enterKeyPressedListeners.add(listner);
     }
 
     protected void allowDigitsOnly(KeyPressEvent event) {
@@ -92,6 +103,12 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
             textbox.cancelKey();
         } else {
             clearMessage();
+        }
+    }
+
+    protected void enterKeyPressed() {
+        for (GenericListener listener : enterKeyPressedListeners) {
+            listener.fireEvent();
         }
     }
 }
