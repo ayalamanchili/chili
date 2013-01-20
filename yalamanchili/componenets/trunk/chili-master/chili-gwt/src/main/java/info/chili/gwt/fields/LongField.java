@@ -45,6 +45,7 @@ public class LongField extends BaseFieldWithTextBox {
 
     @Override
     public void onKeyPress(KeyPressEvent event) {
+        super.onKeyPress(event);
         allowDigitsOnly(event);
     }
 }

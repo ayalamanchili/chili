@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.TextBox;
 import info.chili.gwt.listeners.GenericListener;
+import info.chili.gwt.listeners.KeyPressListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -18,7 +19,7 @@ import java.util.logging.Logger;
 public abstract class BaseFieldWithTextBox extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler {
 
     private Logger logger = Logger.getLogger(BaseFieldWithTextBox.class.getName());
-    protected List<GenericListener> enterKeyPressedListeners = new ArrayList<GenericListener>();
+    protected List<KeyPressListener> enterKeyPressedListeners = new ArrayList<KeyPressListener>();
     protected TextBox textbox = new TextBox();
 
     public TextBox getTextbox() {
@@ -72,20 +73,20 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
 
     @Override
     public void onKeyPress(KeyPressEvent event) {
+         if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER) {
+            enterKeyPressed(event);
+        }
     }
 
     @Override
     public void onKeyUp(KeyUpEvent event) {
-        if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER) {
-            enterKeyPressed();
-        }
     }
 
     @Override
     public void onKeyDown(KeyDownEvent arg0) {
     }
 
-    public void addEnterKeyPressesListener(GenericListener listner) {
+    public void addEnterKeyPressesListener(KeyPressListener listner) {
         this.enterKeyPressedListeners.add(listner);
     }
 
@@ -106,9 +107,9 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
         }
     }
 
-    protected void enterKeyPressed() {
-        for (GenericListener listener : enterKeyPressedListeners) {
-            listener.fireEvent();
+    protected void enterKeyPressed(KeyPressEvent event) {
+        for (KeyPressListener listener : enterKeyPressedListeners) {
+            listener.keyPressed(event);
         }
     }
 }
