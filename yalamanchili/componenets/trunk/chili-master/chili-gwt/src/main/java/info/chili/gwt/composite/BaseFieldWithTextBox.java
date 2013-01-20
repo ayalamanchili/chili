@@ -9,7 +9,6 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.TextBox;
-import info.chili.gwt.listeners.GenericListener;
 import info.chili.gwt.listeners.KeyPressListener;
 import java.util.ArrayList;
 import java.util.List;
