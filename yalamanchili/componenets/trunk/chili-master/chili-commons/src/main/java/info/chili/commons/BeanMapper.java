@@ -48,6 +48,7 @@ public class BeanMapper {
     }
 
     /* merges the source to target by only copyinng the promitive datatypes */
+    //TODO add ignore id and version fields
     public static Object merge(Object source, Object target) {
         for (Field field : ReflectionUtils.getAllFields(source.getClass())) {
             if (!DataType.DEFAULT.equals(ReflectionUtils.getDataType(field))) {
