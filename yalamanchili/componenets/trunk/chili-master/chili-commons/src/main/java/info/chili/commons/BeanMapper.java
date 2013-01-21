@@ -1,7 +1,7 @@
 package info.chili.commons;
 
-import info.chili.commons.DataType;
 import info.chili.commons.ReflectionUtils;
+import info.chili.commons.DataType;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

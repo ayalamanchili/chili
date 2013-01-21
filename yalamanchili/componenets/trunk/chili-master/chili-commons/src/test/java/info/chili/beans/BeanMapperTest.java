@@ -4,6 +4,7 @@
  */
 package info.chili.beans;
 
+import info.chili.commons.BeanMapper;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
