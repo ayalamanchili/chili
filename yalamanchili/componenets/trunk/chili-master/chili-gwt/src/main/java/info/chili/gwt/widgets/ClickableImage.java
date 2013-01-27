@@ -18,4 +18,15 @@ public class ClickableImage extends Image {
         super.setTitle(name);
         this.addStyleName("y-gwt-ClickableImage");
     }
+    public void setImageAndTitle(ImageResource imageResource,String title){
+        this.setImage(imageResource);
+        this.setTitle(title);
+    }
+    public void setImage(ImageResource imageResource){
+        this.setImage(imageResource);
+    }
+    
+    public void setTitle(String title){
+        this.setTitle(title);
+    }
 }
