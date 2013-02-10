@@ -40,7 +40,7 @@ public class JSONUtils {
         return null;
     }
 
-    protected JSONArray convertFormProperties(String jsonString) {
+    public static JSONArray convertFormProperties(String jsonString) {
         if (jsonString != null && !jsonString.isEmpty()) {
             JSONObject formPropertyObj = JSONParser.parseLenient(jsonString).isObject();
             return formPropertyObj.get("formProperty").isArray();
