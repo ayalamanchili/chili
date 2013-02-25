@@ -57,13 +57,14 @@ public class DateUtils {
 
     }
 
-    protected int getLastDayOfMonth(int month) {
+    protected int getLastDayOfMonth(int month, int year) {
         Calendar date = Calendar.getInstance();
         date.set(Calendar.MONTH, month);
+        date.set(Calendar.YEAR, year);
         return date.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
-
     /* for JSON to string conversion */
+
     public static String toString(Date date) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
         TimeZone tz = TimeZone.getTimeZone("UTC");
