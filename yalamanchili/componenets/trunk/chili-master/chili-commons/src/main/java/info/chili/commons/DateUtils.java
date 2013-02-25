@@ -57,7 +57,7 @@ public class DateUtils {
 
     }
 
-    protected int getLastDayOfMonth(int month, int year) {
+    public int getLastDayOfMonth(int month, int year) {
         Calendar date = Calendar.getInstance();
         date.set(Calendar.MONTH, month);
         date.set(Calendar.YEAR, year);
