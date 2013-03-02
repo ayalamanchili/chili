@@ -59,8 +59,7 @@ public class DateUtils {
 
     public static int getLastDayOfMonth(int month, int year) {
         Calendar date = Calendar.getInstance();
-        date.set(Calendar.MONTH, month);
-        date.set(Calendar.YEAR, year);
+        date.set(year, month, 1);
         return date.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
     /* for JSON to string conversion */
