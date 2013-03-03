@@ -72,7 +72,7 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
 
     @Override
     public void onKeyPress(KeyPressEvent event) {
-         if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER) {
+        if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER) {
             enterKeyPressed(event);
         }
     }
@@ -90,12 +90,13 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
     }
 
     protected void allowDigitsOnly(KeyPressEvent event) {
+        logger.info("dddd"+event.getNativeEvent().getKeyCode());
         event.getNativeEvent().getKeyCode();
         //This is for support for firefox for special characters like enter,tab,etc...
         if (event.getUnicodeCharCode() == 0) {
             return;
         }
-        if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE || event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER || event.getNativeEvent().getKeyCode() == KeyCodes.KEY_TAB) {
+        if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE || event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER || event.getNativeEvent().getKeyCode() == KeyCodes.KEY_TAB || event.getNativeEvent().getKeyCode() == 46) {
             return;
         }
         if (!Character.isDigit(event.getCharCode())) {
