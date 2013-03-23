@@ -9,8 +9,8 @@ import com.google.gwt.user.client.ui.RichTextArea;
 
 public class RichTextField extends BaseField {
 
-    RichTextArea area = new RichTextArea();
-    RichTextToolBar bar = new RichTextToolBar(area);
+    public RichTextArea area = new RichTextArea();
+    public RichTextToolBar bar = new RichTextToolBar(area);
 
     @UiConstructor
     public RichTextField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
