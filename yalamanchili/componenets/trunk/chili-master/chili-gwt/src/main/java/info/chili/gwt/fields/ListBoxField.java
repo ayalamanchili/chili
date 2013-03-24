@@ -71,6 +71,10 @@ public class ListBoxField extends Composite {
         listbox.addChangeHandler(changeHandler);
     }
 
+    public Label getLabel() {
+        return label;
+    }
+
     public ListBox getListBox() {
         return listbox;
     }
