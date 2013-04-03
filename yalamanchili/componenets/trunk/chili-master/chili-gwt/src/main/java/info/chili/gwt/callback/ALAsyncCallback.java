@@ -59,7 +59,6 @@ public abstract class ALAsyncCallback<T> implements AsyncCallback<T> {
         JSONArray errorsArray = JSONUtils.toJSONArray(errorsObj.isObject().get("Error"));
         String errorMessage = "";
         for (int i = 0; i < errorsArray.size(); i++) {
-            logger.info("dddd");
             JSONObject err = (JSONObject) errorsArray.get(i);
             errorMessage = errorMessage.concat(JSONUtils.toString(err, "description"));
             errorMessage = errorMessage.concat("\n");
