@@ -10,15 +10,22 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class AsyncHttpPut extends AsyncTask<HttpRequest, Integer, String> {
 
     protected DefaultHttpClient httpclient;
     protected HttpResponse response;
     protected ProgressDialog dialog;
+    protected Activity activity;
 
     public AsyncHttpPut(Activity activity) {
-        dialog = new ProgressDialog(activity);
+        this.dialog = new ProgressDialog(activity);
+        this.activity = activity;
         httpclient = HttpHelper.getHttpClient();
     }
 
@@ -45,18 +52,27 @@ public abstract class AsyncHttpPut extends AsyncTask<HttpRequest, Integer, Strin
         Log.d(AsyncHttpPut.class.getName(), "HttpPutURL:" + request.getUrl());
         Log.d(AsyncHttpPut.class.getName(), "Content:" + request.getBody());
         Log.d(AsyncHttpPut.class.getName(), "Headers:" + request.getHeaders());
+        HttpPut put = new HttpPut(request.getUrl());
+        for (String headerKey : request.getHeaders().keySet()) {
+            put.setHeader(headerKey, request.getHeaders().get(headerKey));
+        }
         try {
-            HttpPut put = new HttpPut(request.getUrl());
-            for (String headerKey : request.getHeaders().keySet()) {
-                put.setHeader(headerKey, request.getHeaders().get(headerKey));
-            }
             put.setEntity(new StringEntity(request.getBody()));
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(AsyncHttpPut.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
             response = httpclient.execute(put);
-        } catch (Exception e) {
-            throw new RuntimeException("Http Put called failed for uri:"
-                    + request.getUrl() + e);
+        } catch (IOException ex) {
+            onNetworkError(ex);
         }
         return result;
+    }
+
+    protected void onNetworkError(IOException ex) {
+        Toast.makeText(activity, "error connecting...",
+                Toast.LENGTH_SHORT).show();
+        Log.d("chili-adnroid", "error communicating with server", ex);
     }
 
     protected void onProgressUpdate(Integer... progress) {
