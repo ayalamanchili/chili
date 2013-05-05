@@ -16,7 +16,7 @@ import javax.validation.ValidatorFactory;
  */
 public class ValidationUtils {
 
-    protected static Set<ConstraintViolation<Object>> validate(Object entity) {
+    public static Set<ConstraintViolation<Object>> validate(Object entity) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         return validator.validate(entity);
