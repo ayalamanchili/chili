@@ -70,6 +70,7 @@ public class SearchUtils {
                 sb.append(" AND ");
             }
         }
+        log.info("search query String:" + sb.toString());
         return sb.toString();
     }
 
