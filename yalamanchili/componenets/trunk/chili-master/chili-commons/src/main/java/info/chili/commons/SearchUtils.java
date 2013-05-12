@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 
@@ -44,6 +45,63 @@ public class SearchUtils {
         }
         log.info("search query String:" + query);
         return query.toString();
+    }
+
+    public static <T> String getNestedSearchQuery(T entity) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT ").append(convertEntityAlias(entity)).append(" FROM ").append(entity.getClass().getSimpleName()).append(" ").append(convertEntityAlias(entity)).append(" , ");
+        List<String> filters = new ArrayList<String>();
+        List<Object> joins = new ArrayList<Object>();
+        getEntityNestedSearchFiltersAndJoins(entity, filters, joins);
+        int i = 0;
+        for (Object joinEntity : joins) {
+            sb.append(joinEntity.getClass().getSimpleName()).append(" ").append(convertEntityAlias(joinEntity));
+            i++;
+            if (i < joins.size()) {
+                sb.append(" , ");
+            }
+        }
+        sb.append(" WHERE ");
+        int j = 0;
+        for (String filter : filters) {
+            sb.append(filter);
+            j++;
+            if (j < filters.size()) {
+                sb.append(" AND ");
+            }
+        }
+        return sb.toString();
+    }
+
+    public static <T> List<String> getEntityNestedSearchFiltersAndJoins(T entity, List<String> filters, List<Object> joins) {
+        for (Field field : ReflectionUtils.getAllFields(entity.getClass())) {
+            Method getterMethod = ReflectionUtils.getGetterMethod(field, entity.getClass());
+            if (getterMethod != null) {
+                Object value = ReflectionUtils.callGetterMethod(getterMethod, entity);
+                if (value != null && !value.toString().isEmpty()) {
+                    if (value instanceof String) {
+                        filters.add(convertEntityAlias(entity) + "." + field.getName() + " LIKE '%" + value.toString().trim() + "%'");
+                    }
+                    if (value instanceof Long || value instanceof Integer || value instanceof Float) {
+                        filters.add(convertEntityAlias(entity) + "." + field.getName() + " = " + value.toString().trim());
+                    }
+                    if (value instanceof List || value instanceof Set) {
+                        ArrayList list = (ArrayList) value;
+                        if (list.size() > 0) {
+                            Object child = list.get(0);
+                            joins.add(child);
+                            filters.add(convertEntityAlias(child) + "." + StringUtils.getStringCamelCase(entity.getClass().getSimpleName()) + ".id=" + convertEntityAlias(entity) + ".id");
+                            getEntityNestedSearchFiltersAndJoins(child, filters, joins);
+                        }
+                    }
+                }
+            }
+        }
+        return filters;
+    }
+
+    protected static <T> String convertEntityAlias(T entity) {
+        return entity.getClass().getSimpleName().toLowerCase() + "_";
     }
 
     public static <T> String getSearchQueryString(T entity) {
