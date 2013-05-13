@@ -49,17 +49,17 @@ public class SearchUtils {
 
     public static <T> String getNestedSearchQuery(T entity) {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT ").append(convertEntityAlias(entity)).append(" FROM ").append(entity.getClass().getSimpleName()).append(" ").append(convertEntityAlias(entity)).append(" , ");
+        sb.append("SELECT ").append(convertEntityAlias(entity)).append(" FROM ").append(entity.getClass().getSimpleName()).append(" ").append(convertEntityAlias(entity));
         List<String> filters = new ArrayList<String>();
         List<Object> joins = new ArrayList<Object>();
         getEntityNestedSearchFiltersAndJoins(entity, filters, joins);
         int i = 0;
         for (Object joinEntity : joins) {
-            sb.append(joinEntity.getClass().getSimpleName()).append(" ").append(convertEntityAlias(joinEntity));
-            i++;
-            if (i < joins.size()) {
+             if (i < joins.size()) {
                 sb.append(" , ");
             }
+            sb.append(joinEntity.getClass().getSimpleName()).append(" ").append(convertEntityAlias(joinEntity));
+            i++;
         }
         sb.append(" WHERE ");
         int j = 0;

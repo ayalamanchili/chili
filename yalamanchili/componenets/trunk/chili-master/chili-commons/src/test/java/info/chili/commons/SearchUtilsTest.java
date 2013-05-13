@@ -33,6 +33,7 @@ public class SearchUtilsTest {
     @Test
     public void testGetEntityNestedSearchFilters() {
         EntitySuper e = new EntitySuper();
+        e.setSuperString("testStr");
         EntityChildOne child = new EntityChildOne();
         child.setChildOneName("childname");
         e.getChildrenOne().add(child);
