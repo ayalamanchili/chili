@@ -91,7 +91,7 @@ public class SearchUtils {
                         if (list.size() > 0) {
                             Object child = list.get(0);
                             joins.add(child);
-                            filters.add(convertEntityAlias(child) + "." + StringUtils.getStringCamelCase(entity.getClass().getSimpleName()) + ".id=" + convertEntityAlias(entity) + ".id");
+                            filters.add(convertEntityAlias(child) + "." + StringUtils.getStringCamelCase(ReflectionUtils.getRootEntityClass(entity.getClass()).getSimpleName()) + ".id=" + convertEntityAlias(entity) + ".id");
                             getEntityNestedSearchFiltersAndJoins(child, filters, joins);
                         }
                     }

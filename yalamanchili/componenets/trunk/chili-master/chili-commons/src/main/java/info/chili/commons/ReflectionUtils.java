@@ -1,5 +1,6 @@
 package info.chili.commons;
 
+import info.chili.jpa.AbstractEntity;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -191,6 +192,13 @@ public class ReflectionUtils {
 
         } while (!entity.equals(java.lang.Object.class));
         return fields;
+    }
+
+    public static Class getRootEntityClass(Class cls) {
+        while (cls.getSuperclass() != null && !cls.getSuperclass().equals(AbstractEntity.class)) {
+            cls = cls.getSuperclass();
+        }
+        return cls;
     }
 
     public static List<Method> getAllMethods(Class<?> entity) {
