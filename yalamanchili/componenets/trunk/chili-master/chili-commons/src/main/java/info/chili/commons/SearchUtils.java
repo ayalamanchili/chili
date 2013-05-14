@@ -51,7 +51,7 @@ public class SearchUtils {
         return "SELECT COUNT(*) " + query;
     }
 
-    public static <T> String getNestedSearchQuery(T entity) {
+    public static <T> String getSearchQuery(T entity) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT ").append(convertEntityAlias(entity)).append(" FROM ").append(entity.getClass().getSimpleName()).append(" ").append(convertEntityAlias(entity));
         List<String> filters = new ArrayList<String>();
@@ -78,13 +78,13 @@ public class SearchUtils {
         return sb.toString();
     }
 
-    public static <T> String getNestedSearchSizeQuery(T entity, String qry) {
+    public static <T> String getSearchSizeQuery(T entity, String qry) {
         String str1 = "SELECT " + convertEntityAlias(entity) + " FROM";
         String str2 = "SELECT COUNT(" + convertEntityAlias(entity) + ") FROM";
         return qry.replace(str1, str2);
     }
 
-    public static <T> List<String> getEntityNestedSearchFiltersAndJoins(T entity, List<String> filters, List<Object> joins) {
+    protected static <T> void getEntityNestedSearchFiltersAndJoins(T entity, List<String> filters, List<Object> joins) {
         for (Field field : ReflectionUtils.getAllFields(entity.getClass())) {
             Method getterMethod = ReflectionUtils.getGetterMethod(field, entity.getClass());
             if (getterMethod != null) {
@@ -108,49 +108,10 @@ public class SearchUtils {
                 }
             }
         }
-        return filters;
     }
 
     protected static <T> String convertEntityAlias(T entity) {
         return entity.getClass().getSimpleName().toLowerCase() + "_";
-    }
-
-    public static <T> String getSearchQueryString(T entity) {
-        String query = "FROM " + entity.getClass().getCanonicalName() + " WHERE ";
-        List<String> filters = new ArrayList<String>();
-        for (Field field : ReflectionUtils.getAllFields(entity.getClass())) {
-            if (!DataType.DEFAULT.equals(ReflectionUtils.getDataType(field))) {
-                Method getterMethod = ReflectionUtils.getGetterMethod(field, entity.getClass());
-                if (getterMethod != null) {
-                    Object value = ReflectionUtils.callGetterMethod(getterMethod, entity);
-                    if (value != null && !value.toString().isEmpty()) {
-                        if (value instanceof String) {
-                            filters.add(field.getName() + " LIKE '%" + value.toString().trim() + "%'");
-                        }
-                        if (value instanceof Long) {
-                            filters.add(field.getName() + " = " + value.toString().trim());
-                        }
-                        if (value instanceof Integer) {
-                            filters.add(field.getName() + " = " + value.toString().trim());
-                        }
-                        if (value instanceof Float) {
-                            filters.add(field.getName() + " = " + value.toString().trim());
-                        }
-                    }
-                }
-            }
-        }
-        int i = 0;
-        for (String filter : filters) {
-            query = query.concat(filter);
-            i++;
-            if (i < filters.size()) {
-                query = query.concat(" AND ");
-            }
-        }
-        log.info(
-                "getSearchQueryString:" + query);
-        return query;
     }
 
     public static Query getLuceneQuery(String searchText, StandardAnalyzer anaylyzer, String... fields) {
@@ -181,7 +142,7 @@ public class SearchUtils {
      * Encountered "<EOF>" at line 1, column 0. Was expecting one of: <NOT> ...
      * "+" ... "-" ... "(" ... "*" ... <QUOTED> ... <TERM> ... <PREFIXTERM> ...
      */
-    public static String getSearchQuery(String searchText, String... fields) {
+    protected static String getSearchQuery(String searchText, String... fields) {
         StringBuilder searchQuery = new StringBuilder();
         for (String word : splitSearchString(searchText, ' ')) {
             for (String field : fields) {

@@ -14,23 +14,13 @@ import static org.junit.Assert.*;
 import org.junit.Ignore;
 
 public class SearchUtilsTest {
-    
+
     private static final Log log = LogFactory.getLog(SearchUtilsTest.class);
-    
+
     @Before
     public void init() {
     }
-    
-    @Test
-    public void testGetSearchQueryString() {
-        Entity entity = new Entity();
-        entity.setStringField("searchentityString");
-        entity.setSuperString("entitysearchsuper string");
-        String expectedResult = "FROM info.chili.commons.entity.Entity WHERE stringField LIKE '%searchentityString%' AND superString LIKE '%entitysearchsuper string%'";
-        assertEquals(expectedResult, SearchUtils.getSearchQueryString(entity));
-        System.out.println(SearchUtils.getSearchSizeQuery(expectedResult));
-    }
-    
+
     @Test
     public void testGetEntityNestedSearchFilters() {
         EntitySuper e = new EntitySuper();
@@ -38,11 +28,11 @@ public class SearchUtilsTest {
         EntityChildOne child = new EntityChildOne();
         child.setChildOneName("childname");
         e.getChildrenOne().add(child);
-        String expectedQuery = SearchUtils.getNestedSearchQuery(e);
+        String expectedQuery = SearchUtils.getSearchQuery(e);
         System.out.println(expectedQuery);
-        System.out.println(SearchUtils.getNestedSearchSizeQuery(e, expectedQuery));
+        System.out.println(SearchUtils.getSearchSizeQuery(e, expectedQuery));
     }
-    
+
     @After
     public void destroy() {
     }
