@@ -47,6 +47,10 @@ public class SearchUtils {
         return query.toString();
     }
 
+    public static String getSearchSizeQuery(String query) {
+        return "SELECT COUNT(*) " + query;
+    }
+
     public static <T> String getNestedSearchQuery(T entity) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT ").append(convertEntityAlias(entity)).append(" FROM ").append(entity.getClass().getSimpleName()).append(" ").append(convertEntityAlias(entity));
@@ -55,7 +59,7 @@ public class SearchUtils {
         getEntityNestedSearchFiltersAndJoins(entity, filters, joins);
         int i = 0;
         for (Object joinEntity : joins) {
-             if (i < joins.size()) {
+            if (i < joins.size()) {
                 sb.append(" , ");
             }
             sb.append(joinEntity.getClass().getSimpleName()).append(" ").append(convertEntityAlias(joinEntity));
@@ -72,6 +76,12 @@ public class SearchUtils {
         }
         log.info("search query String:" + sb.toString());
         return sb.toString();
+    }
+
+    public static <T> String getNestedSearchSizeQuery(T entity, String qry) {
+        String str1 = "SELECT " + convertEntityAlias(entity) + " FROM";
+        String str2 = "SELECT COUNT(" + convertEntityAlias(entity) + ") FROM";
+        return qry.replace(str1, str2);
     }
 
     public static <T> List<String> getEntityNestedSearchFiltersAndJoins(T entity, List<String> filters, List<Object> joins) {
