@@ -30,9 +30,7 @@ import org.zenika.widget.client.datePicker.DatePicker;
 public class DateField extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler, ClickHandler {
 
     private static Logger logger = Logger.getLogger(DateField.class.getName());
-    final TextBox dateField = new TextBox();
     final DatePicker datePicker = new DatePicker();
-
 
     public DatePicker getDatePicker() {
         return datePicker;
@@ -44,7 +42,7 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
         configureAddMainWidget();
         setReadOnly(readOnly);
         datePicker.addBlurHandler(this);
-        dateField.addBlurHandler(this);
+//        dateField.addBlurHandler(this);
     }
 
     public Date getDate() {
@@ -53,7 +51,6 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
 
     public void setDate(Date date) {
         if (date != null) {
-            dateField.setText(Utils.getShortDate(date));
             datePicker.setSelectedDate(date);
         }
     }
@@ -61,21 +58,17 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
     public void setValue(String dateString) {
         //need to set the datepicker date to support udpate
         datePicker.setSelectedDate(DateUtils.toDate(dateString));
-        String formatedDate = DateUtils.getFormatedDate(dateString, DateTimeFormat.PredefinedFormat.DATE_MEDIUM);
-        dateField.setText(formatedDate);
     }
 
+    @Override
     public void setReadOnly(Boolean readOnly) {
-        dateField.setReadOnly(readOnly);
-        if (readOnly) {
-            dateField.setEnabled(false);
-        }
+        datePicker.setReadOnly(readOnly);
+        datePicker.setEnabled(!readOnly);
     }
 
     @Override
     protected void configureAddMainWidget() {
-        dateField.ensureDebugId(className + "_" + attributeName + "_TB");
-        dateField.addKeyPressHandler(this);
+        datePicker.ensureDebugId(className + "_" + attributeName + "_TB");
         fieldPanel.insert(datePicker, 0);
     }
 
@@ -97,6 +90,5 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
 
     @Override
     public void onClick(ClickEvent event) {
-       
     }
 }
