@@ -46,13 +46,21 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
     }
 
     public Date getDate() {
-        return datePicker.getSelectedDate();
+        return getDateHours12(datePicker.getSelectedDate());
     }
 
     public void setDate(Date date) {
         if (date != null) {
-            datePicker.setSelectedDate(date);
+            datePicker.setSelectedDate(getDateHours12(date));
         }
+    }
+    //BUG RELATED to 
+    //http://stackoverflow.com/questions/13266876/java-date-saved-as-the-day-before
+    //http://yalamanchili.info:8080/jira/browse/SSTO-605
+
+    protected Date getDateHours12(Date date) {
+        final long hours12 = 12L * 60L * 60L * 1000L;
+        return new Date(date.getTime() + hours12);
     }
 
     public void setValue(String dateString) {
