@@ -59,6 +59,9 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
     //http://yalamanchili.info:8080/jira/browse/SSTO-605
 
     protected Date getDateHours12(Date date) {
+        if(date==null){
+            return null;
+        }
         final long hours12 = 12L * 60L * 60L * 1000L;
         return new Date(date.getTime() + hours12);
     }
