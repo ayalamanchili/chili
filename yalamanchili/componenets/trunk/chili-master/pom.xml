@@ -11,7 +11,8 @@
         <module>chili-common-deps</module>
         <module>chili-commons</module>
         <module>chili-gwt</module>
-    </modules>
+    <module>chili-security</module>
+  </modules>
     <build>
         <plugins>
             <plugin>
