@@ -18,6 +18,13 @@
             <artifactId>chili-commons</artifactId>
             <version>${chili.version}</version>
         </dependency>
+        <!-- JASYPT-->
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>info.chili</groupId>
             <artifactId>chili-common-deps</artifactId>
