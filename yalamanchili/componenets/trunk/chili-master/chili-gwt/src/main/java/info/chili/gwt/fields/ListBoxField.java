@@ -24,11 +24,12 @@ public class ListBoxField extends Composite {
     /**
      * The listbox.
      */
-    ListBox listbox = new ListBox();
+    ListBox listbox;
 
     @UiConstructor
-    public ListBoxField(String labelName) {
+    public ListBoxField(String labelName, boolean isMultiSelect) {
         panel = new VerticalPanel();
+        listbox = new ListBox(isMultiSelect);
         initWidget(panel);
         label.setText(labelName);
         label.ensureDebugId(labelName + "_LB");
@@ -36,7 +37,8 @@ public class ListBoxField extends Composite {
         addWidgets();
     }
 
-    public ListBoxField(String labelName, Alignment alignment) {
+    public ListBoxField(String labelName, boolean isMultiSelect, Alignment alignment) {
+        listbox = new ListBox(isMultiSelect);
         switch (alignment) {
             case HORIZONTAL:
                 panel = new HorizontalPanel();
