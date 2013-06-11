@@ -43,6 +43,23 @@ public class QueryUtils {
         return values;
     }
 
+    public static Map<String, String> getEntityStringMapByParams(EntityManager em, String query, Integer start, Integer limit, String... columns) {
+        Map<String, String> values = new HashMap<String, String>();
+        Query getListBoxValuesQuery = em.createQuery(query);
+        getListBoxValuesQuery.setFirstResult(start);
+        getListBoxValuesQuery.setMaxResults(limit);
+        for (Object obj : getListBoxValuesQuery.getResultList()) {
+            Object[] obs = (Object[]) obj;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 1; i < columns.length; i++) {
+                sb.append(obs[i].toString());
+                sb.append(" ");
+            }
+            values.put(obs[0].toString(), sb.toString());
+        }
+        return values;
+    }
+
     public static String getSuggestionsQueryForName(String attributeName, Class<?> entityCls) {
         String query = "SELECT " + attributeName + " FROM " + entityCls.getCanonicalName();
         return query;
