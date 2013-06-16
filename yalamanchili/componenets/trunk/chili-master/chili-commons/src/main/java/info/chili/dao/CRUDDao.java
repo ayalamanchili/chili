@@ -24,6 +24,8 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.context.annotation.Scope;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -39,10 +41,12 @@ public abstract class CRUDDao<T> {
         this.entityCls = cls;
     }
 
+    @Transactional(readOnly = true)
     public T findById(Long id) {
         return (T) getEntityManager().find(entityCls, id);
     }
 
+    @Transactional(readOnly = true)
     public List<T> query(int start, int limit) {
         Query findAllQuery = getEntityManager().createQuery("from " + entityCls.getCanonicalName(), entityCls);
         findAllQuery.setFirstResult(start);
@@ -50,10 +54,18 @@ public abstract class CRUDDao<T> {
         return findAllQuery.getResultList();
     }
 
+    /**
+     * we don’t want it to be enlisted in a transaction at all. The reason is
+     * that we don’t need the result to be managed by the underlying JPA
+     * EntityManager. Instead, we just want to get the count and forget about
+     * it.
+     */
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public Map<String, String> getEntityStringMapByParams(int start, int limit, String... params) {
         return QueryUtils.getEntityStringMapByParams(getEntityManager(), entityCls, start, limit, params);
     }
 
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public <T> List<String> getSuggestionsForName(String name, Class<?> entityCls, Integer start, Integer limit) {
         Query query = getEntityManager().createQuery(QueryUtils.getSuggestionsQueryForName(name, entityCls));
         query.setFirstResult(start);
@@ -79,11 +91,13 @@ public abstract class CRUDDao<T> {
         }
     }
 
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public Long size() {
         Query sizeQuery = getEntityManager().createQuery("select count (*) from " + entityCls.getCanonicalName());
         return (Long) sizeQuery.getSingleResult();
     }
 
+    @Transactional(readOnly = true)
     public List<T> search(String searchText, int start, int limit, boolean useSQLSearch) {
         if (searchText.isEmpty()) {
             return Collections.EMPTY_LIST;
@@ -95,6 +109,7 @@ public abstract class CRUDDao<T> {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<T> sqlSearch(String searchText, int start, int limit) {
         Query searchQ = getEntityManager().createQuery(SearchUtils.getSearchQueryString(entityCls, searchText));
         searchQ.setFirstResult(start);
@@ -102,6 +117,7 @@ public abstract class CRUDDao<T> {
         return searchQ.getResultList();
     }
 
+    @Transactional(readOnly = true)
     public List<T> hibernateSearch(String searchText, int start, int limit) {
         FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search
                 .createFullTextEntityManager(getEntityManager());
@@ -122,6 +138,7 @@ public abstract class CRUDDao<T> {
         return jpaSearchQuery.getResultList();
     }
 
+    @Transactional(readOnly = true)
     public List<T> search(T entity, int start, int limit) {
         Query searchQuery = getEntityManager().createQuery(SearchUtils.getSearchQuery(entity), entityCls);
         searchQuery.setFirstResult(start);
