@@ -96,6 +96,9 @@ public class SearchUtils {
                     if (value instanceof Long || value instanceof Integer || value instanceof Float) {
                         filters.add(convertEntityAlias(entity) + "." + field.getName() + " = " + value.toString().trim());
                     }
+                    if(value.getClass().isEnum()){
+                        filters.add(convertEntityAlias(entity) + "." + field.getName() + " = '" + value.toString().trim() + "'");
+                    }
                     if (value instanceof List || value instanceof Set) {
                         ArrayList list = (ArrayList) value;
                         if (list.size() > 0) {
