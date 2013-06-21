@@ -146,5 +146,17 @@ public abstract class CRUDDao<T> {
         return searchQuery.getResultList();
     }
 
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public Long searchSize(T entity) {
+        Query sizeQuery = getEntityManager().createQuery(SearchUtils.getSearchSizeQuery(entity));
+        return (Long) sizeQuery.getSingleResult();
+    }
+
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public Long searchSize(String searchText) {
+        Query sizeQuery = getEntityManager().createQuery(SearchUtils.getSearchSizeQuery(entityCls, searchText));
+        return (Long) sizeQuery.getSingleResult();
+    }
+
     public abstract EntityManager getEntityManager();
 }

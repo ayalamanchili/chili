@@ -47,8 +47,8 @@ public class SearchUtils {
         return query.toString();
     }
 
-    public static String getSearchSizeQuery(String query) {
-        return "SELECT COUNT(*) " + query;
+    public static String getSearchSizeQuery(Class cls, String searchText) {
+        return "SELECT COUNT(*) " + getSearchQueryString(cls,searchText);
     }
 
     public static <T> String getSearchQuery(T entity) {
@@ -78,10 +78,10 @@ public class SearchUtils {
         return sb.toString();
     }
 
-    public static <T> String getSearchSizeQuery(T entity, String qry) {
+    public static <T> String getSearchSizeQuery(T entity) {
         String str1 = "SELECT " + convertEntityAlias(entity) + " FROM";
         String str2 = "SELECT COUNT(" + convertEntityAlias(entity) + ") FROM";
-        return qry.replace(str1, str2);
+        return getSearchQuery(entity).replace(str1, str2);
     }
 
     protected static <T> void getEntityNestedSearchFiltersAndJoins(T entity, List<String> filters, List<Object> joins) {
@@ -96,7 +96,7 @@ public class SearchUtils {
                     if (value instanceof Long || value instanceof Integer || value instanceof Float) {
                         filters.add(convertEntityAlias(entity) + "." + field.getName() + " = " + value.toString().trim());
                     }
-                    if(value.getClass().isEnum()){
+                    if (value.getClass().isEnum()) {
                         filters.add(convertEntityAlias(entity) + "." + field.getName() + " = '" + value.toString().trim() + "'");
                     }
                     if (value instanceof List || value instanceof Set) {
