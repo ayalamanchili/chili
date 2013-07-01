@@ -1,5 +1,6 @@
 package info.chili.commons;
 
+import info.chili.jpa.AbstractEntity;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class SearchUtils {
     }
 
     public static String getSearchSizeQuery(Class cls, String searchText) {
-        return "SELECT COUNT(*) " + getSearchQueryString(cls,searchText);
+        return "SELECT COUNT(*) " + getSearchQueryString(cls, searchText);
     }
 
     public static <T> String getSearchQuery(T entity) {
@@ -104,17 +105,35 @@ public class SearchUtils {
                         if (list.size() > 0) {
                             Object child = list.get(0);
                             joins.add(child);
-                            filters.add(convertEntityAlias(child) + "." + StringUtils.getStringCamelCase(ReflectionUtils.getRootEntityClass(entity.getClass()).getSimpleName()) + ".id=" + convertEntityAlias(entity) + ".id");
+                            filters.add(convertEntityAlias(child) + "." + getEntityPropertyClass(entity, child) + ".id=" + convertEntityAlias(entity) + ".id");
                             getEntityNestedSearchFiltersAndJoins(child, filters, joins);
                         }
+                    }
+                    if (value instanceof AbstractEntity) {
+                        joins.add(value);
+                        filters.add(getEntityPropertyClass(entity, value).toLowerCase() + "." + convertEntityAlias(value) + ".id=" + convertEntityAlias(value) + ".id");
+                        getEntityNestedSearchFiltersAndJoins(value, filters, joins);
                     }
                 }
             }
         }
     }
 
+    /*
+     * this would return the apprioriate entity property for sql query
+     */
+    protected static <T> String getEntityPropertyClass(T parent, T child) {
+        for (Field f : ReflectionUtils.getAllFields(child.getClass())) {
+            if (f.getType().equals(parent.getClass())) {
+                return StringUtils.getStringCamelCase(parent.getClass().getSimpleName());
+            }
+        }
+        //if child does not have the parent property return parent root class
+        return StringUtils.getStringCamelCase(ReflectionUtils.getRootEntityClass(parent.getClass()).getSimpleName());
+    }
+
     protected static <T> String convertEntityAlias(T entity) {
-        return entity.getClass().getSimpleName().toLowerCase() + "_";
+        return entity.getClass().getSimpleName().substring(0, 1).toLowerCase() + entity.getClass().getSimpleName().substring(1);
     }
 
     public static Query getLuceneQuery(String searchText, StandardAnalyzer anaylyzer, String... fields) {

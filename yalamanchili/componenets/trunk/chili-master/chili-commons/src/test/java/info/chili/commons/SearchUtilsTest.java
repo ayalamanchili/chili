@@ -2,6 +2,7 @@ package info.chili.commons;
 
 import info.chili.beans.EntityChildOne;
 import info.chili.beans.EntitySuper;
+import info.chili.beans.EntityType;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.After;
@@ -16,7 +17,7 @@ public class SearchUtilsTest {
     public void init() {
     }
 
-    @Test
+//    @Test
     public void testGetEntityNestedSearchFilters() {
         EntitySuper e = new EntitySuper();
         e.setSuperString("testStr");
@@ -26,6 +27,18 @@ public class SearchUtilsTest {
         String expectedQuery = SearchUtils.getSearchQuery(e);
         System.out.println(expectedQuery);
         System.out.println(SearchUtils.getSearchSizeQuery(e));
+    }
+
+    @Test
+    public void testAdvancedEntitySearch() {
+        EntitySuper searchParentEntity = new EntitySuper();
+        EntityChildOne child = new EntityChildOne();
+
+        EntityType type = new EntityType();
+        type.setName("aaa");
+        child.setType(type);
+        searchParentEntity.getChildrenOne().add(child);
+        System.out.println(SearchUtils.getSearchQuery(searchParentEntity));
     }
 
     @After
