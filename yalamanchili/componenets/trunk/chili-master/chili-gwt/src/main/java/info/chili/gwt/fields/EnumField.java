@@ -57,6 +57,10 @@ public class EnumField extends BaseField {
     public void setReadOnly(Boolean readOnly) {
         listBox.setEnabled(!readOnly);
     }
+    
+    public void setSelectedIndex(int index){
+        listBox.setSelectedIndex(index);
+    }
 
     @Override
     public void validate() {
