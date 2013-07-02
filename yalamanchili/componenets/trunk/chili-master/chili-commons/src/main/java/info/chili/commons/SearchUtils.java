@@ -3,6 +3,7 @@ package info.chili.commons;
 import info.chili.jpa.AbstractEntity;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -105,13 +106,13 @@ public class SearchUtils {
                         if (list.size() > 0) {
                             Object child = list.get(0);
                             joins.add(child);
-                            filters.add(convertEntityAlias(child) + "." + getEntityPropertyClass(entity, child) + ".id=" + convertEntityAlias(entity) + ".id");
+                            filters.add(convertEntityAlias(child) + "." + getEntityPropertyClassWithParent(entity, child) + ".id=" + convertEntityAlias(entity) + ".id");
                             getEntityNestedSearchFiltersAndJoins(child, filters, joins);
                         }
                     }
                     if (value instanceof AbstractEntity) {
                         joins.add(value);
-                        filters.add(getEntityPropertyClass(entity, value).toLowerCase() + "." + convertEntityAlias(value) + ".id=" + convertEntityAlias(value) + ".id");
+                        filters.add(getEntityPropertyClassWithChild(entity, value).toLowerCase() + "." + convertEntityAlias(value) + ".id=" + convertEntityAlias(value) + ".id");
                         getEntityNestedSearchFiltersAndJoins(value, filters, joins);
                     }
                 }
@@ -122,11 +123,43 @@ public class SearchUtils {
     /*
      * this would return the apprioriate entity property for sql query
      */
-    protected static <T> String getEntityPropertyClass(T parent, T child) {
+    protected static <T> String getEntityPropertyClassWithChild(T parent, T child) {
+        for (Field f : ReflectionUtils.getAllFields(parent.getClass())) {
+            if (f.getType().equals(child.getClass())) {
+                return StringUtils.getStringCamelCase(parent.getClass().getSimpleName());
+            }
+            //support for list and sets
+            if (f.getType().equals(List.class) || f.getType().equals(Set.class)) {
+                ParameterizedType listType = (ParameterizedType) f.getGenericType();
+                if (listType != null) {
+                    Class<?> listClass = (Class<?>) listType.getActualTypeArguments()[0];
+                    if (listClass.equals(child.getClass())) {
+                        return StringUtils.getStringCamelCase(parent.getClass().getSimpleName());
+                    }
+                }
+            }
+
+        }
+        //if child does not have the parent property return parent root class
+        return StringUtils.getStringCamelCase(ReflectionUtils.getRootEntityClass(parent.getClass()).getSimpleName());
+    }
+
+    protected static <T> String getEntityPropertyClassWithParent(T parent, T child) {
         for (Field f : ReflectionUtils.getAllFields(child.getClass())) {
             if (f.getType().equals(parent.getClass())) {
                 return StringUtils.getStringCamelCase(parent.getClass().getSimpleName());
             }
+            //support for list and sets
+            if (f.getType().equals(List.class) || f.getType().equals(Set.class)) {
+                ParameterizedType listType = (ParameterizedType) f.getGenericType();
+                if (listType != null) {
+                    Class<?> listClass = (Class<?>) listType.getActualTypeArguments()[0];
+                    if (listClass.equals(parent.getClass())) {
+                        return StringUtils.getStringCamelCase(parent.getClass().getSimpleName());
+                    }
+                }
+            }
+
         }
         //if child does not have the parent property return parent root class
         return StringUtils.getStringCamelCase(ReflectionUtils.getRootEntityClass(parent.getClass()).getSimpleName());
