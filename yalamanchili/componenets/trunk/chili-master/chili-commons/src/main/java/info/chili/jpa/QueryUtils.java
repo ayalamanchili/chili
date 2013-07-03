@@ -4,7 +4,13 @@
  */
 package info.chili.jpa;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -57,7 +63,7 @@ public class QueryUtils {
             }
             values.put(obs[0].toString(), sb.toString());
         }
-        return values;
+        return sortByComparator(values);
     }
 
     public static String getSuggestionsQueryForName(String attributeName, Class<?> entityCls) {
@@ -77,5 +83,28 @@ public class QueryUtils {
         query = query.substring(0, query.length() - 1);
         query = query.concat(" FROM " + className);
         return query;
+    }
+
+    //Utils move to seperate class
+    private static Map sortByComparator(Map unsortMap) {
+
+        List list = new LinkedList(unsortMap.entrySet());
+
+        // sort list based on comparator
+        Collections.sort(list, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                return ((Comparable) ((Map.Entry) (o1)).getValue())
+                        .compareTo(((Map.Entry) (o2)).getValue());
+            }
+        });
+
+        // put sorted list into map again
+        //LinkedHashMap make sure order in which keys were inserted
+        Map sortedMap = new LinkedHashMap();
+        for (Iterator it = list.iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+        return sortedMap;
     }
 }
