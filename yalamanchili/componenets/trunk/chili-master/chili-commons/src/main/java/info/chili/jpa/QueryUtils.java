@@ -86,15 +86,15 @@ public class QueryUtils {
     }
 
     //Utils move to seperate class
-    private static Map sortByComparator(Map unsortMap) {
+    public static Map sortByComparator(Map unsortMap) {
 
         List list = new LinkedList(unsortMap.entrySet());
 
         // sort list based on comparator
         Collections.sort(list, new Comparator() {
             public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o1)).getValue())
-                        .compareTo(((Map.Entry) (o2)).getValue());
+                return ((Comparable) ((Map.Entry) (o1)).getValue().toString().toLowerCase())
+                        .compareTo(((Map.Entry) (o2)).getValue().toString().toLowerCase());
             }
         });
 
