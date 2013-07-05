@@ -46,7 +46,7 @@ public class QueryUtils {
             }
             values.put(obs[0].toString(), sb.toString());
         }
-        return values;
+        return sortByComparator(values);
     }
 
     public static Map<String, String> getEntityStringMapByParams(EntityManager em, String query, Integer start, Integer limit, String... columns) {
