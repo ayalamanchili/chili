@@ -4,7 +4,6 @@
  */
 package info.chili.commons;
 
-import info.chili.jpa.QueryUtils;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;
@@ -24,6 +23,6 @@ public class QueryUtilsTest {
         map.put("1", "ccc");
         map.put("5", "AAA");
         map.put("6", "aaa");
-        System.out.println(QueryUtils.sortByComparator(map));
+        System.out.println(CollectionsUtils.sortByComparator(map));
     }
 }
