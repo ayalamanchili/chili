@@ -107,11 +107,10 @@ public class Utils {
     }
 
     public static Map sortByComparator(Map unsortMap) {
-
         List list = new LinkedList(unsortMap.entrySet());
-
         // sort list based on comparator
         Collections.sort(list, new Comparator() {
+            @Override
             public int compare(Object o1, Object o2) {
                 return ((Comparable) ((Map.Entry) (o1)).getValue().toString().toLowerCase())
                         .compareTo(((Map.Entry) (o2)).getValue().toString().toLowerCase());

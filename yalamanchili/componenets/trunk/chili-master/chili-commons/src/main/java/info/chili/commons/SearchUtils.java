@@ -55,7 +55,7 @@ public class SearchUtils {
 
     public static <T> String getSearchQuery(T entity) {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT ").append(convertEntityAlias(entity)).append(" FROM ").append(entity.getClass().getSimpleName()).append(" ").append(convertEntityAlias(entity));
+        sb.append("SELECT DISTINCT ").append(convertEntityAlias(entity)).append(" FROM ").append(entity.getClass().getSimpleName()).append(" ").append(convertEntityAlias(entity));
         List<String> filters = new ArrayList<String>();
         List<Object> joins = new ArrayList<Object>();
         getEntityNestedSearchFiltersAndJoins(entity, filters, joins);
@@ -81,8 +81,8 @@ public class SearchUtils {
     }
 
     public static <T> String getSearchSizeQuery(T entity) {
-        String str1 = "SELECT " + convertEntityAlias(entity) + " FROM";
-        String str2 = "SELECT COUNT(" + convertEntityAlias(entity) + ") FROM";
+        String str1 = "SELECT DISTINCT " + convertEntityAlias(entity) + " FROM";
+        String str2 = "SELECT COUNT(DISTINCT" + convertEntityAlias(entity) + ") FROM";
         return getSearchQuery(entity).replace(str1, str2);
     }
 
