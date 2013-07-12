@@ -22,11 +22,11 @@ import org.apache.http.client.methods.HttpRequestBase;
  * @author ayalamanchili
  */
 public abstract class AbstractFileServiceServlet extends HttpServlet {
-
+    
     private static final long serialVersionUID = 1L;
     private final static Logger logger = Logger.getLogger(AbstractFileServiceServlet.class.getName());
     public final static String AUTH_HEADER_ATTR = "auth-header";
-
+    
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.log(Level.INFO, "in FileService Post");
@@ -41,12 +41,20 @@ public abstract class AbstractFileServiceServlet extends HttpServlet {
         HttpHelper.copyStatusAndHeaders(response, resp);
         HttpHelper.copyBody(response, resp);
     }
-
+    
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.log(Level.INFO, "in FileService Get");
         //prepare request
-        HttpGet get = new HttpGet(getServiceBaseUrl() + "file/download?" + request.getQueryString());
+        String report = request.getParameter("report");
+        String url = getServiceBaseUrl();
+        if (request.getParameter(report) != null) {
+            url = url.concat("file/download?") + request.getQueryString();
+        } else {
+            url = url.concat(request.getParameter("path"));
+        }
+        logger.info("FileServiceServlet URL" + url);
+        HttpGet get = new HttpGet(url);
         HttpHelper.copyHeaders(request, get, "Content-Length", "Host");
         addAuthenticationHeader(get, request);
         //TODO change to false
@@ -56,12 +64,12 @@ public abstract class AbstractFileServiceServlet extends HttpServlet {
         HttpHelper.copyStatusAndHeaders(response, resp);
         HttpHelper.copyBody(response, resp);
     }
-
+    
     protected void addAuthenticationHeader(HttpRequestBase body, HttpServletRequest request) {
         if (request.getSession(false).getAttribute(AUTH_HEADER_ATTR) != null) {
             body.addHeader("Authorization", (String) request.getSession().getAttribute(AUTH_HEADER_ATTR));
         }
     }
-
+    
     protected abstract String getServiceBaseUrl();
 }
