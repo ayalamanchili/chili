@@ -22,16 +22,25 @@ import org.apache.http.client.methods.HttpRequestBase;
  * @author ayalamanchili
  */
 public abstract class AbstractFileServiceServlet extends HttpServlet {
-    
+
     private static final long serialVersionUID = 1L;
     private final static Logger logger = Logger.getLogger(AbstractFileServiceServlet.class.getName());
     public final static String AUTH_HEADER_ATTR = "auth-header";
-    
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.log(Level.INFO, "in FileService Post");
         //prepare request
-        HttpPost post = new HttpPost(getServiceBaseUrl() + "file/upload");
+        String url = getServiceBaseUrl();
+        if (request.getParameter("passthrough") != null) {
+            //passthrough mode calls the service method for the path
+            url = url + request.getParameter("path");
+        } else {
+            //calls file upload services
+            url = url + "file/upload";
+        }
+        System.out.println("FileServiceServlet URL" + url);
+        HttpPost post = new HttpPost(url);
         HttpHelper.copyHeaders(request, post, "Content-Length", "Host");
         HttpHelper.copyBody(request, post);
         addAuthenticationHeader(post, request);
@@ -41,17 +50,18 @@ public abstract class AbstractFileServiceServlet extends HttpServlet {
         HttpHelper.copyStatusAndHeaders(response, resp);
         HttpHelper.copyBody(response, resp);
     }
-    
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.log(Level.INFO, "in FileService Get");
         //prepare request
-        String report = request.getParameter("report");
         String url = getServiceBaseUrl();
-        if (request.getParameter(report) != null) {
-            url = url.concat("file/download?") + request.getQueryString();
-        } else {
+        if (request.getParameter("passthrough") != null) {
+            //passthrough mode calls the service method for the path
             url = url.concat(request.getParameter("path"));
+        } else {
+            //calls the file service
+            url = url.concat("file/download?") + request.getQueryString();
         }
         logger.info("FileServiceServlet URL" + url);
         HttpGet get = new HttpGet(url);
@@ -64,12 +74,12 @@ public abstract class AbstractFileServiceServlet extends HttpServlet {
         HttpHelper.copyStatusAndHeaders(response, resp);
         HttpHelper.copyBody(response, resp);
     }
-    
+
     protected void addAuthenticationHeader(HttpRequestBase body, HttpServletRequest request) {
         if (request.getSession(false).getAttribute(AUTH_HEADER_ATTR) != null) {
             body.addHeader("Authorization", (String) request.getSession().getAttribute(AUTH_HEADER_ATTR));
         }
     }
-    
+
     protected abstract String getServiceBaseUrl();
 }
