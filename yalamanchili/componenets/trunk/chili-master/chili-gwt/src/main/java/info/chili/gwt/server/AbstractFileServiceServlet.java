@@ -34,7 +34,7 @@ public abstract class AbstractFileServiceServlet extends HttpServlet {
         String url = getServiceBaseUrl();
         if (request.getParameter("passthrough") != null) {
             //passthrough mode calls the service method for the path
-            url = url + request.getParameter("path");
+            url = url + request.getParameter("path") + "?" + request.getQueryString();
         } else {
             //calls file upload services
             url = url + "file/upload";
@@ -58,10 +58,10 @@ public abstract class AbstractFileServiceServlet extends HttpServlet {
         String url = getServiceBaseUrl();
         if (request.getParameter("passthrough") != null) {
             //passthrough mode calls the service method for the path
-            url = url.concat(request.getParameter("path"));
+            url = request.getParameter("path") + "?" + request.getQueryString();
         } else {
             //calls the file service
-            url = url.concat("file/download?") + request.getQueryString();
+            url = url + "file/download?" + request.getQueryString();
         }
         logger.info("FileServiceServlet URL" + url);
         HttpGet get = new HttpGet(url);
