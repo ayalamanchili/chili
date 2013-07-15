@@ -82,8 +82,13 @@ public class SearchUtils {
 
     public static <T> String getSearchSizeQuery(T entity) {
         String str1 = "SELECT DISTINCT " + convertEntityAlias(entity) + " FROM";
-        String str2 = "SELECT COUNT(DISTINCT" + convertEntityAlias(entity) + ") FROM";
+        String str2 = "SELECT COUNT(DISTINCT " + convertEntityAlias(entity) + ") FROM";
         return getSearchQuery(entity).replace(str1, str2);
+    }
+
+    public static <T> Long getSearchSize(EntityManager em, T entity) {
+        javax.persistence.Query sizeQuery = em.createQuery(SearchUtils.getSearchSizeQuery(entity));
+        return (Long) sizeQuery.getSingleResult();
     }
 
     protected static <T> void getEntityNestedSearchFiltersAndJoins(T entity, List<String> filters, List<Object> joins) {
