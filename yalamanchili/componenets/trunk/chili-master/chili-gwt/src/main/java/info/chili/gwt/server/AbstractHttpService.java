@@ -27,7 +27,7 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
     public String login(String username, String password) throws Exception {
         populateAuthorizationHeader(username, password);
         JSONObject user = new JSONObject();
-        user.put("username", username);
+        user.put("username", username.toLowerCase());
         user.put("passwordHash", password);
         return doPut(getLoginPath(), user.toString(), addHeaders(), true);
     }
@@ -60,7 +60,7 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
 
     protected void populateAuthorizationHeader(String username, String password) {
         this.getThreadLocalRequest().getSession().removeAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR);
-        this.getThreadLocalRequest().getSession().setAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR, "Basic " + new String(Base64.encodeBase64((username + ":" + password).getBytes())));
+        this.getThreadLocalRequest().getSession().setAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR, "Basic " + new String(Base64.encodeBase64((username.toLowerCase() + ":" + password).getBytes())));
     }
 
     protected abstract String getServicesRootURL();
