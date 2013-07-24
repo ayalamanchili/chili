@@ -22,11 +22,6 @@
             <artifactId>gwt-datepicker</artifactId>
             <version>r30</version>
         </dependency>
-        <dependency>
-            <groupId>tinyMCE</groupId>
-            <artifactId>gwt</artifactId>
-            <version>v0.2</version>
-        </dependency>
         <!--Spring web needed for gwt spring web servelts-->
         <dependency>
             <groupId>org.springframework</groupId>
