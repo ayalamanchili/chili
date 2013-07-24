@@ -2,6 +2,8 @@
     <inherits name="com.google.gwt.user.User" />
     <!--org.zenika date picker-->
     <inherits name='org.zenika.widget.DatePickerModule'/>
+    <!--tinyMCE editor -->
+    <inherits name="gr.open.TinymceGwt"/>
     <source path='gwt' />
     <stylesheet src="chili-gwt.css" />
 </module>

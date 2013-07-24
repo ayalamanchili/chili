@@ -2,15 +2,13 @@ package info.chili.gwt.fields;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import info.chili.gwt.composite.BaseField;
-import info.chili.gwt.widgets.RichTextToolBar;
 
 import com.google.gwt.uibinder.client.UiConstructor;
-import com.google.gwt.user.client.ui.RichTextArea;
+import gr.open.client.TinyMCE;
 
 public class RichTextField extends BaseField {
 
-    public RichTextArea area = new RichTextArea();
-    public RichTextToolBar bar = new RichTextToolBar(area);
+    TinyMCE editor = new TinyMCE();
 
     @UiConstructor
     public RichTextField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
@@ -21,27 +19,26 @@ public class RichTextField extends BaseField {
 
     @Override
     protected void configureAddMainWidget() {
-        area.ensureDebugId(className + "_" + attributeName + "_TB");
-        area.addStyleName("y-gwt-RichTextEditor");
-        bar.addStyleName("y-gwt-RichTexttoolBar");
-        panel.insert(bar, 1);
-        fieldPanel.insert(area, 0);
+        editor.ensureDebugId(className + "_" + attributeName + "_TB");
+        editor.addStyleName("y-gwt-RichTextEditor");
+//        bar.addStyleName("y-gwt-RichTexttoolBar");
+        fieldPanel.insert(editor, 0);
     }
 
     public String getValue() {
-        return area.getText();
+        return editor.getText();
     }
 
     public void setValue(String value) {
-        area.setText(value);
+        editor.setText(value);
     }
 
     public void setHtml(String html) {
-        area.setHTML(html);
+        editor.setText(html);
     }
 
     public String getHtml() {
-        return area.getHTML();
+        return editor.getText();
     }
 
     @Override
@@ -50,6 +47,6 @@ public class RichTextField extends BaseField {
     }
 
     public void setReadOnly(Boolean readOnly) {
-        area.setEnabled(!readOnly);
+        editor.setVisible(!readOnly);
     }
 }
