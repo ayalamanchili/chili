@@ -41,7 +41,6 @@ public class USAStatesFactory {
         states.add("MH");
         states.add("MA");
         states.add("MI");
-        states.add("FM");
         states.add("MN");
         states.add("MS");
         states.add("MO");
