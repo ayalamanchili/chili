@@ -12,9 +12,10 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
-import com.google.gwt.user.client.ui.TextBox;
 import info.chili.gwt.composite.BaseField;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -24,6 +25,7 @@ public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandl
 
     MultiWordSuggestOracle data = new MultiWordSuggestOracle();
     com.google.gwt.user.client.ui.SuggestBox box = new com.google.gwt.user.client.ui.SuggestBox(data);
+    protected Map<String, String> map;
 
     public SuggestBox(ConstantsWithLookup constants,
             String attributeName, String className, Boolean readOnly,
@@ -62,12 +64,29 @@ public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandl
         data.addAll(inputs);
     }
 
+    public void loadData(Map<String, String> inputs) {
+        if (this.map == null) {
+            map = new HashMap<String, String>();
+        }
+        this.map = inputs;
+        data.addAll(inputs.values());
+    }
+
     public String getValue() {
         if (box.getText() != null) {
             return box.getText();
         } else {
             return null;
         }
+    }
+
+    public String getKey() {
+        for (String key : map.keySet()) {
+            if (map.get(key).equalsIgnoreCase(getValue())) {
+                return key;
+            }
+        }
+        return null;
     }
 
     @Override

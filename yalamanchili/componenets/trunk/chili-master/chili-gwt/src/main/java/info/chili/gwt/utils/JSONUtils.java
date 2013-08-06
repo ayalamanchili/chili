@@ -29,6 +29,17 @@ public class JSONUtils {
         return array;
     }
 
+    public static Map<String, String> convertKeyValueStringPairs(String jsonString) {
+        if (jsonString != null && !jsonString.isEmpty()) {
+            JSONObject listObject = JSONParser.parseLenient(jsonString).isObject();
+            if (listObject != null && listObject.get("entry") != null) {
+                JSONArray entities = JSONUtils.toJSONArray(listObject.get("entry"));
+                return convertJSONArrayToKayValueStringMap(entities);
+            }
+        }
+        return null;
+    }
+
     public static Map<Integer, String> convertKeyValuePairs(String jsonString) {
         if (jsonString != null && !jsonString.isEmpty()) {
             JSONObject listObject = JSONParser.parseLenient(jsonString).isObject();
@@ -53,6 +64,17 @@ public class JSONUtils {
         for (int i = 1; i <= entities.size(); i++) {
             JSONObject entity = (JSONObject) entities.get(i - 1);
             Integer key = Integer.valueOf(JSONUtils.toString(entity, "id"));
+            String value = JSONUtils.toString(entity, "value");
+            values.put(key, value);
+        }
+        return values;
+    }
+
+    protected static Map<String, String> convertJSONArrayToKayValueStringMap(JSONArray entities) {
+        Map<String, String> values = new HashMap<String, String>();
+        for (int i = 1; i <= entities.size(); i++) {
+            JSONObject entity = (JSONObject) entities.get(i - 1);
+            String key = JSONUtils.toString(entity, "id");
             String value = JSONUtils.toString(entity, "value");
             values.put(key, value);
         }
