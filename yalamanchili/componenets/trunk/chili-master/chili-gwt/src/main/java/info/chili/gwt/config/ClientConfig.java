@@ -13,4 +13,5 @@ public interface ClientConfig {
     public String getFileUploadUrl();
 
     public String getFileDownloadUrl();
+    
 }

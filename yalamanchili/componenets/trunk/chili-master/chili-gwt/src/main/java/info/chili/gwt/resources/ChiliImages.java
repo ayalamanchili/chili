@@ -27,4 +27,29 @@ public interface ChiliImages extends ClientBundle {
 
     @ClientBundle.Source("images/field-error-icon.png")
     ImageResource fieldErrorIcon();
+
+    @Source("images/default-image.gif")
+    @ImageResource.ImageOptions(height = 50, width = 50)
+    ImageResource defaultImage_50_50();
+
+    @Source("images/default-image.gif")
+    ImageResource defaultImage();
+    /*
+     * View Icons
+     */
+
+    @Source("images/view_icon_16_16.png")
+    ImageResource viewIcon_16_16();
+
+    /*
+     * Update Edit Icons
+     */
+    @Source("images/update_icon_16_16.png")
+    ImageResource updateIcon_16_16();
+    /*
+     * Delete Icons
+     */
+
+    @Source("images/delete_icon_16_16.png")
+    ImageResource deleteIcon_16_16();
 }
