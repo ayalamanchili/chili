@@ -21,7 +21,7 @@ public abstract class AbstractStatusPanel extends ALComposite implements ClickHa
     protected FlexTable statusBar = new FlexTable();
     protected Label userLink = new Label("Welcome Guest");
     // TODO use cleint bundle? and ui binder
-    Image logo = new Image();
+    protected Image logo = new Image();
     protected ClickableLink loginLink = new ClickableLink("login");
     protected ClickableLink logoutLink = new ClickableLink("logout");
     protected ClickableLink createUserLink = new ClickableLink("create user");
