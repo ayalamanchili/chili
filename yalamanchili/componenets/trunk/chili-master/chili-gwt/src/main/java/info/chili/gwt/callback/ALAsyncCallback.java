@@ -3,7 +3,6 @@ package info.chili.gwt.callback;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import info.chili.gwt.widgets.LoadingWidget;
 import info.chili.gwt.widgets.ResponseStatusWidget;
@@ -11,7 +10,6 @@ import info.chili.gwt.widgets.ResponseStatusWidget;
 import java.util.logging.Logger;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import info.chili.gwt.composite.BaseField;
 import info.chili.gwt.utils.JSONUtils;
 
 // TODO: Auto-generated Javadoc
