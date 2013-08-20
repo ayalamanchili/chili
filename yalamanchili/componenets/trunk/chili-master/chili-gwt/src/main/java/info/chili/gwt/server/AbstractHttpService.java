@@ -29,19 +29,19 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
         JSONObject user = new JSONObject();
         user.put("username", username.toLowerCase());
         user.put("passwordHash", password);
-        return doPut(getLoginPath(), user.toString(), addHeaders(), true);
+        return doPut(getLoginPath(), user.toString(), addHeaders(new HashMap<String, String>()), true);
     }
 
     @Override
     public String doPut(String url, String body, Map<String, String> headers, boolean newClient) {
         return SyncHttp.httpPut(getServicesRootURL() + url, body,
-                addHeaders(), newClient);
+                addHeaders(headers), newClient);
     }
 
     @Override
     public String doGet(String url, Map<String, String> headers, boolean newClient) {
         return SyncHttp.httpGet(getServicesRootURL() + url,
-                addHeaders(), newClient);
+                addHeaders(headers), newClient);
     }
 
     @Override
@@ -49,12 +49,17 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
         this.getThreadLocalRequest().getSession().invalidate();
     }
 
-    protected Map<String, String> addHeaders() {
-        Map<String, String> headers = new HashMap<String, String>();
+    protected Map<String, String> addHeaders(Map<String, String> headers) {
+        System.out.println("dddd"+headers);
+        for (String attr : headers.keySet()) {
+            headers.put(attr, headers.get(attr));
+        }
+        //TODO this should be set on client
         headers.put("Content-Type", "application/json");
         if (this.getThreadLocalRequest().getSession().getAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR) != null) {
             headers.put("Authorization", (String) this.getThreadLocalRequest().getSession().getAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR));
         }
+           System.out.println("dddd"+headers);
         return headers;
     }
 
