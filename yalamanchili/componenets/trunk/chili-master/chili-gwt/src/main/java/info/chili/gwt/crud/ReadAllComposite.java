@@ -308,7 +308,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         table.removeAllRows();
         preFetchTable(0);
     }
-
+//TODO move to commons
     protected void handleErrorResponse(Throwable err) {
         //TODO enhance to show generic error messages
         logger.info(err.getMessage());
