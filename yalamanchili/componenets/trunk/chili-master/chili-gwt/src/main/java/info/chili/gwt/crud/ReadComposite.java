@@ -37,4 +37,5 @@ public abstract class ReadComposite extends CRUDComposite {
     public abstract void loadEntity(String entityId);
 
     public abstract void populateFieldsFromEntity(JSONObject entity);
+    
 }

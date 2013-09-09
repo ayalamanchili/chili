@@ -20,6 +20,7 @@ import org.hibernate.envers.RevisionTimestamp;
  */
 @Entity
 @RevisionEntity(AuditRevisionListner.class)
+//TODO extend from defultauditentity?
 public class AuditRevisionEntity implements Serializable {
 
     @Id

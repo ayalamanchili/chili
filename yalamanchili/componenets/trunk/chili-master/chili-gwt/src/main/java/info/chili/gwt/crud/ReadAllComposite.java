@@ -203,6 +203,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         if (tableObjString == null) {
             return;
         }
+        //Temp fix
         if (tableObjString.equals("NOT_SHARED")) {
             tablePanel.add(new HTML("User has choosen to not share this data"));
             return;
@@ -219,7 +220,8 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
             addRowStyles(entities.size());
         }
     }
-
+    
+    //TODO improve this do this with css
     protected void addRowStyles(int size) {
         HTMLTable.RowFormatter rf = table.getRowFormatter();
         for (int row = 1; row <= size; ++row) {
@@ -309,6 +311,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         preFetchTable(0);
     }
 //TODO move to commons
+
     protected void handleErrorResponse(Throwable err) {
         //TODO enhance to show generic error messages
         logger.info(err.getMessage());

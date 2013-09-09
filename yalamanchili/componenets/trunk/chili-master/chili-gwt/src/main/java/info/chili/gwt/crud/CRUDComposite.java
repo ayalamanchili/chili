@@ -5,6 +5,8 @@ package info.chili.gwt.crud;
 
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.logical.shared.OpenEvent;
+import com.google.gwt.event.logical.shared.OpenHandler;
 import info.chili.gwt.utils.JSONUtils;
 import info.chili.gwt.composite.BaseField;
 import info.chili.gwt.fields.BooleanField;
@@ -32,6 +34,7 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import info.chili.gwt.composite.SelectComposite;
 import info.chili.gwt.date.DateUtils;
@@ -88,6 +91,9 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         addListeners();
         configure();
         addWidgets();
+        if(enableAudit()){
+            addAuditWidgets();
+        }
     }
 
     protected abstract void addListeners();
@@ -97,7 +103,8 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
     protected abstract void addWidgets();
 
     /**
-     * This is used to add widgets before the captionpanel. use basePanel to add the widgets
+     * This is used to add widgets before the captionpanel. use basePanel to add
+     * the widgets
      */
     protected abstract void addWidgetsBeforeCaptionPanel();
 
@@ -443,5 +450,27 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         } else {
             return str;
         }
+    }
+
+    //Audting support
+    protected boolean enableAudit() {
+        return false;
+    }
+    protected DisclosurePanel auditDP;
+
+    protected String getAuditUrl() {
+        return "";
+    }
+
+    protected void addAuditWidgets() {
+        auditDP = new DisclosurePanel("History");
+        basePanel.add(auditDP);
+        auditDP.addOpenHandler(new OpenHandler<DisclosurePanel>() {
+            @Override
+            public void onOpen(OpenEvent<DisclosurePanel> event) {
+                auditDP.setContent(new ReadAllAuditDataPanel(getAuditUrl()));
+            }
+        });
+
     }
 }
