@@ -48,7 +48,7 @@ public class ReadAllAuditDataPanel extends ReadAllComposite {
     }
 
     protected void populateHeaders(JSONObject entity) {
-        JSONArray values = entity.get("auditData").isArray();
+        JSONArray values = entity.get("vars").isArray();
         for (int i = 0; i <= values.size(); i++) {
             JSONObject prop = (JSONObject) values.get(i);
             table.setText(0, i, JSONUtils.toString(prop, "id"));
@@ -58,7 +58,7 @@ public class ReadAllAuditDataPanel extends ReadAllComposite {
     protected void populateAuditData(JSONArray entities) {
         for (int i = 1; i <= entities.size(); i++) {
             JSONObject entity = (JSONObject) entities.get(i - 1);
-            JSONArray values = entity.get("auditData").isArray();
+            JSONArray values = entity.get("vars").isArray();
             for (int j = 0; j <= values.size(); j++) {
                 JSONObject prop = (JSONObject) values.get(j);
                 table.setText(i, j, JSONUtils.toString(prop, "value"));
