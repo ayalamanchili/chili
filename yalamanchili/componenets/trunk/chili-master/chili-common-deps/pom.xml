@@ -64,11 +64,17 @@
             <artifactId>hsqldb</artifactId>
             <version>1.8.0.7</version>
         </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-core</artifactId>
+            <version>${jersey.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <!--Jersey-spring-->
         <dependency>
             <groupId>com.sun.jersey.contribs</groupId>
             <artifactId>jersey-spring</artifactId>
-            <version>${jersy.version}</version>
+            <version>${jersey.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -304,7 +310,7 @@
         <hibernate.search.version>3.4.2.Final</hibernate.search.version>
         <jasper.version>4.5.1</jasper.version>
         <dynamic.jasper.version>4.0.0</dynamic.jasper.version>
-        <jersy.version>1.8</jersy.version>
+        <jersey.version>1.8</jersey.version>
         <guava.version>13.0</guava.version>
     </properties>
 </project>
