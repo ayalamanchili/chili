@@ -36,6 +36,7 @@ import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import info.chili.gwt.composite.SelectComposite;
 import info.chili.gwt.date.DateUtils;
 import info.chili.gwt.fields.FileuploadField;
@@ -91,7 +92,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         addListeners();
         configure();
         addWidgets();
-        if(enableAudit()){
+        if (enableAudit()) {
             addAuditWidgets();
         }
     }
@@ -472,5 +473,11 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
             }
         });
 
+    }
+    //-----------------utils--------------------//
+
+    protected HTML getLineSeperatorTag(String title) {
+        HTML lineSeperator = new HTML("<fieldset class=\"lineSeperator\">" + "<legend align=\"center\">" + title + "</legend></fieldset>");
+        return lineSeperator;
     }
 }
