@@ -25,7 +25,6 @@ public class ReportGenerator {
             dynamicReport = new ReflectiveReportBuilder(data).build();
             dynamicReport.setTitle(data.get(0).getClass().getSimpleName());
             JasperPrint jasperPrint = DynamicJasperHelper.generateJasperPrint(dynamicReport, new ClassicLayoutManager(), data);
-            // OfficeServiceConfiguration.instance().getContentManagementLocationRoot() + fileName);
             if (format.equalsIgnoreCase("pdf")) {
                 JasperExportManager.exportReportToPdfFile(jasperPrint, filepath);
             }
