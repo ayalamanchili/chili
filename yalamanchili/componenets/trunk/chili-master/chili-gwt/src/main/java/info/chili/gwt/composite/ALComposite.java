@@ -17,8 +17,8 @@ public abstract class ALComposite extends Composite {
 
     protected void init(Widget widget) {
         initWidget(widget);
-        addListeners();
-        configure();
         addWidgets();
+        configure();
+        addListeners();
     }
 }
