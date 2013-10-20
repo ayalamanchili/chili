@@ -220,7 +220,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
             addRowStyles(entities.size());
         }
     }
-    
+
     //TODO improve this do this with css
     protected void addRowStyles(int size) {
         HTMLTable.RowFormatter rf = table.getRowFormatter();
@@ -339,5 +339,17 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         if (genericErrorMessage != null) {
             new ResponseStatusWidget().show(genericErrorMessage);
         }
+    }
+
+    /**
+     * Used to replacing table columns values with custom values eg: sex_MALE=M
+     * @param entity Table row returned from server eg: Employee
+     * @param key The key(column) value used to search and replace eg: sex_MALE format: column name_value
+     * @param customValues map used to store the custom values
+     * @return 
+     */
+    protected String getCustomValue(JSONObject entity, String key, HashMap<String, String> customValues) {
+        key = key + "_" + JSONUtils.toString(entity, key);
+        return (customValues.get(key)) == null ? key : customValues.get(key);
     }
 }
