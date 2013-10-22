@@ -348,7 +348,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
      * @param customValues map used to store the custom values
      * @return 
      */
-    protected String getCustomValue(JSONObject entity, String key, HashMap<String, String> customValues) {
+    protected String getCustomValue(JSONValue entity, String key, HashMap<String, String> customValues) {
         key = key + "_" + JSONUtils.toString(entity, key);
         return (customValues.get(key)) == null ? key : customValues.get(key);
     }
