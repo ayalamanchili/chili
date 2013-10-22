@@ -1,81 +1,83 @@
 package info.chili.commons.entity;
 
-
 import java.util.Date;
 import java.util.Set;
+import org.hibernate.annotations.Type;
 
 public class Entity extends EntitySuper {
-	protected Long longField;
-	protected String stringField;
-	protected Date dateField;
-	protected Integer integerField;
-	protected Float floatField;
-	protected Boolean booleanField;
-	protected Set<EntityChildTwo> childrenTwo;
-	protected DummyEnum testenum;
 
-	public Long getLongField() {
-		return longField;
-	}
+    protected Long longField;
+    @Type(type = "encrypted")
+    protected String stringField;
+    protected Date dateField;
+    protected Integer integerField;
+    protected Float floatField;
+    protected Boolean booleanField;
+    protected Set<EntityChildTwo> childrenTwo;
+    protected DummyEnum testenum;
 
-	public void setLongField(Long longField) {
-		this.longField = longField;
-	}
+    public Long getLongField() {
+        return longField;
+    }
 
-	public String getStringField() {
-		return stringField;
-	}
+    public void setLongField(Long longField) {
+        this.longField = longField;
+    }
 
-	public void setStringField(String stringField) {
-		this.stringField = stringField;
-	}
+    public String getStringField() {
+        return stringField;
+    }
 
-	public Date getDateField() {
-		return dateField;
-	}
+    public void setStringField(String stringField) {
+        this.stringField = stringField;
+    }
 
-	public void setDateField(Date dateField) {
-		this.dateField = dateField;
-	}
+    public Date getDateField() {
+        return dateField;
+    }
 
-	public Integer getIntegerField() {
-		return integerField;
-	}
+    public void setDateField(Date dateField) {
+        this.dateField = dateField;
+    }
 
-	public void setIntegerField(Integer integerField) {
-		this.integerField = integerField;
-	}
+    public Integer getIntegerField() {
+        return integerField;
+    }
 
-	public Float getFloatField() {
-		return floatField;
-	}
+    public void setIntegerField(Integer integerField) {
+        this.integerField = integerField;
+    }
 
-	public void setFloatField(Float floatField) {
-		this.floatField = floatField;
-	}
+    public Float getFloatField() {
+        return floatField;
+    }
 
-	public Boolean getBooleanField() {
-		return booleanField;
-	}
+    public void setFloatField(Float floatField) {
+        this.floatField = floatField;
+    }
 
-	public void setBooleanField(Boolean booleanField) {
-		this.booleanField = booleanField;
-	}
+    public Boolean getBooleanField() {
+        return booleanField;
+    }
 
-	public Set<EntityChildTwo> getChildrenTwo() {
-		return childrenTwo;
-	}
+    public void setBooleanField(Boolean booleanField) {
+        this.booleanField = booleanField;
+    }
 
-	public void setChildrenTwo(Set<EntityChildTwo> childrenTwo) {
-		this.childrenTwo = childrenTwo;
-	}
+    public Set<EntityChildTwo> getChildrenTwo() {
+        return childrenTwo;
+    }
 
-	public DummyEnum getTestenum() {
-		return testenum;
-	}
+    public void setChildrenTwo(Set<EntityChildTwo> childrenTwo) {
+        this.childrenTwo = childrenTwo;
+    }
 
-	public void setTestenum(DummyEnum testenum) {
-		this.testenum = testenum;
-	}
+    public DummyEnum getTestenum() {
+        return testenum;
+    }
+
+    public void setTestenum(DummyEnum testenum) {
+        this.testenum = testenum;
+    }
 
 }

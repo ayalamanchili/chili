@@ -13,6 +13,7 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.After;
+import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -155,6 +156,14 @@ public class ReflectionUtilsTest {
     @Test
     public void testGetAllFields() {
         ReflectionUtils.getAllFields(Entity.class);
+    }
+
+    @Test
+    public void testGetAllFieldsInfo() {
+        System.out.println(ReflectionUtils.getEntityFieldsInfo(Entity.class, false).keySet());
+        System.out.println(ReflectionUtils.getEntityFieldsInfo(Entity.class, true).keySet());
+        assertTrue(ReflectionUtils.getEntityFieldsInfo(Entity.class, false).keySet().contains("stringField"));
+        assertFalse(ReflectionUtils.getEntityFieldsInfo(Entity.class, true).keySet().contains("stringField"));
     }
 
     @Test

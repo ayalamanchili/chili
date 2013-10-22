@@ -12,26 +12,41 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.hibernate.annotations.Type;
 
 public class ReflectionUtils {
 
     public static LinkedHashMap<String, DataType> getEntityFieldsInfo(
-            Class<?> clazz) {
+            Class<?> clazz, boolean ignoreEncryptedFields) {
         LinkedHashMap<String, DataType> dataFields = new LinkedHashMap<String, DataType>();
-        for (Field field : clazz.getDeclaredFields()) {
+        for (Field field : getAllFields(clazz)) {
             if (!DataType.DEFAULT.equals(getDataType(field))) {
+                if (ignoreEncryptedFields && isEncryptedField(field)) {
+                    continue;
+                }
                 dataFields.put(field.getName(), getDataType(field));
             }
         }
         return dataFields;
     }
 
+    public static boolean isEncryptedField(Field field) {
+        Type type = field.getAnnotation(Type.class);
+        //TODO why is netbeans generating a warning ?
+        if (type != null && type.type().contains("encrypted")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static Map<String, Object> getFieldsDataFromEntity(Object t,
-            Class<?> clazz) {
+            Class<?> clazz, boolean ignoreEncryptedFields) {
         Map<String, Object> attributeValues = new HashMap<String, Object>();
-        LinkedHashMap<String, DataType> fields = getEntityFieldsInfo(clazz);
+        LinkedHashMap<String, DataType> fields = getEntityFieldsInfo(clazz, ignoreEncryptedFields);
         try {
-            for (String fieldName : getEntityFieldsInfo(clazz).keySet()) {
+            for (String fieldName : fields.keySet()) {
+
                 for (Method method : t.getClass().getMethods()) {
                     if (method.getName().compareToIgnoreCase("get" + fieldName) == 0) {
                         if (fields.get(fieldName).equals(DataType.STRING)) {
@@ -69,10 +84,15 @@ public class ReflectionUtils {
                 }
             }
         } catch (Exception e) {
-
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return attributeValues;
+    }
+
+    @Deprecated
+    public static Map<String, Object> getFieldsDataFromEntity(Object t,
+            Class<?> clazz) {
+        return getFieldsDataFromEntity(t, clazz, false);
     }
 
     public static DataType getDataType(Field field) {
@@ -214,7 +234,7 @@ public class ReflectionUtils {
     public static Object callGetter(Object entity, String attributeName) {
         return callGetterMethod(
                 getGetterMethod(getField(entity.getClass(), attributeName),
-                entity.getClass()), entity);
+                        entity.getClass()), entity);
     }
 
     public static Field getField(Class<?> clazz, String attributeName) {
@@ -275,7 +295,7 @@ public class ReflectionUtils {
             Object value) {
         callSetterMethod(
                 getSetterMethod(getField(entity.getClass(), attributeName),
-                entity.getClass()), entity, value);
+                        entity.getClass()), entity, value);
     }
 
     public static Method getSetterMethod(Field field, Class<?> clazz) {
