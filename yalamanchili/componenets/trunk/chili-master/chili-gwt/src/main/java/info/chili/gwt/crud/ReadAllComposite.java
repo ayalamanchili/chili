@@ -67,7 +67,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
     /**
      * The number of records.
      */
-    protected Long numberOfRecords = new Long(0);
+    public Long numberOfRecords = new Long(0);
     /**
      * The page size.
      */
