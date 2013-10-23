@@ -49,7 +49,9 @@ public class RichTextField extends BaseField {
         clearMessage();
     }
 
+    @Override
     public void setReadOnly(Boolean readOnly) {
+        bar.setVisible(!readOnly);
         area.setEnabled(!readOnly);
     }
 }
