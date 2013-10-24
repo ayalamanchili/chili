@@ -167,10 +167,10 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         if (DataType.IMAGE_FIELD.equals(type)) {
             FileuploadField fileUploadPanel = new FileuploadField(constants, attributeName, entityName,
                     "name", isRequired) {
-                @Override
-                public void onUploadComplete() {
-                }
-            };
+                        @Override
+                        public void onUploadComplete() {
+                        }
+                    };
             entityFieldsPanel.add(fileUploadPanel);
         }
         if (DataType.TEXT_AREA_FIELD.equals(type)) {
@@ -469,7 +469,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         auditDP.addOpenHandler(new OpenHandler<DisclosurePanel>() {
             @Override
             public void onOpen(OpenEvent<DisclosurePanel> event) {
-                auditDP.setContent(new ReadAllAuditDataPanel(getAuditUrl()));
+                auditDP.setContent(new ReadAllAuditDataPanel(entityName, getAuditUrl(), constants));
             }
         });
 

@@ -33,7 +33,7 @@ public class ReflectionUtils {
     public static boolean isEncryptedField(Field field) {
         Type type = field.getAnnotation(Type.class);
         //TODO why is netbeans generating a warning ?
-        if (type != null && type.type().contains("encrypted")) {
+        if ((type != null && type.type().contains("encrypted") || field.getName().contains("Hash"))) {
             return true;
         } else {
             return false;

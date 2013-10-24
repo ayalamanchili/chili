@@ -5,12 +5,14 @@
 package info.chili.gwt.crud;
 
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import info.chili.gwt.callback.ALAsyncCallback;
 import info.chili.gwt.rpc.HttpService;
 import info.chili.gwt.utils.JSONUtils;
+import info.chili.gwt.utils.Utils;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -23,27 +25,31 @@ public class ReadAllAuditDataPanel extends ReadAllComposite {
 
     private Logger logger = Logger.getLogger(ReadAllAuditDataPanel.class.getName());
     protected String url;
+    protected String entityName;
+    protected ConstantsWithLookup constants;
 
-    public ReadAllAuditDataPanel(String url) {
+    public ReadAllAuditDataPanel(String entityName, String url, ConstantsWithLookup constants) {
         this.url = url;
+        this.entityName = entityName;
+        this.constants = constants;
         initTable("Audit", null);
     }
 
     @Override
     public void preFetchTable(int start) {
         // TODO externalize the limit size for read all
-        HttpService.HttpServiceAsync.instance().doGet(url, new HashMap<String,String>(), true,
+        HttpService.HttpServiceAsync.instance().doGet(url, new HashMap<String, String>(), true,
                 new ALAsyncCallback<String>() {
-            @Override
-            public void onResponse(String result) {
-                if (result != null || !result.isEmpty()) {
-                    JSONObject resultObj = (JSONObject) JSONParser.parseLenient(result);
-                    JSONArray data = JSONUtils.toJSONArray(resultObj.get("entityAuditData"));
-                    populateHeaders((JSONObject) data.get(0));
-                    populateAuditData(data);
-                }
-            }
-        });
+                    @Override
+                    public void onResponse(String result) {
+                        if (result != null || !result.isEmpty()) {
+                            JSONObject resultObj = (JSONObject) JSONParser.parseLenient(result);
+                            JSONArray data = JSONUtils.toJSONArray(resultObj.get("entityAuditData"));
+                            populateHeaders((JSONObject) data.get(0));
+                            populateAuditData(data);
+                        }
+                    }
+                });
 
     }
 
@@ -51,7 +57,7 @@ public class ReadAllAuditDataPanel extends ReadAllComposite {
         JSONArray values = entity.get("vars").isArray();
         for (int i = 0; i <= values.size(); i++) {
             JSONObject prop = (JSONObject) values.get(i);
-            table.setText(0, i, JSONUtils.toString(prop, "id"));
+            table.setHTML(0, i, Utils.getAttributeLabel(JSONUtils.toString(prop, "id"), entityName, constants));
         }
     }
 
@@ -61,7 +67,7 @@ public class ReadAllAuditDataPanel extends ReadAllComposite {
             JSONArray values = entity.get("vars").isArray();
             for (int j = 0; j <= values.size(); j++) {
                 JSONObject prop = (JSONObject) values.get(j);
-                table.setText(i, j, JSONUtils.toString(prop, "value"));
+                table.setHTML(i, j, JSONUtils.toString(prop, "value"));
             }
         }
     }
@@ -85,7 +91,4 @@ public class ReadAllAuditDataPanel extends ReadAllComposite {
     @Override
     public void onOptionsSelected(ClickEvent event, GenericTableRowOptionsWidget t) {
     }
-//    protected String getEntityAuditDataUrl() {
-//        return OfficeWelcome.instance().constants.root_url() + "audit/changes-for-entity/" + entityClass + "/" + entityId;
-//    }
 }
