@@ -464,7 +464,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
     }
 
     protected void addAuditWidgets() {
-        auditDP = new DisclosurePanel("History");
+        auditDP = new DisclosurePanel("Audit Data");
         basePanel.add(auditDP);
         auditDP.addOpenHandler(new OpenHandler<DisclosurePanel>() {
             @Override

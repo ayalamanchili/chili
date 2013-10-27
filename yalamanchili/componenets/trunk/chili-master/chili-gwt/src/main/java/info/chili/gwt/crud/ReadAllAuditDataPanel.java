@@ -26,7 +26,6 @@ public class ReadAllAuditDataPanel extends ReadAllComposite {
     private Logger logger = Logger.getLogger(ReadAllAuditDataPanel.class.getName());
     protected String url;
     protected String entityName;
-    protected ConstantsWithLookup constants;
 
     public ReadAllAuditDataPanel(String entityName, String url, ConstantsWithLookup constants) {
         this.url = url;
@@ -42,7 +41,7 @@ public class ReadAllAuditDataPanel extends ReadAllComposite {
                 new ALAsyncCallback<String>() {
                     @Override
                     public void onResponse(String result) {
-                        if (result != null || !result.isEmpty()) {
+                        if (result != null && !result.isEmpty()) {
                             JSONObject resultObj = (JSONObject) JSONParser.parseLenient(result);
                             JSONArray data = JSONUtils.toJSONArray(resultObj.get("entityAuditData"));
                             populateHeaders((JSONObject) data.get(0));
