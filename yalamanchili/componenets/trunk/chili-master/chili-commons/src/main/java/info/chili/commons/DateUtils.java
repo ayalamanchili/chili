@@ -1,5 +1,6 @@
 package info.chili.commons;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,6 +56,15 @@ public class DateUtils {
         }
         return df.parse(input);
 
+    }
+
+    public static Date parse(String dateString, String dateFormat) {
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+        try {
+            return formatter.parse(dateString);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static int getLastDayOfMonth(int month, int year) {
