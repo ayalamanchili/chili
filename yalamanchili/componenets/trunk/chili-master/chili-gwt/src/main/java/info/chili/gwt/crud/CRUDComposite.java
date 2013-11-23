@@ -42,6 +42,7 @@ import info.chili.gwt.date.DateUtils;
 import info.chili.gwt.fields.FileuploadField;
 import info.chili.gwt.fields.TextAreaField;
 import info.chili.gwt.listeners.KeyPressListener;
+import info.chili.gwt.utils.FormatUtils;
 import info.chili.gwt.utils.Utils;
 
 public abstract class CRUDComposite extends Composite implements KeyPressListener {
@@ -360,7 +361,11 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         // Currency Field
         if (DataType.CURRENCY_FIELD.equals(type)) {
             CurrencyField field = (CurrencyField) fields.get(fieldKey);
-            field.setValue(JSONUtils.toString(entity, fieldKey));
+            if (field.getTextbox().isReadOnly()) {
+                field.setValue(FormatUtils.formarCurrency(JSONUtils.toString(entity, fieldKey)));
+            } else {
+                field.setValue(JSONUtils.toString(entity, fieldKey));
+            }
         }
         if (DataType.SUGGEST_FIELD.equals(type)) {
             info.chili.gwt.widgets.SuggestBox field = (info.chili.gwt.widgets.SuggestBox) fields.get(fieldKey);
