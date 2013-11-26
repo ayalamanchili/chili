@@ -9,8 +9,13 @@ import com.google.gwt.user.client.Window;
 public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOptionsWidget> {
 
 //temp method need to update all implementing sub classes
-    protected void createOptionsWidget(TableRowOptionsWidget.OptionsType type, int row, String id) {
-        TableRowOptionsWidget rowOptionsWidget = new TableRowOptionsWidget(type, id);
+    protected void createOptionsWidget(TableRowOptionsWidget.OptionsType type, final int row, final String id) {
+        TableRowOptionsWidget rowOptionsWidget = new TableRowOptionsWidget(type, id) {
+            @Override
+            protected void onReadMouseOver() {
+                CRUDReadAllComposite.this.onReadMouseOver(row, id);
+            }
+        };
         createOptionsWidget(rowOptionsWidget, row, id);
     }
 
@@ -57,4 +62,8 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
      * override this to add logic to perform on update row clicked
      */
     public abstract void updateClicked(String entityId);
+
+    protected void onReadMouseOver(int row, String id) {
+
+    }
 }

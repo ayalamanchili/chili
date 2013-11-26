@@ -93,10 +93,15 @@ public class TableRowOptionsWidget extends GenericTableRowOptionsWidget implemen
     @Override
     public void onMouseOver(MouseOverEvent event) {
         if (event.getSource().equals(readLink)) {
+            onReadMouseOver();
         }
         if (event.getSource().equals(updateLink)) {
         }
         if (event.getSource().equals(deleteLink)) {
         }
+    }
+
+    protected void onReadMouseOver() {
+       
     }
 }
