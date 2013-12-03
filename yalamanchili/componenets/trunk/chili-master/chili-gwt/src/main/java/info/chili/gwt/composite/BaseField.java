@@ -3,15 +3,37 @@ package info.chili.gwt.composite;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
+import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import info.chili.gwt.resources.ChiliImages;
+import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.Utils;
 import info.chili.gwt.widgets.ClickableImage;
 
 public abstract class BaseField extends Composite implements BlurHandler {
+
+    public BaseField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean required, Alignment alignment) {
+        this.readOnly = readOnly;
+        this.alignment = alignment;
+        this.required = required;
+        this.attributeName = attributeName;
+        this.className = className;
+        if (required) {
+            label.setHTML(Utils.getAttributeLabel(attributeName, className, constants) + "<em>*</em>");
+            label.addStyleName("tfRequired");
+        } else {
+            label.setHTML(Utils.getAttributeLabel(attributeName, className, constants));
+        }
+        addWidgets();
+        configure();
+        initWidget(panel);
+        //TODO
+        setMoreInfoDescription(Utils.getMoreInfoLabel(attributeName, className, constants));
+    }
+//TODO depreciate this
 
     public BaseField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean required) {
         this.readOnly = readOnly;
@@ -24,8 +46,13 @@ public abstract class BaseField extends Composite implements BlurHandler {
         } else {
             label.setHTML(Utils.getAttributeLabel(attributeName, className, constants));
         }
-        configure();
+        if (Alignment.VERTICAL.equals(alignment)) {
+            panel = new FlowPanel();
+        } else {
+            panel = new HorizontalPanel();
+        }
         addWidgets();
+        configure();
         initWidget(panel);
         //TODO
         setMoreInfoDescription(Utils.getMoreInfoLabel(attributeName, className, constants));
@@ -54,22 +81,23 @@ public abstract class BaseField extends Composite implements BlurHandler {
      * called for validate on blur
      */
     protected abstract void validate();
-    protected FlowPanel panel = new FlowPanel();
+    protected ComplexPanel panel;
     //TODO change to flow panel with horizontal allignment
     protected HorizontalPanel fieldPanel = new HorizontalPanel();
     protected HTML label = new HTML();
     protected ClickableImage fieldInfoIcon = new ClickableImage("learn more", ChiliImages.INSTANCE.fieldInfoIcon());
-     protected ClickableImage errorIcon = new ClickableImage("error", ChiliImages.INSTANCE.fieldErrorIcon());
+    protected ClickableImage errorIcon = new ClickableImage("error", ChiliImages.INSTANCE.fieldErrorIcon());
     protected HTML message = new HTML();
     protected Boolean isValid = false;
     protected Boolean readOnly = false;
     protected Boolean required = false;
+    protected Alignment alignment = Alignment.VERTICAL;
     // this is actual bean/entity attribute name can be used to validation
     // purposes
     public String attributeName = null;
     public String className = null;
 
-    public FlowPanel getPanel() {
+    public ComplexPanel getPanel() {
         return panel;
     }
 

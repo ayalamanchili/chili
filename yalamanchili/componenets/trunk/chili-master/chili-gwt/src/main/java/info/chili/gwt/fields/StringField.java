@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.uibinder.client.UiConstructor;
+import info.chili.gwt.utils.Alignment;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -19,6 +20,10 @@ import com.google.gwt.uibinder.client.UiConstructor;
 public class StringField extends BaseFieldWithTextBox {
 
     Logger log = Logger.getLogger(StringField.class.getName());
+
+    public StringField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired, Alignment alignment) {
+        super(constants, attributeName, className, readOnly, isRequired, alignment);
+    }
 
     @UiConstructor
     public StringField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {

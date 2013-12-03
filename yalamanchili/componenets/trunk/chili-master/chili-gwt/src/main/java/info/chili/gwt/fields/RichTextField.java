@@ -5,6 +5,8 @@ import info.chili.gwt.composite.BaseField;
 import info.chili.gwt.widgets.RichTextToolBar;
 
 import com.google.gwt.uibinder.client.UiConstructor;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
 
 public class RichTextField extends BaseField {
@@ -24,7 +26,11 @@ public class RichTextField extends BaseField {
         area.ensureDebugId(className + "_" + attributeName + "_TB");
         area.addStyleName("y-gwt-RichTextEditor");
         bar.addStyleName("y-gwt-RichTexttoolBar");
-        panel.insert(bar, 1);
+        if (panel instanceof FlowPanel) {
+            ((FlowPanel) panel).insert(bar, 1);
+        } else if (panel instanceof HorizontalPanel) {
+            ((HorizontalPanel) panel).insert(bar, 1);
+        }
         fieldPanel.insert(area, 0);
     }
 

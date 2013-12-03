@@ -42,6 +42,7 @@ import info.chili.gwt.date.DateUtils;
 import info.chili.gwt.fields.FileuploadField;
 import info.chili.gwt.fields.TextAreaField;
 import info.chili.gwt.listeners.KeyPressListener;
+import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.FormatUtils;
 import info.chili.gwt.utils.Utils;
 
@@ -110,9 +111,13 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
      */
     protected abstract void addWidgetsBeforeCaptionPanel();
 
+    protected void addField(String attributeName, Boolean readOnly, Boolean isRequired, DataType type, Alignment alignement) {
+
+    }
     /*
      * adding and getting Fields
      */
+
     protected void addField(String attributeName, Boolean readOnly, Boolean isRequired, DataType type) {
         if (DataType.LONG_FIELD.equals(type)) {
             LongField longField = new LongField(constants,

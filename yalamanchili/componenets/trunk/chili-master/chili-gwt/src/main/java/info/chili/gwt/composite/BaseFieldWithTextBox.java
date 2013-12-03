@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.TextBox;
 import info.chili.gwt.listeners.KeyPressListener;
+import info.chili.gwt.utils.Alignment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -24,6 +25,16 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
     public TextBox getTextbox() {
         return textbox;
     }
+
+    public BaseFieldWithTextBox(ConstantsWithLookup constants,
+            String attributeName, String className, Boolean readOnly,
+            Boolean required, Alignment alignment) {
+        super(constants, attributeName, className, readOnly, required, alignment);
+        configureAddMainWidget();
+        textbox.ensureDebugId(className + "_" + attributeName + "_TB");
+        setReadOnly(readOnly);
+    }
+//TODO depreciate this
 
     public BaseFieldWithTextBox(ConstantsWithLookup constants,
             String attributeName, String className, Boolean readOnly,
