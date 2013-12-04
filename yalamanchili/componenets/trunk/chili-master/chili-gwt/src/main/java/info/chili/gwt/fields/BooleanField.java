@@ -5,6 +5,7 @@ import info.chili.gwt.composite.BaseField;
 
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.ui.CheckBox;
+import info.chili.gwt.utils.Alignment;
 
 public class BooleanField extends BaseField {
 
@@ -12,6 +13,13 @@ public class BooleanField extends BaseField {
 
     public CheckBox getBox() {
         return box;
+    }
+
+    public BooleanField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired, Alignment alignment) {
+        super(constants, attributeName, className, readOnly, isRequired, alignment);
+        //TODO move this calls to super
+        configureAddMainWidget();
+        setReadOnly(readOnly);
     }
 
     @UiConstructor
@@ -46,7 +54,7 @@ public class BooleanField extends BaseField {
 
     @Override
     public void validate() {
-       clearMessage();
+        clearMessage();
     }
 
     public void setReadOnly(Boolean readlOnly) {

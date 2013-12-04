@@ -5,10 +5,17 @@ import info.chili.gwt.composite.BaseField;
 
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.ui.PasswordTextBox;
+import info.chili.gwt.utils.Alignment;
 
 public class PasswordField extends BaseField {
 
     protected PasswordTextBox password = new PasswordTextBox();
+
+    public PasswordField(ConstantsWithLookup constants, String attributeName, String className, boolean required, Alignment alignment) {
+        super(constants, attributeName, className, false, required, alignment);
+        fieldPanel.insert(password, 0);
+        password.ensureDebugId(className + "_" + attributeName + "_PTB");
+    }
 
     @UiConstructor
     public PasswordField(ConstantsWithLookup constants, String attributeName, String className, boolean required) {
@@ -31,6 +38,6 @@ public class PasswordField extends BaseField {
 
     @Override
     public void validate() {
-      clearMessage();
+        clearMessage();
     }
 }

@@ -9,13 +9,17 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.i18n.client.NumberFormat;
-import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.Window;
+import info.chili.gwt.utils.Alignment;
 
 public class CurrencyField extends BaseFieldWithTextBox {
     // TODO add Local info to constructor
 
     protected static NumberFormat fmt = NumberFormat.getCurrencyFormat();
+
+    public CurrencyField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired, Alignment alignment) {
+        super(constants, attributeName, className, readOnly, isRequired, alignment);
+    }
 
     public CurrencyField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
         super(constants, attributeName, className, readOnly, isRequired);

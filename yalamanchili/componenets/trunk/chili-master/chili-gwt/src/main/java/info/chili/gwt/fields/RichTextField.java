@@ -8,12 +8,20 @@ import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
+import info.chili.gwt.utils.Alignment;
 
 public class RichTextField extends BaseField {
 
     public RichTextArea area = new RichTextArea();
     public RichTextToolBar bar = new RichTextToolBar(area);
 
+    public RichTextField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired, Alignment alignment) {
+        super(constants, attributeName, className, readOnly, isRequired, alignment);
+        configureAddMainWidget();
+        setReadOnly(readOnly);
+    }
+
+    //TODO depreciate this 
     @UiConstructor
     public RichTextField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
         super(constants, attributeName, className, readOnly, isRequired);

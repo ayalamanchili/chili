@@ -6,6 +6,7 @@ import info.chili.gwt.composite.BaseField;
 import java.util.logging.Logger;
 
 import com.google.gwt.user.client.ui.ListBox;
+import info.chili.gwt.utils.Alignment;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -15,6 +16,16 @@ public class EnumField extends BaseField {
 
     Logger logger = Logger.getLogger(EnumField.class.getName());
     protected final ListBox listBox = new ListBox();
+
+    public EnumField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired,
+            String[] values, Alignment alignment) {
+        super(constants, attributeName, className, readOnly, isRequired, alignment);
+        configureAddMainWidget();
+        for (String value : values) {
+            listBox.addItem(value.toString(), value.toString());
+        }
+        setReadOnly(readOnly);
+    }
 
     public EnumField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired,
             String[] values) {
@@ -57,13 +68,13 @@ public class EnumField extends BaseField {
     public void setReadOnly(Boolean readOnly) {
         listBox.setEnabled(!readOnly);
     }
-    
-    public void setSelectedIndex(int index){
+
+    public void setSelectedIndex(int index) {
         listBox.setSelectedIndex(index);
     }
 
     @Override
     public void validate() {
-       clearMessage();
+        clearMessage();
     }
 }
