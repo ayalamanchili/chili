@@ -103,6 +103,10 @@ public abstract class BaseField extends Composite implements BlurHandler {
         return panel;
     }
 
+    public Alignment getAlignment() {
+        return this.alignment;
+    }
+
     public HTML getLabel() {
         return label;
     }

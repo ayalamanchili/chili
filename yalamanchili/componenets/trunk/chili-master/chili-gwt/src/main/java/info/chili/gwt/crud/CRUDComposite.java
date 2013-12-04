@@ -3,6 +3,9 @@
  */
 package info.chili.gwt.crud;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.logical.shared.OpenEvent;
@@ -463,7 +466,33 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         }
     }
 
+    /**
+     * aligns the horizontal fields with apprioriate spacing
+     */
+    protected void alignFields() {
+        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+            @Override
+            public void execute() {
+                Integer maxWidth = 30;
+                for (Map.Entry<String, BaseField> bf
+                        : fields.entrySet()) {
+                    logger.info(new Integer(bf.getValue().getLabel().getElement().getClientWidth()).toString());
+                    if (bf.getValue().getLabel().getElement().getClientWidth() > 30 && Alignment.HORIZONTAL.equals(bf.getValue().getAlignment())) {
+                        maxWidth = bf.getValue().getLabel().getElement().getClientWidth();
+                    }
+                }
+                for (Map.Entry<String, BaseField> bf
+                        : fields.entrySet()) {
+                    if (Alignment.HORIZONTAL.equals(bf.getValue().getAlignment())) {
+                        bf.getValue().getLabel().getElement().getStyle().setWidth(maxWidth * 2, Style.Unit.PX);
+                    }
+                }
+            }
+        });
+
+    }
     //Audting support
+
     protected boolean enableAudit() {
         return false;
     }
