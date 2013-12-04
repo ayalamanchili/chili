@@ -13,7 +13,7 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.user.client.ui.ListBox;
-import info.chili.gwt.composite.BaseField;
+import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.JSONUtils;
 import info.chili.gwt.utils.Utils;
 import java.util.ArrayList;
@@ -30,6 +30,13 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
     protected Map<Integer, String> values;
     protected Map<Integer, JSONObject> entityMap = new HashMap<Integer, JSONObject>();
     protected JSONObject selectedObject = null;
+
+    public SelectComposite(ConstantsWithLookup constants, String className, Boolean readOnly, Boolean isRequired, Alignment alignment) {
+        super(constants, info.chili.gwt.utils.Utils.getStringCamelCase(className), className, readOnly, isRequired, alignment);
+        configureAddMainWidget();
+        setReadOnly(readOnly);
+        fetchDropDownData();
+    }
 
     public SelectComposite(ConstantsWithLookup constants, String className, Boolean readOnly, Boolean isRequired) {
         super(constants, info.chili.gwt.utils.Utils.getStringCamelCase(className), className, readOnly, isRequired);
@@ -107,7 +114,7 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
 
     protected void populateDropDown(Map<Integer, String> values) {
         //TODO avoid this sorting on client side
-        values=Utils.sortByComparator(values);
+        values = Utils.sortByComparator(values);
         int i = 1;
         for (Integer key : values.keySet()) {
             listBox.insertItem(values.get(key), key.toString(), i);
