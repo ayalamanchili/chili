@@ -46,11 +46,6 @@ public abstract class BaseField extends Composite implements BlurHandler {
         } else {
             label.setHTML(Utils.getAttributeLabel(attributeName, className, constants));
         }
-        if (Alignment.VERTICAL.equals(alignment)) {
-            panel = new FlowPanel();
-        } else {
-            panel = new HorizontalPanel();
-        }
         addWidgets();
         configure();
         initWidget(panel);
@@ -67,6 +62,13 @@ public abstract class BaseField extends Composite implements BlurHandler {
     }
 
     protected void addWidgets() {
+        if (Alignment.VERTICAL.equals(alignment)) {
+            panel = new FlowPanel();
+            panel.addStyleName("baseFieldVertical");
+        } else {
+            panel = new HorizontalPanel();
+            panel.addStyleName("baseFieldHorizontal");
+        }
         panel.add(label);
         fieldPanel.add(errorIcon);
         fieldPanel.add(fieldInfoIcon);

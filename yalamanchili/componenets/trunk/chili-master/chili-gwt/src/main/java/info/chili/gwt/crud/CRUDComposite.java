@@ -111,14 +111,14 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
      */
     protected abstract void addWidgetsBeforeCaptionPanel();
 
-    protected void addField(String attributeName, Boolean readOnly, Boolean isRequired, DataType type, Alignment alignement) {
-
+    protected void addField(String attributeName, Boolean readOnly, Boolean isRequired, DataType type) {
+        addField(attributeName, readOnly, isRequired, type, Alignment.VERTICAL);
     }
     /*
      * adding and getting Fields
      */
 
-    protected void addField(String attributeName, Boolean readOnly, Boolean isRequired, DataType type) {
+    protected void addField(String attributeName, Boolean readOnly, Boolean isRequired, DataType type, Alignment alignment) {
         if (DataType.LONG_FIELD.equals(type)) {
             LongField longField = new LongField(constants,
                     attributeName, entityName, readOnly, isRequired);
@@ -135,7 +135,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         }
         if (DataType.STRING_FIELD.equals(type)) {
             StringField stringField = new StringField(constants,
-                    attributeName, entityName, readOnly, isRequired);
+                    attributeName, entityName, readOnly, isRequired, alignment);
             stringField.addEnterKeyPressesListener(this);
             fields.put(attributeName, stringField);
             entityFieldsPanel.add(stringField);
