@@ -124,14 +124,14 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
     protected void addField(String attributeName, Boolean readOnly, Boolean isRequired, DataType type, Alignment alignment) {
         if (DataType.LONG_FIELD.equals(type)) {
             LongField longField = new LongField(constants,
-                    attributeName, entityName, readOnly, isRequired);
+                    attributeName, entityName, readOnly, isRequired, alignment);
             longField.addEnterKeyPressesListener(this);
             fields.put(attributeName, longField);
             entityFieldsPanel.add(longField);
         }
         if (DataType.INTEGER_FIELD.equals(type)) {
             IntegerField integerField = new IntegerField(constants,
-                    attributeName, entityName, readOnly, isRequired);
+                    attributeName, entityName, readOnly, isRequired, alignment);
             integerField.addEnterKeyPressesListener(this);
             fields.put(attributeName, integerField);
             entityFieldsPanel.add(integerField);
@@ -145,31 +145,31 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         }
         if (DataType.DATE_FIELD.equals(type)) {
             DateField dateField = new DateField(constants,
-                    attributeName, entityName, readOnly, isRequired);
+                    attributeName, entityName, readOnly, isRequired, alignment);
             fields.put(attributeName, dateField);
             entityFieldsPanel.add(dateField);
         }
         if (DataType.BOOLEAN_FIELD.equals(type)) {
             BooleanField booleanField = new BooleanField(constants,
-                    attributeName, entityName, readOnly, isRequired);
+                    attributeName, entityName, readOnly, isRequired, alignment);
             fields.put(attributeName, booleanField);
             entityFieldsPanel.add(booleanField);
         }
         if (DataType.FLOAT_FIELD.equals(type)) {
             FloatField floatField = new FloatField(constants,
-                    attributeName, entityName, readOnly, isRequired);
+                    attributeName, entityName, readOnly, isRequired, alignment);
             floatField.addEnterKeyPressesListener(this);
             fields.put(attributeName, floatField);
             entityFieldsPanel.add(floatField);
         }
         if (DataType.PASSWORD_FIELD.equals(type)) {
-            PasswordField passwordField = new PasswordField(constants, attributeName, entityName, isRequired);
+            PasswordField passwordField = new PasswordField(constants, attributeName, entityName, isRequired, alignment);
             fields.put(attributeName, passwordField);
             entityFieldsPanel.add(passwordField);
         }
         if (DataType.DROPDOWN_FIELD.equals(type)) {
             StringField dropDownField = new StringField(constants,
-                    attributeName, entityName, readOnly, isRequired);
+                    attributeName, entityName, readOnly, isRequired, alignment);
             fields.put(attributeName, dropDownField);
             entityFieldsPanel.add(dropDownField);
         }
@@ -189,13 +189,13 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
             entityFieldsPanel.add(textAreaField);
         }
         if (DataType.RICH_TEXT_AREA.equals(type)) {
-            RichTextField richTextField = new RichTextField(constants, attributeName, entityName, readOnly, isRequired);
+            RichTextField richTextField = new RichTextField(constants, attributeName, entityName, readOnly, isRequired, alignment);
             richTextField.addStyleName("y-gwt-RichTextField");
             fields.put(attributeName, richTextField);
             entityFieldsPanel.add(richTextField);
         }
         if (DataType.CURRENCY_FIELD.equals(type)) {
-            CurrencyField currencyField = new CurrencyField(constants, attributeName, entityName, readOnly, isRequired);
+            CurrencyField currencyField = new CurrencyField(constants, attributeName, entityName, readOnly, isRequired, alignment);
             currencyField.addStyleName("y-gwt-CurrencyField");
             currencyField.addEnterKeyPressesListener(this);
             fields.put(attributeName, currencyField);
@@ -209,8 +209,12 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
     }
 
     protected void addEnumField(String key, Boolean readOnly, Boolean isRequired, String[] values) {
+        addEnumField(key, readOnly, isRequired, values, Alignment.VERTICAL);
+    }
+
+    protected void addEnumField(String key, Boolean readOnly, Boolean isRequired, String[] values, Alignment alignment) {
         EnumField enumField = new EnumField(constants, key, entityName,
-                readOnly, isRequired, values);
+                readOnly, isRequired, values, alignment);
         fields.put(key, enumField);
         entityFieldsPanel.add(enumField);
     }
@@ -473,18 +477,16 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         Scheduler.get().scheduleDeferred(new ScheduledCommand() {
             @Override
             public void execute() {
-                Integer maxWidth = 30;
-                for (Map.Entry<String, BaseField> bf
-                        : fields.entrySet()) {
+                Integer maxWidth = 50;
+                for (Map.Entry<String, BaseField> bf : fields.entrySet()) {
                     logger.info(new Integer(bf.getValue().getLabel().getElement().getClientWidth()).toString());
-                    if (bf.getValue().getLabel().getElement().getClientWidth() > 30 && Alignment.HORIZONTAL.equals(bf.getValue().getAlignment())) {
+                    if (bf.getValue().getLabel().getElement().getClientWidth() > maxWidth && Alignment.HORIZONTAL.equals(bf.getValue().getAlignment())) {
                         maxWidth = bf.getValue().getLabel().getElement().getClientWidth();
                     }
                 }
-                for (Map.Entry<String, BaseField> bf
-                        : fields.entrySet()) {
+                for (Map.Entry<String, BaseField> bf : fields.entrySet()) {
                     if (Alignment.HORIZONTAL.equals(bf.getValue().getAlignment())) {
-                        bf.getValue().getLabel().getElement().getStyle().setWidth(maxWidth * 2, Style.Unit.PX);
+                        bf.getValue().getLabel().getElement().getStyle().setWidth(maxWidth + 5, Style.Unit.PX);
                     }
                 }
             }
