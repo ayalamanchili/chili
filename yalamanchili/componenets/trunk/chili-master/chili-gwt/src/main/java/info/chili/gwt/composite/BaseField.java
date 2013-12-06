@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import info.chili.gwt.resources.ChiliImages;
 import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.Utils;
@@ -123,6 +124,10 @@ public abstract class BaseField extends Composite implements BlurHandler {
     public void clearMessage() {
         errorIcon.setVisible(false);
         message.setHTML("");
+    }
+    
+    public void addWidgetToFieldPanel(Widget widget){
+        fieldPanel.add(widget);
     }
 
     public Boolean getValid() {
