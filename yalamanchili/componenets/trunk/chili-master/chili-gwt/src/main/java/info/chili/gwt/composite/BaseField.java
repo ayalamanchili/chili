@@ -85,7 +85,7 @@ public abstract class BaseField extends Composite implements BlurHandler {
     protected abstract void validate();
     protected ComplexPanel panel;
     //TODO change to flow panel with horizontal allignment
-    protected HorizontalPanel fieldPanel = new HorizontalPanel();
+    public HorizontalPanel fieldPanel = new HorizontalPanel();
     protected HTML label = new HTML();
     protected ClickableImage fieldInfoIcon = new ClickableImage("learn more", ChiliImages.INSTANCE.fieldInfoIcon());
     protected ClickableImage errorIcon = new ClickableImage("error", ChiliImages.INSTANCE.fieldErrorIcon());
