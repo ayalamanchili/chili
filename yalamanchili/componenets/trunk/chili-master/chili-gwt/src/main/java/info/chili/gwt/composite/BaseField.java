@@ -23,8 +23,7 @@ public abstract class BaseField extends Composite implements BlurHandler {
         this.attributeName = attributeName;
         this.className = className;
         if (required) {
-            label.setHTML(Utils.getAttributeLabel(attributeName, className, constants) + "<em>*</em>");
-            label.addStyleName("tfRequired");
+            label.setHTML(Utils.getAttributeLabel(attributeName, className, constants) + "<em class='tfRequired'>*</em>");
         } else {
             label.setHTML(Utils.getAttributeLabel(attributeName, className, constants));
         }
@@ -42,8 +41,7 @@ public abstract class BaseField extends Composite implements BlurHandler {
         this.attributeName = attributeName;
         this.className = className;
         if (required) {
-            label.setHTML(Utils.getAttributeLabel(attributeName, className, constants) + "<em>*</em>");
-            label.addStyleName("tfRequired");
+            label.setHTML(Utils.getAttributeLabel(attributeName, className, constants) + "<em class='tfRequired'>*</em>");
         } else {
             label.setHTML(Utils.getAttributeLabel(attributeName, className, constants));
         }
@@ -125,8 +123,8 @@ public abstract class BaseField extends Composite implements BlurHandler {
         errorIcon.setVisible(false);
         message.setHTML("");
     }
-    
-    public void addWidgetToFieldPanel(Widget widget){
+
+    public void addWidgetToFieldPanel(Widget widget) {
         fieldPanel.add(widget);
     }
 
