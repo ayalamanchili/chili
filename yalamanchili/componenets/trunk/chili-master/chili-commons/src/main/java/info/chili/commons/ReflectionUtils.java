@@ -65,6 +65,10 @@ public class ReflectionUtils {
                             Float result = (Float) method.invoke(t);
                             attributeValues.put(fieldName, result);
                         }
+                        if (fields.get(fieldName).equals(DataType.BIG_DECIMAL)) {
+                            BigDecimal result = (BigDecimal) method.invoke(t);
+                            attributeValues.put(fieldName, result);
+                        }
                         if (fields.get(fieldName).equals(DataType.DATE)) {
                             Date result = (Date) method.invoke(t);
                             attributeValues.put(fieldName, result);
