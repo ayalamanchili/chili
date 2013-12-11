@@ -63,6 +63,11 @@ public class RichTextField extends BaseField {
         clearMessage();
     }
 
+    public void setHeightAndWidth(String height, String width) {
+        area.setHeight(height);
+        area.setWidth(width);
+    }
+
     @Override
     public void setReadOnly(Boolean readOnly) {
         bar.setVisible(!readOnly);
