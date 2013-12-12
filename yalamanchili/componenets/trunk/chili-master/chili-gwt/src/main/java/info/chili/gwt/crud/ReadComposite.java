@@ -18,11 +18,11 @@ public abstract class ReadComposite extends CRUDComposite {
     }
 
     protected void initReadComposite(String id, String className, final ConstantsWithLookup constants) {
+        this.entityId = id;
         init(className, true, constants);
         entityCaptionPanel.addStyleName("y-gwt-ReadEntityCaptionPanel");
         entityFieldsPanel.addStyleName("y-gwt-ReadEntityDisplayWidget");
         basePanel.addStyleName("y-gwt-ReadBasePanel");
-        this.entityId = id;
         loadEntity(entityId);
     }
 
@@ -37,5 +37,5 @@ public abstract class ReadComposite extends CRUDComposite {
     public abstract void loadEntity(String entityId);
 
     public abstract void populateFieldsFromEntity(JSONObject entity);
-    
+
 }
