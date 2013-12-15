@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gwt.user.client.ui.ListBox;
 import info.chili.gwt.utils.Alignment;
+import info.chili.gwt.utils.JSONUtils;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -22,7 +23,7 @@ public class EnumField extends BaseField {
         super(constants, attributeName, className, readOnly, isRequired, alignment);
         configureAddMainWidget();
         for (String value : values) {
-            listBox.addItem(value.toString(), value.toString());
+            listBox.addItem(JSONUtils.formatEnumString(value), value.toString());
         }
         setReadOnly(readOnly);
     }
@@ -32,7 +33,7 @@ public class EnumField extends BaseField {
         super(constants, attributeName, className, readOnly, isRequired);
         configureAddMainWidget();
         for (String value : values) {
-            listBox.addItem(value.toString(), value.toString());
+            listBox.addItem(JSONUtils.formatEnumString(value), value.toString());
         }
         setReadOnly(readOnly);
     }
@@ -52,7 +53,7 @@ public class EnumField extends BaseField {
 
     public String getValue() {
         if (listBox.getSelectedIndex() > 0) {
-            return listBox.getItemText(listBox.getSelectedIndex());
+            return listBox.getValue(listBox.getSelectedIndex());
         } else {
             return null;
         }

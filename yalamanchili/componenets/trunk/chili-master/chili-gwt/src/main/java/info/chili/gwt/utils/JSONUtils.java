@@ -80,4 +80,22 @@ public class JSONUtils {
         }
         return values;
     }
+
+    public static String formatEnumString(JSONObject entity, String propertyName) {
+        return formatEnumString(JSONUtils.toString(entity, propertyName));
+    }
+
+    /**
+     * converts All Caps string to regular string eg: MALE-->Male
+     *
+     * @param str eg: MALE
+     * @return eg: Male
+     */
+    public static String formatEnumString(String str) {
+        if (str != null && str.length() > 2) {
+            return str.substring(0, 1).toUpperCase() + str.substring(1, str.length()).toLowerCase();
+        } else {
+            return str;
+        }
+    }
 }
