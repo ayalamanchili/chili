@@ -95,6 +95,22 @@ public class DateUtils {
         return IsLeapYear(cal.getTime());
     }
 
+    public static Date getFirstDayOfYear(int year) {
+        Calendar calendarStart = Calendar.getInstance();
+        calendarStart.set(Calendar.YEAR, year);
+        calendarStart.set(Calendar.MONTH, 0);
+        calendarStart.set(Calendar.DAY_OF_MONTH, 1);
+        return calendarStart.getTime();
+    }
+
+    public static Date getLastDayOfYear(int year) {
+        Calendar calendarEnd = Calendar.getInstance();
+        calendarEnd.set(Calendar.YEAR, year);
+        calendarEnd.set(Calendar.MONTH, 11);
+        calendarEnd.set(Calendar.DAY_OF_MONTH, 31);
+        return calendarEnd.getTime();
+    }
+
     public static boolean isLeapYear(int year) {
         if ((year % 4) == 0) {
             if ((year % 100) == 0) {
