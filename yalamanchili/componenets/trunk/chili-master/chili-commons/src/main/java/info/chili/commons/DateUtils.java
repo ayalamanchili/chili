@@ -88,4 +88,25 @@ public class DateUtils {
         return result;
 
     }
+
+    public static boolean IsLeapYear(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return IsLeapYear(cal.getTime());
+    }
+
+    public static boolean isLeapYear(int year) {
+        if ((year % 4) == 0) {
+            if ((year % 100) == 0) {
+                if ((year % 400) == 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
 }
