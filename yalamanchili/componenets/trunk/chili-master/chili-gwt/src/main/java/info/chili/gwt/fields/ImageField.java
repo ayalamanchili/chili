@@ -40,7 +40,6 @@ public class ImageField extends ALComposite implements ClickHandler {
         logger.info("ddd" + this.url);
         if (validUrl) {
             this.url = ChiliClientConfig.instance().getFileDownloadUrl() + url + "&entityId=" + entityId;
-            logger.info("dddd" + this.url);
             image.setUrl(this.url);
         } else {
             setDefaultImage(width, height);
@@ -101,7 +100,7 @@ public class ImageField extends ALComposite implements ClickHandler {
     public void onClick(ClickEvent event) {
         if (event.getSource().equals(image)) {
             if (validUrl) {
-                new GenericPopup(new Image(ChiliClientConfig.instance().getFileDownloadUrl() + url + "&entityId=" + entityId)).show();
+                new GenericPopup(new Image(url + "&entityId=" + entityId)).show();
             }
         }
     }
