@@ -1,5 +1,6 @@
 package info.chili.commons;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -95,6 +96,10 @@ public class DateUtils {
         return IsLeapYear(cal.getTime());
     }
 
+    public static Date getFirstDayOfYear(Date date) {
+        return getFirstDayOfYear(date.getYear());
+    }
+
     public static Date getFirstDayOfYear(int year) {
         Calendar calendarStart = Calendar.getInstance();
         calendarStart.set(Calendar.YEAR, year);
@@ -103,12 +108,35 @@ public class DateUtils {
         return calendarStart.getTime();
     }
 
+    public static Date getLastDayOfYear(Date date) {
+        return getLastDayOfYear(date.getYear());
+    }
+
     public static Date getLastDayOfYear(int year) {
         Calendar calendarEnd = Calendar.getInstance();
         calendarEnd.set(Calendar.YEAR, year);
         calendarEnd.set(Calendar.MONTH, 11);
         calendarEnd.set(Calendar.DAY_OF_MONTH, 31);
         return calendarEnd.getTime();
+    }
+
+    public static Integer getDaysCompletedInYear(Date date) {
+        return null;
+    }
+
+    public static Integer getDaysRemainingInYear(Date date) {
+        return null;
+    }
+
+    /**
+     *
+     * @param totalChuck eg: 40 hours
+     * @param totalPortaion eg: 365 Days
+     * @param proratedPortion eg: 175 Days
+     * @return eg: 19.1 hours
+     */
+    public static BigDecimal getProratedHours(BigDecimal totalChuck, BigDecimal totalPortaion, BigDecimal proratedPortion) {
+        return totalChuck.divide(totalPortaion).multiply(proratedPortion);
     }
 
     public static boolean isLeapYear(int year) {
