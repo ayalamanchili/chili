@@ -220,6 +220,13 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         entityFieldsPanel.add(enumField);
     }
 
+    protected void addEnumField(String key, Boolean readOnly, Boolean isRequired, HashMap<String, String> values) {
+        EnumField enumField = new EnumField(constants, key, entityName,
+                readOnly, isRequired, values);
+        fields.put(key, enumField);
+        entityFieldsPanel.add(enumField);
+    }
+
     protected void addDropDown(String key, SelectComposite widget) {
         fields.put(key, widget);
         widget.getListBox().setEnabled(!readOnly);

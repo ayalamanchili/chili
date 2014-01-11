@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 import com.google.gwt.user.client.ui.ListBox;
 import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.JSONUtils;
+import java.util.HashMap;
+import java.util.Map;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -34,6 +36,16 @@ public class EnumField extends BaseField {
         configureAddMainWidget();
         for (String value : values) {
             listBox.addItem(JSONUtils.formatEnumString(value), value.toString());
+        }
+        setReadOnly(readOnly);
+    }
+
+    public EnumField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired,
+            HashMap<String, String> values) {
+        super(constants, attributeName, className, readOnly, isRequired);
+        configureAddMainWidget();
+        for (Map.Entry<String, String> value : values.entrySet()) {
+            listBox.addItem(value.getValue(), value.getKey());
         }
         setReadOnly(readOnly);
     }
