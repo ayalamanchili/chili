@@ -6,6 +6,8 @@ package info.chili.gwt.crud;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.logical.shared.OpenEvent;
@@ -35,10 +37,12 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import info.chili.gwt.composite.SelectComposite;
 import info.chili.gwt.date.DateUtils;
@@ -94,7 +98,12 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         entityCaptionPanel.setContentWidget(entityPanel);
         basePanel.add(entityCaptionPanel);
         entityCaptionPanel.addStyleName("crudCompositeCaptionPanel");
-        entityCaptionPanel.setCaptionHTML(Utils.getKeyValue(entityName, constants));
+        if (showDocumentationLink()) {
+
+        } else {
+            entityCaptionPanel.setCaptionHTML(Utils.getKeyValue(entityName, constants));
+        }
+        configureDocumentationLink();
         addWidgets();
         configure();
         addListeners();
@@ -523,6 +532,34 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
             }
         });
 
+    }
+
+    //------------------Documention Link and Widget -----------------//
+    protected void configureDocumentationLink() {
+        if (showDocumentationLink()) {
+            Anchor docLink = new Anchor("Documentation");
+            docLink.addStyleName("documentationLink");
+            docLink.addClickHandler(new ClickHandler() {
+
+                @Override
+                public void onClick(ClickEvent event) {
+                    Frame frame = new Frame(getDocumentationLink());
+                    frame.setHeight("600px");
+                    frame.setWidth("600px");
+                    frame.addStyleName("documentationFrame");
+                    entityFieldsPanel.add(frame);
+                }
+            });
+            entityFieldsPanel.add(docLink);
+        }
+    }
+
+    protected boolean showDocumentationLink() {
+        return false;
+    }
+
+    protected String getDocumentationLink() {
+        return "";
     }
     //-----------------utils--------------------//
 
