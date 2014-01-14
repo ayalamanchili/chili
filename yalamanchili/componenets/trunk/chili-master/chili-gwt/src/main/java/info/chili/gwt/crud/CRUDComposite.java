@@ -6,8 +6,6 @@ package info.chili.gwt.crud;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.logical.shared.OpenEvent;
@@ -37,15 +35,11 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
 import info.chili.gwt.composite.SelectComposite;
 import info.chili.gwt.date.DateUtils;
 import info.chili.gwt.fields.FileuploadField;
@@ -54,7 +48,6 @@ import info.chili.gwt.listeners.KeyPressListener;
 import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.FormatUtils;
 import info.chili.gwt.utils.Utils;
-import info.chili.gwt.widgets.GenericPopup;
 
 public abstract class CRUDComposite extends Composite implements KeyPressListener {
 
@@ -99,10 +92,12 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         entityPanel.add(entityFieldsPanel);
         entityPanel.add(entityActionsPanel);
         entityCaptionPanel.setContentWidget(entityPanel);
-        configureDocumentationLink();
         basePanel.add(entityCaptionPanel);
         entityCaptionPanel.addStyleName("crudCompositeCaptionPanel");
         entityCaptionPanel.setCaptionHTML(Utils.getKeyValue(entityName, constants));
+        if (showDocumentationLink()) {
+            configureDocumentationLink();
+        }
         addWidgets();
         configure();
         addListeners();
@@ -535,25 +530,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
 
     //------------------Documention Link and Widget -----------------//
     protected void configureDocumentationLink() {
-        if (showDocumentationLink()) {
-            final Label docLink = new Label("View Documentation");
-            docLink.addStyleName("documentationLink");
-            basePanel.add(docLink);
-            docLink.addClickHandler(new ClickHandler() {
-
-                @Override
-                public void onClick(ClickEvent event) {
-                    Frame frame = new Frame(getDocumentationLink());
-                    Integer width = (Window.getClientWidth() * 2) / 3;
-                    Integer height = (Window.getClientHeight() * 2) / 3;
-                    frame.setHeight(height + "px");
-                    frame.setWidth(width + "px");
-                    frame.addStyleName("documentationFrame");
-                    new GenericPopup(frame).show();
-                }
-            });
-
-        }
+        entityCaptionPanel.setCaptionHTML(entityCaptionPanel.getCaptionHTML() + Utils.getInformationIconHtml(getDocumentationLink()));
     }
 
     protected boolean showDocumentationLink() {

@@ -5,6 +5,9 @@ import java.util.MissingResourceException;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.user.client.ui.Image;
+import info.chili.gwt.resources.ChiliImages;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -104,6 +107,17 @@ public class Utils {
 
     public static String getFileNameFromUrl(String url) {
         return url.substring(url.lastIndexOf("_"));
+    }
+
+    public static String getInformationIconHtml(String informationLink) {
+        Image image = new Image((ImageResource) ChiliImages.INSTANCE.infoIcon_16_16());
+        StringBuilder sb = new StringBuilder();
+        sb.append("   <span class=\"infoToolTip\">");
+        sb.append("<a target=\"_blank\" class=\"infoToolTipIcon\"");
+        sb.append("href=\"").append(informationLink).append("\">");
+        sb.append(" <img src=\"").append(image.getUrl()).append("\"/>");
+        sb.append(" </a>  </span>");
+        return sb.toString();
     }
 
     public static Map sortByComparator(Map unsortMap) {

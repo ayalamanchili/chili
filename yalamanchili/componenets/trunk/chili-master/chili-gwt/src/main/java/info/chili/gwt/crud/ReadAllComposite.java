@@ -17,10 +17,12 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -30,6 +32,7 @@ import info.chili.gwt.fields.ListBoxField;
 import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.JSONUtils;
 import info.chili.gwt.utils.Utils;
+import info.chili.gwt.widgets.GenericPopup;
 import info.chili.gwt.widgets.ResponseStatusWidget;
 import java.util.HashMap;
 import java.util.Map;
@@ -166,6 +169,9 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         mainPanel.add(tablePanel);
         captionPanel.setContentWidget(mainPanel);
         captionPanel.setCaptionHTML(classCanonicalName);
+        if (showDocumentationLink()) {
+            configureDocumentationLink();
+        }
         basePanel.add(captionPanel);
     }
 
@@ -341,12 +347,26 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         }
     }
 
+    protected void configureDocumentationLink() {
+        captionPanel.setCaptionHTML(captionPanel.getCaptionHTML() + Utils.getInformationIconHtml(getDocumentationLink()));
+    }
+
+    protected boolean showDocumentationLink() {
+        return false;
+    }
+
+    protected String getDocumentationLink() {
+        return "";
+    }
+
     /**
      * Used to replacing table columns values with custom values eg: sex_MALE=M
+     *
      * @param entity Table row returned from server eg: Employee
-     * @param key The key(column) value used to search and replace eg: sex_MALE format: column name_value
+     * @param key The key(column) value used to search and replace eg: sex_MALE
+     * format: column name_value
      * @param customValues map used to store the custom values
-     * @return 
+     * @return
      */
     protected String getCustomValue(JSONValue entity, String key, HashMap<String, String> customValues) {
         key = key + "_" + JSONUtils.toString(entity, key);

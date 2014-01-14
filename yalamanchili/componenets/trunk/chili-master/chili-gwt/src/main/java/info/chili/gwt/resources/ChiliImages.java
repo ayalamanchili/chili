@@ -41,6 +41,9 @@ public interface ChiliImages extends ClientBundle {
     @Source("images/quick_view_icon_16_16.png")
     ImageResource quickViewIcon_16_16();
 
+    @Source("images/info_icon_16_16.png")
+    ImageResource infoIcon_16_16();
+
     @Source("images/view_icon_16_16.png")
     ImageResource viewIcon_16_16();
 
