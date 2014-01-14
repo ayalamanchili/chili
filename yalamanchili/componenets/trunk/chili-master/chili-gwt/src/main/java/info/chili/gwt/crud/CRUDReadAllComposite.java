@@ -12,8 +12,8 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
     protected void createOptionsWidget(TableRowOptionsWidget.OptionsType type, final int row, final String id) {
         TableRowOptionsWidget rowOptionsWidget = new TableRowOptionsWidget(type, id) {
             @Override
-            protected void onReadMouseOver() {
-                CRUDReadAllComposite.this.onReadMouseOver(row, id);
+            protected void onQuickView() {
+                CRUDReadAllComposite.this.onQuickView(row, id);
             }
         };
         createOptionsWidget(rowOptionsWidget, row, id);
@@ -21,9 +21,16 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
 
     @Override
     protected void createOptionsWidget(TableRowOptionsWidget rowOptionsWidget, int row, String id) {
+        if (enableQuickView()) {
+            rowOptionsWidget.configureQuickViewLink();
+        }
         rowOptionsWidget.initListeners(this);
         table.setWidget(row, 0, rowOptionsWidget);
         optionsWidgetMap.put(String.valueOf(row), rowOptionsWidget);
+    }
+
+    protected boolean enableQuickView() {
+        return false;
     }
 
     @Override
@@ -63,7 +70,7 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
      */
     public abstract void updateClicked(String entityId);
 
-    protected void onReadMouseOver(int row, String id) {
+    protected void onQuickView(int row, String id) {
 
     }
 }

@@ -14,6 +14,7 @@ public class TableRowOptionsWidget extends GenericTableRowOptionsWidget implemen
     ClickableImage readLink = new ClickableImage("view", ChiliImages.INSTANCE.viewIcon_16_16());
     ClickableImage updateLink = new ClickableImage("update", ChiliImages.INSTANCE.updateIcon_16_16());
     ClickableImage deleteLink = new ClickableImage("delete", ChiliImages.INSTANCE.deleteIcon_16_16());
+    ClickableImage quickViewLink;
 
     public enum OptionsType {
 
@@ -30,23 +31,25 @@ public class TableRowOptionsWidget extends GenericTableRowOptionsWidget implemen
     }
 
     protected void addListeners() {
-        readLink.addMouseOverHandler(this);
-        updateLink.addMouseOverHandler(this);
-        deleteLink.addMouseOverHandler(this);
+
     }
 
     protected void initListeners(ClickHandler handler) {
         readLink.addClickHandler(handler);
         updateLink.addClickHandler(handler);
         deleteLink.addClickHandler(handler);
-
     }
 
     protected void configure() {
         readLink.addStyleName("readL");
         updateLink.addStyleName("updateLink");
         deleteLink.addStyleName("deleteLink");
+    }
 
+    protected void configureQuickViewLink() {
+        quickViewLink = new ClickableImage("quick view", ChiliImages.INSTANCE.quickViewIcon_16_16());
+        quickViewLink.addMouseOverHandler(this);
+        panel.add(quickViewLink);
     }
 
     protected void addWidgets() {
@@ -92,16 +95,12 @@ public class TableRowOptionsWidget extends GenericTableRowOptionsWidget implemen
 
     @Override
     public void onMouseOver(MouseOverEvent event) {
-        if (event.getSource().equals(readLink)) {
-            onReadMouseOver();
-        }
-        if (event.getSource().equals(updateLink)) {
-        }
-        if (event.getSource().equals(deleteLink)) {
+        if (event.getSource().equals(quickViewLink)) {
+            onQuickView();
         }
     }
 
-    protected void onReadMouseOver() {
-       
+    protected void onQuickView() {
+
     }
 }
