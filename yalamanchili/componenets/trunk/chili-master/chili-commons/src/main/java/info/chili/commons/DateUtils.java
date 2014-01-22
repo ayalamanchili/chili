@@ -5,9 +5,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class DateUtils {
+
+    public static String removeTimeZoneCodeFromDate(String dateStr) {
+        int start = dateStr.indexOf("GMT");
+        if (start < 0) {
+            return dateStr;
+        }
+        String tempStr=dateStr.substring(start);
+        int end = tempStr.indexOf(" ");
+        
+        return dateStr.substring(0, start) + tempStr.substring(end+1);
+    }
 
     public final static Date getNextYear(Date now, int i) {
         Calendar calendar = Calendar.getInstance();
@@ -59,6 +71,15 @@ public class DateUtils {
 
     }
 
+    public static Date parse(String dateString, String dateFormat, Locale lcl) {
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat, lcl);
+        try {
+            return formatter.parse(dateString);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static Date parse(String dateString, String dateFormat) {
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
         try {
@@ -102,7 +123,7 @@ public class DateUtils {
         calendarStart.set(Calendar.DAY_OF_MONTH, 1);
         return calendarStart.getTime();
     }
-    
+
     public static Date getLastDayCurrentOfYear() {
         Calendar calendarEnd = Calendar.getInstance();
         calendarEnd.set(Calendar.MONTH, 11);
