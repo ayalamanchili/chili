@@ -29,19 +29,19 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
         JSONObject user = new JSONObject();
         user.put("username", username.toLowerCase());
         user.put("passwordHash", password);
-        return doPut(getLoginPath(), user.toString(), addHeaders(new HashMap<String, String>()), true);
+        return doPut(getLoginPath(), user.toString(), addHeaders(new HashMap<String, String>(), ""), true);
     }
 
     @Override
     public String doPut(String url, String body, Map<String, String> headers, boolean newClient) {
         return SyncHttp.httpPut(getServicesRootURL() + url, body,
-                addHeaders(headers), newClient);
+                addHeaders(headers, url), newClient);
     }
 
     @Override
     public String doGet(String url, Map<String, String> headers, boolean newClient) {
         return SyncHttp.httpGet(getServicesRootURL() + url,
-                addHeaders(headers), newClient);
+                addHeaders(headers, url), newClient);
     }
 
     @Override
@@ -49,17 +49,16 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
         this.getThreadLocalRequest().getSession().invalidate();
     }
 
-    protected Map<String, String> addHeaders(Map<String, String> headers) {
-        System.out.println("dddd"+headers);
+    protected Map<String, String> addHeaders(Map<String, String> headers, String url) {
+        System.out.println("dddd" + headers);
         for (String attr : headers.keySet()) {
             headers.put(attr, headers.get(attr));
         }
         //TODO this should be set on client
         headers.put("Content-Type", "application/json");
-        if (this.getThreadLocalRequest().getSession().getAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR) != null) {
+        if (this.getThreadLocalRequest().getSession().getAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR) != null && !url.contains("/public/")) {
             headers.put("Authorization", (String) this.getThreadLocalRequest().getSession().getAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR));
         }
-           System.out.println("dddd"+headers);
         return headers;
     }
 
@@ -71,4 +70,6 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
     protected abstract String getServicesRootURL();
 
     protected abstract String getLoginPath();
+
+    protected abstract String getPublicUrlPath();
 }
