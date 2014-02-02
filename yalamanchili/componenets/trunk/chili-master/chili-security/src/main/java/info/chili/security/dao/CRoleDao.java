@@ -30,7 +30,11 @@ public class CRoleDao extends CRUDDao<CRole> {
         }
         return storeRole;
     }
-    
+
+    public CRole findRoleByName(String roleName) {
+        return EntityQueryUtils.findEntity(em, CRole.class, "rolename", roleName);
+    }
+
     @PersistenceContext
     protected EntityManager em;
 
