@@ -24,9 +24,7 @@ public class EnumField extends BaseField {
             String[] values, Alignment alignment) {
         super(constants, attributeName, className, readOnly, isRequired, alignment);
         configureAddMainWidget();
-        for (String value : values) {
-            listBox.addItem(JSONUtils.formatEnumString(value), value.toString());
-        }
+        addValues(values);
         setReadOnly(readOnly);
     }
 
@@ -34,9 +32,7 @@ public class EnumField extends BaseField {
             String[] values) {
         super(constants, attributeName, className, readOnly, isRequired);
         configureAddMainWidget();
-        for (String value : values) {
-            listBox.addItem(JSONUtils.formatEnumString(value), value.toString());
-        }
+        addValues(values);
         setReadOnly(readOnly);
     }
 
@@ -48,6 +44,17 @@ public class EnumField extends BaseField {
             listBox.addItem(value.getValue(), value.getKey());
         }
         setReadOnly(readOnly);
+    }
+
+    public void addValues(String[] values) {
+        for (String value : values) {
+            listBox.addItem(JSONUtils.formatEnumString(value), value.toString());
+        }
+    }
+
+    public void setValues(String[] values) {
+        listBox.clear();
+        addValues(values);
     }
 
     public void setValue(String var) {
