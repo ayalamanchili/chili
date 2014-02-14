@@ -92,10 +92,17 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         return values;
     }
 
+    public void setSelectedValue(JSONObject entity, String idKey) {
+        this.selectedObject = entity;
+        if (getSelectedObject() == null) {
+            populateSelectedValue(idKey);
+        }
+    }
+
     public void setSelectedValue(JSONObject entity) {
         this.selectedObject = entity;
         if (getSelectedObject() == null) {
-            populateSelectedValue();
+            populateSelectedValue(null);
         }
     }
 
@@ -103,10 +110,21 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         this.listeners.add(listner);
     }
 
-    public void populateSelectedValue() {
+    /**
+     * use this 'id' is not the primary key
+     *
+     * @param idStr
+     */
+    public void populateSelectedValue(String idStr) {
+        String keyStr;
+        if (idStr == null) {
+            keyStr = "id";
+        } else {
+            keyStr = idStr;
+        }
         for (int i = 0; i < listBox.getItemCount(); i++) {
             //TODO make primary key static
-            if (listBox.getItemText(i) != null && listBox.getValue(i).equalsIgnoreCase(JSONUtils.toString(selectedObject, "id"))) {
+            if (listBox.getItemText(i) != null && listBox.getValue(i).equalsIgnoreCase(JSONUtils.toString(selectedObject, keyStr))) {
                 listBox.setSelectedIndex(i);
             }
         }
@@ -121,7 +139,7 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
             i++;
         }
         if (selectedObject != null) {
-            populateSelectedValue();
+            populateSelectedValue(null);
             //To support update panel drop downs
             onChange(null);
         }
