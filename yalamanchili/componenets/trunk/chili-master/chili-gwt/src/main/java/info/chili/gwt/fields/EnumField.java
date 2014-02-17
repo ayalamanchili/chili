@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gwt.user.client.ui.ListBox;
 import info.chili.gwt.utils.Alignment;
-import info.chili.gwt.utils.JSONUtils;
+import info.chili.gwt.utils.Utils;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,10 +19,12 @@ public class EnumField extends BaseField {
 
     Logger logger = Logger.getLogger(EnumField.class.getName());
     protected final ListBox listBox = new ListBox();
+    protected ConstantsWithLookup constants;
 
     public EnumField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired,
             String[] values, Alignment alignment) {
         super(constants, attributeName, className, readOnly, isRequired, alignment);
+        this.constants = constants;
         configureAddMainWidget();
         addValues(values);
         setReadOnly(readOnly);
@@ -48,7 +50,7 @@ public class EnumField extends BaseField {
 
     public void addValues(String[] values) {
         for (String value : values) {
-            listBox.addItem(JSONUtils.formatEnumString(value), value.toString());
+            listBox.addItem(Utils.getAttributeLabel(value, attributeName, constants), value.toString());
         }
     }
 
