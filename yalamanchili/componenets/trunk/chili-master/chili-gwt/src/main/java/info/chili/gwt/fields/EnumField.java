@@ -66,7 +66,7 @@ public class EnumField extends BaseField {
 
     public void selectValue(String value) {
         for (int i = 0; i < listBox.getItemCount(); i++) {
-            if (listBox.getItemText(i) != null && listBox.getItemText(i).equalsIgnoreCase(value)) {
+            if (listBox.getValue(i) != null && listBox.getValue(i).toLowerCase().equals(value.toLowerCase())) {
                 listBox.setSelectedIndex(i);
             }
         }
