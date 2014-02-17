@@ -147,7 +147,7 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
 
     protected void initListBox() {
         listBox.clear();
-        listBox.insertItem("SELECT", 0);
+        listBox.insertItem("Select", 0);
     }
 
     @Override
