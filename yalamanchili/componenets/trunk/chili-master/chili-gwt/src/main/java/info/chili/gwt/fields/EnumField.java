@@ -82,7 +82,7 @@ public class EnumField extends BaseField {
 
     @Override
     protected void configureAddMainWidget() {
-        listBox.insertItem("SELECT", 0);
+        listBox.insertItem("Select", 0);
         listBox.ensureDebugId(className + "_" + attributeName + "_LB");
         fieldPanel.insert(listBox, 0);
     }
