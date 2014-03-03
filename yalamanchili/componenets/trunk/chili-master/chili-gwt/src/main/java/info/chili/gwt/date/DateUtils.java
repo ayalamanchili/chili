@@ -2,6 +2,7 @@ package info.chili.gwt.date;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
+import info.chili.gwt.config.ChiliClientConfig;
 import java.util.Date;
 
 public class DateUtils {
@@ -11,7 +12,11 @@ public class DateUtils {
 
     public static String toDateString(Date date) {
         DateTimeFormat formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT);
-        return formatter.format(date);
+        if (ChiliClientConfig.instance().getTimeZone() != null) {
+            return formatter.format(date, ChiliClientConfig.instance().getTimeZone());
+        } else {
+            return formatter.format(date);
+        }
     }
 
     public static Date toDate(String dateString) {
@@ -33,7 +38,10 @@ public class DateUtils {
         if (dateString == null || "".equals(dateString)) {
             return null;
         }
-        return DateTimeFormat.getFormat(format).format(toDate(dateString));
-
+        if (ChiliClientConfig.instance().getTimeZone() != null) {
+            return DateTimeFormat.getFormat(format).format(toDate(dateString), ChiliClientConfig.instance().getTimeZone());
+        } else {
+            return DateTimeFormat.getFormat(format).format(toDate(dateString));
+        }
     }
 }
