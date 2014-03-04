@@ -58,7 +58,7 @@ public abstract class AbstractFileServiceServlet extends HttpServlet {
         String url = getServiceBaseUrl();
         if (request.getParameter("passthrough") != null) {
             //passthrough mode calls the service method for the path
-            url = request.getParameter("path") + "?" + request.getQueryString();
+            url = url + request.getParameter("path") + "?" + request.getQueryString();
         } else {
             //calls the file service
             url = url + "file/download?" + request.getQueryString();
