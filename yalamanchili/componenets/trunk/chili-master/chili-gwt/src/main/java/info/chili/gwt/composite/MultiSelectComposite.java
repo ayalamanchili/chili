@@ -42,6 +42,7 @@ public abstract class MultiSelectComposite extends Composite {
         panel.add(multiSelectBox);
         multiSelectBox.setReadOnly(readOnly);
         multiSelectBox.setConstants(constants);
+        multiSelectBox.setClassName(name);
         loadData();
     }
 

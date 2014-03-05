@@ -28,10 +28,12 @@ import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.JSONUtils;
 import info.chili.gwt.utils.Utils;
 //TODO extend base field
+
 public abstract class MultiSelectBox extends ALComposite implements ClickHandler {
 
     private static Logger logger = Logger.getLogger(MultiSelectBox.class.getName());
     protected ConstantsWithLookup constants;
+    protected String className;
     CaptionPanel captionPanel = new CaptionPanel();
     CHorizontalPanel panel = new CHorizontalPanel();
     ListBoxField availableListBox = new ListBoxField("Available", true, Alignment.VERTICAL);
@@ -54,10 +56,10 @@ public abstract class MultiSelectBox extends ALComposite implements ClickHandler
         int i = 0;
         for (String id : available.keySet()) {
             if (selected.contains(id)) {
-                selectedListBox.getListBox().insertItem(available.get(id), id.toString(),
+                selectedListBox.getListBox().insertItem(Utils.getAttributeLabel(available.get(id), className, constants), id.toString(),
                         i);
             } else {
-                availableListBox.getListBox().insertItem(available.get(id), id.toString(),
+                availableListBox.getListBox().insertItem(Utils.getAttributeLabel(available.get(id), className, constants), id.toString(),
                         i);
             }
             i++;
@@ -101,7 +103,7 @@ public abstract class MultiSelectBox extends ALComposite implements ClickHandler
         if (event.getSource().equals(selectButton)) {
             tempSelectedItems = new ArrayList<String>();
             for (String id : getSelectedIds(availableListBox)) {
-                selectedListBox.getListBox().insertItem(available.get(id), id.toString(),
+                selectedListBox.getListBox().insertItem(Utils.getAttributeLabel(available.get(id), className, constants), id.toString(),
                         new Integer(id));
                 removeSelectedItems(availableListBox);
                 tempSelectedItems.add(id);
@@ -111,7 +113,7 @@ public abstract class MultiSelectBox extends ALComposite implements ClickHandler
         if (event.getSource().equals(unselectButton)) {
             tempSelectedItems = new ArrayList<String>();
             for (String id : getSelectedIds(selectedListBox)) {
-                availableListBox.getListBox().insertItem(available.get(id), id.toString(),
+                availableListBox.getListBox().insertItem(Utils.getAttributeLabel(available.get(id), className, constants), id.toString(),
                         new Integer(id));
                 removeSelectedItems(selectedListBox);
                 tempSelectedItems.add(id);
@@ -165,6 +167,14 @@ public abstract class MultiSelectBox extends ALComposite implements ClickHandler
         selectedListBox.getListBox().setEnabled(!readOnly);
         selectButton.setEnabled(!readOnly);
         unselectButton.setEnabled(!readOnly);
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     public ConstantsWithLookup getConstants() {
