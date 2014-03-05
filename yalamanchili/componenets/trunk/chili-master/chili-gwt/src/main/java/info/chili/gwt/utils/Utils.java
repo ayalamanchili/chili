@@ -53,7 +53,7 @@ public class Utils {
         String key = classCanonicalName + "_" + attribute;
         key = key.replace(".", "_");
         try {
-            return constants.getString(key);
+            return constants.getString(key.trim());
         } catch (MissingResourceException e) {
             return attribute;
         }

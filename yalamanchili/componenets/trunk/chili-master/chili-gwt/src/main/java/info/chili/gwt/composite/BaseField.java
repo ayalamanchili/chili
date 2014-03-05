@@ -17,11 +17,13 @@ import info.chili.gwt.widgets.ClickableImage;
 public abstract class BaseField extends Composite implements BlurHandler {
 
     public BaseField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean required, Alignment alignment) {
+        this.constants = constants;
         this.readOnly = readOnly;
         this.alignment = alignment;
         this.required = required;
         this.attributeName = attributeName;
         this.className = className;
+        //TODO move this to configure metjhod
         if (required) {
             label.setHTML(Utils.getAttributeLabel(attributeName, className, constants) + "<em class='tfRequired'>*</em>");
         } else {
@@ -36,6 +38,7 @@ public abstract class BaseField extends Composite implements BlurHandler {
 //TODO depreciate this
 
     public BaseField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean required) {
+        this.constants = constants;
         this.readOnly = readOnly;
         this.required = required;
         this.attributeName = attributeName;
@@ -92,6 +95,7 @@ public abstract class BaseField extends Composite implements BlurHandler {
     protected Boolean isValid = false;
     protected Boolean readOnly = false;
     protected Boolean required = false;
+    protected ConstantsWithLookup constants;
     protected Alignment alignment = Alignment.VERTICAL;
     // this is actual bean/entity attribute name can be used to validation
     // purposes

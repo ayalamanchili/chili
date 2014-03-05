@@ -135,7 +135,11 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         values = Utils.sortByComparator(values);
         int i = 1;
         for (Integer key : values.keySet()) {
-            listBox.insertItem(values.get(key), key.toString(), i);
+            if (useConstants()) {
+                listBox.insertItem(Utils.getAttributeLabel(values.get(key), className, constants), key.toString(), i);
+            } else {
+                listBox.insertItem(values.get(key), key.toString(), i);
+            }
             i++;
         }
         if (selectedObject != null) {
@@ -143,6 +147,10 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
             //To support update panel drop downs
             onChange(null);
         }
+    }
+
+    protected boolean useConstants() {
+        return false;
     }
 
     protected void initListBox() {
