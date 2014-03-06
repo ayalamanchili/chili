@@ -33,6 +33,7 @@ public class EnumField extends BaseField {
     public EnumField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired,
             String[] values) {
         super(constants, attributeName, className, readOnly, isRequired);
+        this.constants = constants;
         configureAddMainWidget();
         addValues(values);
         setReadOnly(readOnly);
@@ -43,7 +44,7 @@ public class EnumField extends BaseField {
         super(constants, attributeName, className, readOnly, isRequired);
         configureAddMainWidget();
         for (Map.Entry<String, String> value : values.entrySet()) {
-            listBox.addItem(value.getValue(), value.getKey());
+            listBox.addItem(Utils.getAttributeLabel(value.getValue(), attributeName, constants), value.getKey());
         }
         setReadOnly(readOnly);
     }

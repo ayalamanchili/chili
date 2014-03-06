@@ -17,12 +17,10 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -32,7 +30,6 @@ import info.chili.gwt.fields.ListBoxField;
 import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.JSONUtils;
 import info.chili.gwt.utils.Utils;
-import info.chili.gwt.widgets.GenericPopup;
 import info.chili.gwt.widgets.ResponseStatusWidget;
 import java.util.HashMap;
 import java.util.Map;
@@ -357,6 +354,21 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
 
     protected String getDocumentationLink() {
         return "";
+    }
+
+    /**
+     * @param row table row
+     * @param column table column
+     * @param entity actual object
+     * @param enumClassName eg: Sex
+     * @param attributeName eg: sex
+     */
+    protected void setEnumColumn(int row, int column, JSONObject entity, String enumClassName, String attributeName) {
+        table.setText(row, column, Utils.getAttributeLabel(JSONUtils.toString(entity, attributeName), enumClassName, constants));
+    }
+
+    protected void setValueFromConstants(int row, int column, JSONObject entity, String className, String attributeName) {
+        table.setText(row, column, Utils.getAttributeLabel(attributeName, className, constants));
     }
 
     /**
