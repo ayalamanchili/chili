@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class AuditService {
-    
+
     protected AuditReader auditReader;
     //TODO get this only on demand
     @PersistenceContext
@@ -60,6 +60,9 @@ public class AuditService {
             auditData.addEntry(new Entry("UPDATED-BY", revEntity.getUpdatedUserId()));
             auditData.addEntry(new Entry("UPDATED-AT", revEntity.getUpdatedTimeStamp().toString()));
             Object entity = getAuditReader().find(entityCls, id, revNumber);
+            if (entity == null) {
+                continue;
+            }
             Map<String, Object> valuesMap = ReflectionUtils.getFieldsDataFromEntity(entity, entityCls, true);
             for (Map.Entry<String, Object> entry : valuesMap.entrySet()) {
                 if (ignoreFields.contains(entry.getKey())) {
@@ -94,6 +97,7 @@ public class AuditService {
             }
         }
     }
+
     //TODO add a css style ?
     protected void highLightChanges(info.chili.service.jrs.types.Entry e) {
         e.setValue("<font style=\"BACKGROUND-COLOR: yellow\">" + e.getValue() + "</font>");
