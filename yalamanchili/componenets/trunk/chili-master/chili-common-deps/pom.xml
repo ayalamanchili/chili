@@ -211,6 +211,18 @@
             <artifactId>guava-gwt</artifactId>
             <version>${guava.version}</version>
         </dependency>
+        <!-- html to pdf-->
+        <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>core-renderer</artifactId>
+            <version>${xhtmlrenderer.core.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>${itext.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -312,5 +324,7 @@
         <dynamic.jasper.version>4.0.0</dynamic.jasper.version>
         <jersey.version>1.8</jersey.version>
         <guava.version>13.0</guava.version>
+        <itext.version>2.0.8</itext.version>
+        <xhtmlrenderer.core.version>R8</xhtmlrenderer.core.version>
     </properties>
 </project>

@@ -8,6 +8,7 @@ package info.chili.commons;
  *
  * @author ayalamanchili
  */
+//TODO rename it to be more apprioriate
 public class FileUtils {
 
     public enum DOC_EXTENSIONS {
