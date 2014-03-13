@@ -90,6 +90,9 @@ public class HttpHelper {
         InputStream input = null;
         OutputStream output = null;
         HttpEntity entity = response.getEntity();
+        if (entity == null) {
+            return;
+        }
         try {
             input = entity.getContent();
             output = servletRes.getOutputStream();
