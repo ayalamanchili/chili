@@ -43,6 +43,15 @@ public class AuditService {
         return auditReader;
     }
 
+    public Object getPreviousVersion(Class cls, Long id) {
+        List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
+        if (revNumbers.size() > 0) {
+            return getAuditReader().find(cls, id, revNumbers.get(0));
+        } else {
+            return null;
+        }
+    }
+
     //get recent changes on a entity
     public EntityAuditDataTbl getRecentChanges(String className, Long id, List<String> ignoreFields) {
         ignoreFieldsList.addAll(ignoreFields);
@@ -84,7 +93,7 @@ public class AuditService {
         return table;
     }
 
-    protected void checkForChanges(Map.Entry<String, Object> entry, info.chili.service.jrs.types.Entry e, Map<String, Object> previousValuesMap) {
+    public static void checkForChanges(Map.Entry<String, Object> entry, info.chili.service.jrs.types.Entry e, Map<String, Object> previousValuesMap) {
         if (null != previousValuesMap) {
             if (previousValuesMap.get(entry.getKey()) == null && entry.getValue() != null) {
                 highLightChanges(e);
@@ -98,9 +107,12 @@ public class AuditService {
         }
     }
 
-    //TODO add a css style ?
-    protected void highLightChanges(info.chili.service.jrs.types.Entry e) {
+    protected static void highLightChanges(info.chili.service.jrs.types.Entry e) {
         e.setValue("<font style=\"BACKGROUND-COLOR: yellow\">" + e.getValue() + "</font>");
+    }
+
+    public static String highLightChanges(String str) {
+        return "<font style=\"BACKGROUND-COLOR: yellow\">" + str + "</font>";
     }
     protected static final List<String> ignoreFieldsList = new ArrayList<String>();
 

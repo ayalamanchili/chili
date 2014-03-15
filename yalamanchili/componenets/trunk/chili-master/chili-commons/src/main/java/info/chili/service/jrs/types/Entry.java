@@ -4,6 +4,7 @@
  */
 package info.chili.service.jrs.types;
 
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -13,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement
 @XmlType
-public class Entry {
+public class Entry implements Serializable {
 
     protected String id;
     protected String value;
