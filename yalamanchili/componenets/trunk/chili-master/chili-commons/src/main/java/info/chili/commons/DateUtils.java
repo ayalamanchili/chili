@@ -15,10 +15,10 @@ public class DateUtils {
         if (start < 0) {
             return dateStr;
         }
-        String tempStr=dateStr.substring(start);
+        String tempStr = dateStr.substring(start);
         int end = tempStr.indexOf(" ");
-        
-        return dateStr.substring(0, start) + tempStr.substring(end+1);
+
+        return dateStr.substring(0, start) + tempStr.substring(end + 1);
     }
 
     public final static Date getNextYear(Date now, int i) {
@@ -126,6 +126,14 @@ public class DateUtils {
 
     public static Date getLastDayCurrentOfYear() {
         Calendar calendarEnd = Calendar.getInstance();
+        calendarEnd.set(Calendar.MONTH, 11);
+        calendarEnd.set(Calendar.DAY_OF_MONTH, 31);
+        return calendarEnd.getTime();
+    }
+
+    public static Date getLastDayOfYear(Date year) {
+        Calendar calendarEnd = Calendar.getInstance();
+        calendarEnd.setTime(year);
         calendarEnd.set(Calendar.MONTH, 11);
         calendarEnd.set(Calendar.DAY_OF_MONTH, 31);
         return calendarEnd.getTime();
