@@ -76,8 +76,8 @@ public abstract class CRUDResource<T> {
     @Path("/search/{searchText}/{start}/{limit}")
     @Transactional(propagation = Propagation.NEVER)
     public List<T> search(@PathParam("searchText") String searchText, @PathParam("start") int start,
-            @PathParam("limit") int limit) {
-        return getDao().search(searchText, start, limit, true);
+            @PathParam("limit") int limit, @QueryParam("column") List<String> columns) {
+        return getDao().search(searchText, start, limit, columns, true);
     }
 
     @GET

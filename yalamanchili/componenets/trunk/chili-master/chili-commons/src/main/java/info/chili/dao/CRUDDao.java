@@ -100,20 +100,20 @@ public abstract class CRUDDao<T> {
     }
 
     @Transactional(readOnly = true)
-    public List<T> search(String searchText, int start, int limit, boolean useSQLSearch) {
+    public List<T> search(String searchText, int start, int limit, List<String> columns, boolean useSQLSearch) {
         if (searchText.isEmpty()) {
             return Collections.EMPTY_LIST;
         }
         if (useSQLSearch) {
-            return sqlSearch(searchText, start, limit);
+            return sqlSearch(searchText, start, limit, columns);
         } else {
             return hibernateSearch(searchText, start, limit);
         }
     }
 
     @Transactional(readOnly = true)
-    public List<T> sqlSearch(String searchText, int start, int limit) {
-        Query searchQ = getEntityManager().createQuery(SearchUtils.getSearchQueryString(entityCls, searchText));
+    public List<T> sqlSearch(String searchText, int start, int limit, List<String> columns) {
+        Query searchQ = getEntityManager().createQuery(SearchUtils.getSearchQueryString(entityCls, searchText, columns));
         searchQ.setFirstResult(start);
         searchQ.setMaxResults(limit);
         return searchQ.getResultList();
@@ -133,8 +133,8 @@ public abstract class CRUDDao<T> {
                 .onFields(fields)
                 .matching(searchText)
                 .createQuery();
-        javax.persistence.Query jpaSearchQuery =
-                fullTextEntityManager.createFullTextQuery(luceneSearchQuery, entityCls);
+        javax.persistence.Query jpaSearchQuery
+                = fullTextEntityManager.createFullTextQuery(luceneSearchQuery, entityCls);
         jpaSearchQuery.setFirstResult(start);
         jpaSearchQuery.setMaxResults(limit);
         return jpaSearchQuery.getResultList();
@@ -155,8 +155,8 @@ public abstract class CRUDDao<T> {
     }
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public Long searchSize(String searchText) {
-        Query sizeQuery = getEntityManager().createQuery(SearchUtils.getSearchSizeQuery(entityCls, searchText));
+    public Long searchSize(String searchText, List<String> columns) {
+        Query sizeQuery = getEntityManager().createQuery(SearchUtils.getSearchSizeQuery(entityCls, searchText, columns));
         return (Long) sizeQuery.getSingleResult();
     }
 

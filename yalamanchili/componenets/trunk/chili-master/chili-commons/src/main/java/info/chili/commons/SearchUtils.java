@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -26,16 +27,21 @@ public class SearchUtils {
 
     private static final Log log = LogFactory.getLog(SearchUtils.class);
 
-    public static String getSearchQueryString(Class cls, String searchString) {
+    public static String getSearchQueryString(Class cls, String searchString, List<String> columns) {
         if (searchString.isEmpty()) {
             return null;
         }
+        if (columns == null || columns.size() == 0) {
+            columns = Arrays.asList(ReflectionUtils.getBeanProperties(cls, DataType.STRING));
+        }
+        String[] searchTextFrags = searchString.trim().split(" ");
         StringBuilder query = new StringBuilder();
         query.append("FROM " + cls.getCanonicalName() + " WHERE ");
-        String[] fields = ReflectionUtils.getBeanProperties(cls, DataType.STRING);
         List<String> filters = new ArrayList<String>();
-        for (String field : fields) {
-            filters.add(field + " LIKE '%" + searchString.trim() + "%'");
+        for (String cloumn : columns) {
+            for (String searchFrag : searchTextFrags) {
+                filters.add(cloumn + " LIKE '%" + searchFrag.trim() + "%'");
+            }
         }
         int i = 0;
         for (String filter : filters) {
@@ -49,8 +55,9 @@ public class SearchUtils {
         return query.toString();
     }
 
-    public static String getSearchSizeQuery(Class cls, String searchText) {
-        return "SELECT COUNT(*) " + getSearchQueryString(cls, searchText);
+    public static String getSearchSizeQuery(Class cls, String searchText, List<String> columns) {
+        //TODO avoid unnecessary call
+        return "SELECT COUNT(*) " + getSearchQueryString(cls, searchText, columns);
     }
 
     public static <T> String getSearchQuery(T entity) {
