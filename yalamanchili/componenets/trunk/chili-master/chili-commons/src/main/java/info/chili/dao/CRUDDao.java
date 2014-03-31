@@ -85,11 +85,21 @@ public abstract class CRUDDao<T> {
     }
 
     public void delete(Long id) {
+        delete(findById(id));
+    }
+
+    public void delete(T entity) {
         try {
-            getEntityManager().remove(findById(id));
+            getEntityManager().remove(entity);
             getEntityManager().flush();
         } catch (javax.persistence.PersistenceException e) {
             throw new ServiceException(ServiceException.StatusCode.INVALID_REQUEST, "DELETE", "SQLError", e.getMessage());
+        }
+    }
+
+    public void deleteAll(List<T> entities) {
+        for (T t : entities) {
+            delete(t);
         }
     }
 
