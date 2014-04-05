@@ -34,8 +34,8 @@ public abstract class UpdateComposite extends CRUDComposite implements ClickHand
         if (processClientSideValidations(entity)) {
             if (event.getSource() == update) {
                 updateButtonClicked();
+                disableSubmitButtons();
             }
-            disableSubmitButtons();
         }
     }
 

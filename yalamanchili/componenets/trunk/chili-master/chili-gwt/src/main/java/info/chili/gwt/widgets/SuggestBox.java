@@ -22,11 +22,11 @@ import java.util.Map;
  * @author yalamanchili
  */
 public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler {
-
+    
     MultiWordSuggestOracle data = new MultiWordSuggestOracle();
     com.google.gwt.user.client.ui.SuggestBox box = new com.google.gwt.user.client.ui.SuggestBox(data);
     protected Map<String, String> map;
-
+    
     public SuggestBox(ConstantsWithLookup constants,
             String attributeName, String className, Boolean readOnly,
             Boolean required) {
@@ -35,35 +35,35 @@ public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandl
         box.ensureDebugId(className + "_" + attributeName + "_TB");
         setReadOnly(readOnly);
     }
-
+    
     protected void configureAddMainWidget() {
         box.addStyleName("tfTextBox");
         fieldPanel.insert(box, 0);
         addListeners();
     }
-
+    
     protected void addListeners() {
         box.addKeyPressHandler(this);
         box.addKeyUpHandler(this);
     }
-
+    
     public void setReadOnly(Boolean readlOnly) {
         if (readOnly) {
             box.setEnabled(false);
         }
     }
-
+    
     public void validate() {
     }
-
+    
     public void setValue(String value) {
         box.setText(value);
     }
-
+    
     public void loadData(Collection<String> inputs) {
         data.addAll(inputs);
     }
-
+    
     public void loadData(Map<String, String> inputs) {
         if (this.map == null) {
             map = new HashMap<String, String>();
@@ -71,13 +71,17 @@ public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandl
         this.map = inputs;
         data.addAll(inputs.values());
     }
-
+    
     public String getValue() {
         if (box.getText() != null) {
             return box.getText();
         } else {
             return null;
         }
+    }
+    
+    public void clearText() {
+        box.setText("");
     }
 
     public String getKey() {
@@ -88,19 +92,19 @@ public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandl
         }
         return null;
     }
-
+    
     public com.google.gwt.user.client.ui.SuggestBox getSuggestBox() {
         return box;
     }
-
+    
     @Override
     public void onKeyPress(KeyPressEvent event) {
     }
-
+    
     @Override
     public void onKeyUp(KeyUpEvent event) {
     }
-
+    
     @Override
     public void onKeyDown(KeyDownEvent event) {
     }
