@@ -1,5 +1,7 @@
 package info.chili.gwt.fields;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import info.chili.gwt.composite.BaseField;
 import info.chili.gwt.widgets.RichTextToolBar;
@@ -19,6 +21,13 @@ public class RichTextField extends BaseField {
         super(constants, attributeName, className, readOnly, isRequired, alignment);
         configureAddMainWidget();
         setReadOnly(readOnly);
+        //
+        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+            @Override
+            public void execute() {
+                area.setFocus(true);
+            }
+        });
     }
 
     //TODO depreciate this 
