@@ -3,6 +3,7 @@
  */
 package info.chili.gwt.crud;
 
+import com.google.gwt.core.client.Scheduler;
 import java.util.logging.Logger;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -10,6 +11,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.ui.Button;
+import info.chili.gwt.composite.BaseFieldWithTextBox;
 import info.chili.gwt.utils.Utils;
 
 public abstract class CreateComposite extends CRUDComposite implements ClickHandler {
@@ -43,6 +45,12 @@ public abstract class CreateComposite extends CRUDComposite implements ClickHand
         entityCaptionPanel.addStyleName("y-gwt-CreateEntityCaptionPanel");
         entityFieldsPanel.addStyleName("y-gwt-CreateEntityDisplayWidget");
         basePanel.addStyleName("y-gwt-CreateBasePanel");
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            @Override
+            public void execute() {
+                setFocus();
+            }
+        });
     }
 
     protected abstract JSONObject populateEntityFromFields();
@@ -52,6 +60,16 @@ public abstract class CreateComposite extends CRUDComposite implements ClickHand
     protected abstract void addButtonClicked();
 
     protected abstract void postCreateSuccess(String result);
+
+    protected void setFocus() {
+        for (int i = 0; i < fields.size(); i++) {
+            if (entityFieldsPanel.getWidget(i) instanceof BaseFieldWithTextBox) {
+                BaseFieldWithTextBox f = (BaseFieldWithTextBox) entityFieldsPanel.getWidget(i);
+                f.getTextbox().setFocus(true);
+                break;
+            }
+        }
+    }
 
     @Override
     public void onClick(ClickEvent event) {
