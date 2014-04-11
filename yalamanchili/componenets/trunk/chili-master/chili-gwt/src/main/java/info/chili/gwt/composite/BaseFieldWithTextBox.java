@@ -122,4 +122,9 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
             listener.keyPressed(event);
         }
     }
+
+    @Override
+    public void focus(boolean focus) {
+        textbox.setFocus(true);
+    }
 }

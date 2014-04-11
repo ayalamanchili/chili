@@ -196,4 +196,9 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         }
         return url;
     }
+
+    @Override
+    public void focus(boolean focus) {
+        listBox.setFocus(true);
+    }
 }

@@ -40,4 +40,9 @@ public class PasswordField extends BaseField {
     public void validate() {
         clearMessage();
     }
+
+    @Override
+    public void focus(boolean focus) {
+        password.setFocus(true);
+    }
 }

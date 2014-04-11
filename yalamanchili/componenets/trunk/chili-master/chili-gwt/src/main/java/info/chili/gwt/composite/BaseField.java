@@ -144,6 +144,8 @@ public abstract class BaseField extends Composite implements BlurHandler {
         return readOnly;
     }
 
+    public abstract void focus(boolean focus);
+    
     public abstract void setReadOnly(Boolean readOnly);
 
     protected void setMoreInfoDescription(String moreInfo) {

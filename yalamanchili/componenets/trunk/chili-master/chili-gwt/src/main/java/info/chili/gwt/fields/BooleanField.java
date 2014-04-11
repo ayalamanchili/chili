@@ -60,4 +60,9 @@ public class BooleanField extends BaseField {
     public void setReadOnly(Boolean readlOnly) {
         box.setEnabled(!readlOnly);
     }
+
+    @Override
+    public void focus(boolean focus) {
+
+    }
 }

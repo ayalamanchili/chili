@@ -105,4 +105,9 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
     @Override
     public void onClick(ClickEvent event) {
     }
+
+    @Override
+    public void focus(boolean focus) {
+        datePicker.setFocus(true);
+    }
 }

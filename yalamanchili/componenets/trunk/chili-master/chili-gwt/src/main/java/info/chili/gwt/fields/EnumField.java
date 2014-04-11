@@ -100,4 +100,9 @@ public class EnumField extends BaseField {
     public void validate() {
         clearMessage();
     }
+
+    @Override
+    public void focus(boolean focus) {
+        listBox.setFocus(true);
+    }
 }

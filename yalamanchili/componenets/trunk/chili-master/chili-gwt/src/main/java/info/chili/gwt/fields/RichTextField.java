@@ -90,4 +90,9 @@ public class RichTextField extends BaseField {
         bar.setVisible(!readOnly);
         area.setEnabled(!readOnly);
     }
+
+    @Override
+    public void focus(boolean focus) {
+        area.setFocus(true);
+    }
 }
