@@ -11,9 +11,11 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
 import info.chili.gwt.utils.Alignment;
+import java.util.logging.Logger;
 
 public class RichTextField extends BaseField {
 
+    private Logger logger = Logger.getLogger(RichTextField.class.getName());
     public RichTextArea area = new RichTextArea();
     public RichTextToolBar bar = new RichTextToolBar(area);
 
@@ -21,11 +23,17 @@ public class RichTextField extends BaseField {
         super(constants, attributeName, className, readOnly, isRequired, alignment);
         configureAddMainWidget();
         setReadOnly(readOnly);
-        //
-        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+        //ie richtextarea focus fix
+        Scheduler.get().scheduleFinally(new ScheduledCommand() {
             @Override
             public void execute() {
                 area.setFocus(true);
+            }
+        });
+        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+            @Override
+            public void execute() {
+                area.setFocus(false);
             }
         });
     }
