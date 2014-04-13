@@ -132,7 +132,7 @@ public abstract class CRUDDao<T> {
     @Transactional(readOnly = true)
     public List<T> hibernateSearch(String searchText, int start, int limit) {
         FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search
-                .createFullTextEntityManager(getEntityManager());
+                .getFullTextEntityManager(getEntityManager());
         String[] fields = ReflectionUtils.getBeanProperties(entityCls, DataType.STRING);
         log.info("search fields:" + Arrays.asList(fields));
         log.info("search class:" + entityCls);
