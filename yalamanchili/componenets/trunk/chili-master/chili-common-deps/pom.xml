@@ -226,7 +226,13 @@
             <groupId>org.apache.poi</groupId>  
             <artifactId>poi-scratchpad</artifactId>  
             <version>${poi.version}</version>
-        </dependency>   
+        </dependency> 
+        <!-- pdf box for pdf extraction-->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>${pdfbox.version}</version>
+        </dependency>  
         <!-- html to pdf-->
         <dependency>
             <groupId>org.xhtmlrenderer</groupId>
@@ -342,6 +348,7 @@
         <guava.version>13.0</guava.version>
         <itext.version>2.0.8</itext.version>
         <poi.version>3.9</poi.version>
+        <pdfbox.version>1.7.0</pdfbox.version>
         <xhtmlrenderer.core.version>R8</xhtmlrenderer.core.version>
     </properties>
 </project>

@@ -14,9 +14,22 @@ import org.junit.Test;
  */
 public class FileSearchUtilsTest {
 
-    @Test
+  //  @Test
+    public void testGetFileExtension() {
+        File f = new File("C:\\Users\\ayalamanchili\\Desktop\\test.pdf");
+        System.out.println(FileSearchUtils.getFileExtension(f));
+    }
+
+//    @Test
     public void testIndexDocFile() {
         File f = new File("C:\\Users\\ayalamanchili\\Desktop\\test.doc");
-        System.out.println(FileSearchUtils.extractFileContents(f));
+        System.out.println(FileSearchUtils.extractMSDocFileContents(f));
     }
+
+//    @Test
+    public void testIndexPDFFile() {
+        File f = new File("C:\\Users\\ayalamanchili\\Desktop\\test.pdf");
+        System.out.println(FileSearchUtils.extractPDFFileContents(f));
+    }
+
 }
