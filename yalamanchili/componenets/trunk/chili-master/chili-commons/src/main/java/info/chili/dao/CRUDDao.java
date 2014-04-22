@@ -130,12 +130,15 @@ public abstract class CRUDDao<T> {
     }
 
     @Transactional(readOnly = true)
-    public List<T> hibernateSearch(String searchText, int start, int limit) {
+    public List<T> hibernateSearch(String searchText, int start, int limit, String... columns) {
         FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search
                 .getFullTextEntityManager(getEntityManager());
-        String[] fields = ReflectionUtils.getBeanProperties(entityCls, DataType.STRING);
-        log.info("search fields:" + Arrays.asList(fields));
-        log.info("search class:" + entityCls);
+        String[] fields;
+        if (columns != null && columns.length > 0) {
+            fields = columns;
+        } else {
+            fields = ReflectionUtils.getBeanProperties(entityCls, DataType.STRING);
+        }
         QueryBuilder qb = fullTextEntityManager.getSearchFactory()
                 .buildQueryBuilder().forEntity(entityCls).get();
         org.apache.lucene.search.Query luceneSearchQuery = qb
