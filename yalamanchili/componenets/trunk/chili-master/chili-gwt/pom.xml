@@ -3,7 +3,7 @@
     <parent>
         <artifactId>chili-master</artifactId>
         <groupId>info.chili</groupId>
-        <version>1.2</version>
+        <version>1.3-SNAPSHOT</version>
     </parent>
     <groupId>info.chili</groupId>
     <artifactId>chili-gwt</artifactId>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>info.chili</groupId>
             <artifactId>chili-commons</artifactId>
-            <version>${chili.version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <build>
@@ -82,7 +82,6 @@
     <properties>
         <gwtVersion>2.5.0-rc1</gwtVersion>
         <spring.version>3.1.1.RELEASE</spring.version>
-        <chili.version>1.2</chili.version>
     </properties>
     <!-- download artifacts from this repo -->
     <repositories>
