@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>info.chili</groupId>
     <artifactId>chili-common-deps</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
     <packaging>pom</packaging>
     <name>chili-common-deps</name>
     <url>http://maven.apache.org</url>

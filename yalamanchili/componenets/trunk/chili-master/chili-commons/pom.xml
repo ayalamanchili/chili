@@ -4,7 +4,7 @@
     <parent>
         <artifactId>chili-master</artifactId>
         <groupId>info.chili</groupId>
-        <version>1.2-SNAPSHOT</version>
+        <version>1.2</version>
     </parent>
     <groupId>info.chili</groupId>
     <artifactId>chili-commons</artifactId>
@@ -77,7 +77,7 @@
     </scm>     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <chili.version>1.2-SNAPSHOT</chili.version>
+        <chili.version>1.2</chili.version>
         <http.client.version>4.2</http.client.version>
     </properties>
     <!-- download artifacts from this repo -->
