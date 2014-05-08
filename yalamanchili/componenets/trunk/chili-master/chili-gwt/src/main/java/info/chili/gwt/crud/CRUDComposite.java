@@ -187,7 +187,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
             entityFieldsPanel.add(fileUploadPanel);
         }
         if (DataType.TEXT_AREA_FIELD.equals(type)) {
-            TextAreaField textAreaField = new TextAreaField(constants, attributeName, entityName, readOnly, isRequired);
+            TextAreaField textAreaField = new TextAreaField(constants, attributeName, entityName, readOnly, isRequired, alignment);
             textAreaField.addStyleName("y-gwt-TextAreaField");
             fields.put(attributeName, textAreaField);
             entityFieldsPanel.add(textAreaField);

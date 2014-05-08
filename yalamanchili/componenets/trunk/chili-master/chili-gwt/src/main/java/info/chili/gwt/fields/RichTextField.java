@@ -44,6 +44,18 @@ public class RichTextField extends BaseField {
         super(constants, attributeName, className, readOnly, isRequired);
         configureAddMainWidget();
         setReadOnly(readOnly);
+        Scheduler.get().scheduleFinally(new ScheduledCommand() {
+            @Override
+            public void execute() {
+                area.setFocus(true);
+            }
+        });
+        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+            @Override
+            public void execute() {
+                area.setFocus(false);
+            }
+        });
     }
 
     @Override

@@ -12,8 +12,8 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import info.chili.gwt.composite.BaseField;
+import info.chili.gwt.utils.Alignment;
 
 /**
  *
@@ -27,9 +27,14 @@ public class TextAreaField extends BaseField implements KeyPressHandler, KeyUpHa
         return textArea;
     }
 
-    public TextAreaField(ConstantsWithLookup constants,
-            String attributeName, String className, Boolean readOnly,
-            Boolean required) {
+    public TextAreaField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean required, Alignment alignment) {
+        super(constants, attributeName, className, readOnly, required, alignment);
+        configureAddMainWidget();
+        textArea.ensureDebugId(className + "_" + attributeName + "_TB");
+        setReadOnly(readOnly);
+    }
+
+    public TextAreaField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean required) {
         super(constants, attributeName, className, readOnly, required);
         configureAddMainWidget();
         textArea.ensureDebugId(className + "_" + attributeName + "_TB");
