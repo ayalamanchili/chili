@@ -43,6 +43,10 @@ public abstract class AbstractEntity implements Serializable {
         this.id = id;
     }
 
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     @XmlAttribute
     public Integer getVersion() {
         return version;

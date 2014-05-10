@@ -28,6 +28,17 @@ public abstract class UpdateComposite extends CRUDComposite implements ClickHand
         populateFieldsFromEntity(entity);
     }
 
+    protected void initUpdateComposite(String id, String className, final ConstantsWithLookup constants) {
+        this.entityId = id;
+        init(className, false, constants);
+        entityCaptionPanel.addStyleName("y-gwt-UpdateEntityCaptionPanel");
+        entityFieldsPanel.addStyleName("y-gwt-UpdateEntityDisplayWidget");
+        basePanel.addStyleName("y-gwt-UpdateBasePanel");
+        entityActionsPanel.add(update);
+        update.addClickHandler(this);
+        loadEntity(entityId);
+    }
+
     @Override
     public void onClick(ClickEvent event) {
         entity = populateEntityFromFields();
@@ -77,4 +88,8 @@ public abstract class UpdateComposite extends CRUDComposite implements ClickHand
     }
 
     protected abstract void postUpdateSuccess(String result);
+
+    public void loadEntity(String entityId) {
+        throw new UnsupportedOperationException();
+    }
 }

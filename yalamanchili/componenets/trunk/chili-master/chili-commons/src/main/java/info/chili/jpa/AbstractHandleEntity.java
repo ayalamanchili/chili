@@ -5,10 +5,21 @@
  */
 package info.chili.jpa;
 
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.TypedQuery;
+import javax.persistence.Version;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import org.hibernate.annotations.Index;
+import org.hibernate.envers.Audited;
 
 /**
  * this class is used for generic entities that can be associated with many
@@ -17,9 +28,24 @@ import org.hibernate.annotations.Index;
  *
  * @author ayalamanchili
  */
-public abstract class AbstractHandleEntity extends AbstractEntity {
+@Entity
+@Audited
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class AbstractHandleEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    @Version
+    private Integer version;
+    /**
+     *
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long id;
+
     /**
      *
      */
@@ -32,6 +58,24 @@ public abstract class AbstractHandleEntity extends AbstractEntity {
     protected Long targetEntityId;
 
     public AbstractHandleEntity() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    @XmlElement
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    @XmlAttribute
+    public Integer getVersion() {
+        return version;
     }
 
     public String getTargetEntityName() {
@@ -53,22 +97,26 @@ public abstract class AbstractHandleEntity extends AbstractEntity {
     public static <T extends AbstractHandleEntity> T save(EntityManager em, T source, AbstractEntity target) {
         source.setTargetEntityName(target.getClass().getCanonicalName());
         source.setTargetEntityId(target.getId());
+//        Hack to void dups 
+        if (source.getTargetEntityId() == null) {
+            return (T) source;
+        }
         return (T) em.merge(source);
     }
 
-    public static <T extends AbstractEntity> T find(EntityManager em, T source, T target) {
-        Query query = em.createQuery("select * from" + source.getClass().getCanonicalName() + " s where s.target.targetEntityName=:targetEntityNameParam and s.targetEntityId=:targetEntityIdParam", target.getClass());
+    public static <T extends AbstractHandleEntity> T find(EntityManager em, Class entityCls, AbstractEntity target) {
+        TypedQuery<T> query = em.createQuery("from " + entityCls.getCanonicalName() + " where targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
         query.setParameter("targetEntityNameParam", target.getClass().getCanonicalName());
         query.setParameter("targetEntityIdParam", target.getId());
         if (query.getResultList().size() > 0) {
-            return (T) query.getResultList().get(0);
+            return query.getResultList().get(0);
         } else {
             return null;
         }
     }
 
-    public static <T extends AbstractEntity> List<T> findAll(EntityManager em, T source, T target) {
-        Query query = em.createQuery("select * from" + source.getClass().getCanonicalName() + " s where s.target.targetEntityName=:targetEntityNameParam and s.targetEntityId=:targetEntityIdParam", target.getClass());
+    public <T extends AbstractHandleEntity> List<T> findAll(EntityManager em, Class entityCls, AbstractEntity target) {
+        TypedQuery<T> query = em.createQuery("from " + entityCls.getCanonicalName() + " where targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
         query.setParameter("targetEntityNameParam", target.getClass().getCanonicalName());
         query.setParameter("targetEntityIdParam", target.getId());
         return query.getResultList();
