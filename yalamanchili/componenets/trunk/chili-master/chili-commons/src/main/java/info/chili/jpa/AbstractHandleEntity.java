@@ -5,6 +5,7 @@
  */
 package info.chili.jpa;
 
+import info.chili.jpa.validation.Validate;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.TypedQuery;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import org.hibernate.annotations.Index;
@@ -50,11 +52,13 @@ public abstract class AbstractHandleEntity implements Serializable {
      *
      */
     @Index(name = "TGT_ENTY_NM")
+    @NotNull
     protected String targetEntityName;
     /**
      *
      */
     @Index(name = "TGT_ENTY_ID")
+    @NotNull
     protected Long targetEntityId;
 
     public AbstractHandleEntity() {
@@ -92,33 +96,5 @@ public abstract class AbstractHandleEntity implements Serializable {
 
     public void setTargetEntityId(Long targetEntityId) {
         this.targetEntityId = targetEntityId;
-    }
-
-    public static <T extends AbstractHandleEntity> T save(EntityManager em, T source, AbstractEntity target) {
-        source.setTargetEntityName(target.getClass().getCanonicalName());
-        source.setTargetEntityId(target.getId());
-//        Hack to void dups 
-        if (source.getTargetEntityId() == null) {
-            return (T) source;
-        }
-        return (T) em.merge(source);
-    }
-
-    public static <T extends AbstractHandleEntity> T find(EntityManager em, Class entityCls, AbstractEntity target) {
-        TypedQuery<T> query = em.createQuery("from " + entityCls.getCanonicalName() + " where targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
-        query.setParameter("targetEntityNameParam", target.getClass().getCanonicalName());
-        query.setParameter("targetEntityIdParam", target.getId());
-        if (query.getResultList().size() > 0) {
-            return query.getResultList().get(0);
-        } else {
-            return null;
-        }
-    }
-
-    public <T extends AbstractHandleEntity> List<T> findAll(EntityManager em, Class entityCls, AbstractEntity target) {
-        TypedQuery<T> query = em.createQuery("from " + entityCls.getCanonicalName() + " where targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
-        query.setParameter("targetEntityNameParam", target.getClass().getCanonicalName());
-        query.setParameter("targetEntityIdParam", target.getId());
-        return query.getResultList();
     }
 }
