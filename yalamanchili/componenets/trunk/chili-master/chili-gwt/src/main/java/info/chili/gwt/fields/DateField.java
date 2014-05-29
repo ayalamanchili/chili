@@ -71,7 +71,7 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
 
     public void setValue(String dateString) {
         //need to set the datepicker date to support udpate
-        datePicker.setSelectedDate(DateUtils.toDate(dateString));
+        datePicker.setSelectedDate(DateUtils.toDateTZ(dateString));
     }
 
     @Override

@@ -9,6 +9,7 @@ public class DateUtils {
 
     private static final String DEFAULT_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZ";
     private static final String DEFAULT_FORMAT2 = "yyyy-MM-dd'T'HH:mm:ssZZZ";
+    private static final String DEFAULT_FORMAT_TZ = "yyyy-MM-dd";
 
     public static String toDateString(Date date) {
         DateTimeFormat formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT);
@@ -33,12 +34,23 @@ public class DateUtils {
         }
         return formatter.parse(dateString);
     }
+// this fixes the issue with tz moves dates back by a day
+
+    public static Date toDateTZ(String dateString) {
+        dateString = dateString.substring(0, dateString.indexOf("T"));
+        if (dateString == null || dateString.isEmpty()) {
+            return null;
+        }
+        DateTimeFormat formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT_TZ);
+        return formatter.parse(dateString);
+    }
 
     public static String getFormatedDate(String dateString, PredefinedFormat format) {
         if (dateString == null || "".equals(dateString)) {
             return null;
         }
         if (ChiliClientConfig.instance().getTimeZone() != null) {
+//            do we need the time zone since the time zone parsing error is fixed above
             return DateTimeFormat.getFormat(format).format(toDate(dateString), ChiliClientConfig.instance().getTimeZone());
         } else {
             return DateTimeFormat.getFormat(format).format(toDate(dateString));
