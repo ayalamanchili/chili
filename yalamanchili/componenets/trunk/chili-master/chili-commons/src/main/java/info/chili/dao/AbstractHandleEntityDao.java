@@ -24,7 +24,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Scope("prototype")
-public class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
+public abstract class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
 
     private static final Log log = LogFactory.getLog(AbstractHandleEntityDao.class);
     protected Class entityCls;
@@ -34,17 +34,17 @@ public class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
     }
 
     @Validate
-    public T save(EntityManager em, T source, AbstractEntity target) {
+    public T save(T source, AbstractEntity target) {
         if (target.getId() == null) {
             throw new RuntimeException("target id cannot be null");
         }
         source.setTargetEntityName(target.getClass().getCanonicalName());
         source.setTargetEntityId(target.getId());
-        return (T) em.merge(source);
+        return (T) getEntityManager().merge(source);
     }
 
-    public T find(EntityManager em, AbstractEntity target) {
-        TypedQuery<T> query = em.createQuery("from " + entityCls.getCanonicalName() + " where targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
+    public T find(AbstractEntity target) {
+        TypedQuery<T> query = getEntityManager().createQuery("from " + entityCls.getCanonicalName() + " where targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
         query.setParameter("targetEntityNameParam", target.getClass().getCanonicalName());
         query.setParameter("targetEntityIdParam", target.getId());
         if (query.getResultList().size() > 0) {
@@ -55,12 +55,21 @@ public class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
         }
     }
 
-    public List<T> findAll(EntityManager em, Class entityCls, AbstractEntity target) {
-        TypedQuery<T> query = em.createQuery("from " + entityCls.getCanonicalName() + " where targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
+    public List<T> findAll(Long id, String targetClassName) {
+        TypedQuery<T> query = getEntityManager().createQuery("from " + entityCls.getCanonicalName() + " where targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
+        query.setParameter("targetEntityNameParam", targetClassName);
+        query.setParameter("targetEntityIdParam", id);
+        return query.getResultList();
+    }
+
+    public List<T> findAll(AbstractEntity target) {
+        TypedQuery<T> query = getEntityManager().createQuery("from " + entityCls.getCanonicalName() + " where targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
         query.setParameter("targetEntityNameParam", target.getClass().getCanonicalName());
         query.setParameter("targetEntityIdParam", target.getId());
         return query.getResultList();
     }
+
+    public abstract EntityManager getEntityManager();
 
     public static AbstractHandleEntityDao instance() {
         return SpringContext.getBean(AbstractHandleEntityDao.class);
