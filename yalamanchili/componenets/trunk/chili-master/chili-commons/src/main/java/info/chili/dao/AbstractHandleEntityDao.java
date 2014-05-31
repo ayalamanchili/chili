@@ -34,12 +34,21 @@ public abstract class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
     }
 
     @Validate
+    public T save(T source, Long id, String targetClassName) {
+        source.setTargetEntityName(targetClassName);
+        source.setTargetEntityId(id);
+        //TODO use bean mapper for merge
+        return (T) getEntityManager().merge(source);
+    }
+
+    @Validate
     public T save(T source, AbstractEntity target) {
         if (target.getId() == null) {
             throw new RuntimeException("target id cannot be null");
         }
         source.setTargetEntityName(target.getClass().getCanonicalName());
         source.setTargetEntityId(target.getId());
+        //TODO use bean mapper for merge
         return (T) getEntityManager().merge(source);
     }
 
