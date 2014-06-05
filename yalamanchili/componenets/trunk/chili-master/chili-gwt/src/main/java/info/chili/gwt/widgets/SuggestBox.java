@@ -90,7 +90,7 @@ public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandl
                 return key;
             }
         }
-        return null;
+        return getValue();
     }
 
     public com.google.gwt.user.client.ui.SuggestBox getSuggestBox() {

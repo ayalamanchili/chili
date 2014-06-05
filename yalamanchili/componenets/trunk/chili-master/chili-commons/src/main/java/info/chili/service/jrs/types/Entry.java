@@ -5,6 +5,7 @@
 package info.chili.service.jrs.types;
 
 import java.io.Serializable;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -16,6 +17,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class Entry implements Serializable {
 
+    @Transient
+    private static final long serialVersionUID = 1L;
     protected String id;
     protected String value;
 
