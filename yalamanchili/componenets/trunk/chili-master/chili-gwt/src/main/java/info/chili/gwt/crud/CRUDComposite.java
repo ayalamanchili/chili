@@ -543,7 +543,6 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
     //-----------------utils--------------------//
 
     protected HTML getLineSeperatorTag(String title) {
-        HTML lineSeperator = new HTML("<fieldset class=\"lineSeperator\">" + "<legend align=\"center\">" + title + "</legend></fieldset>");
-        return lineSeperator;
+        return Utils.getLineSeperatorTag(title);
     }
 }

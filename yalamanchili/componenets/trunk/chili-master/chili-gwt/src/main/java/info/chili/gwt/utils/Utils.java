@@ -6,6 +6,7 @@ import java.util.MissingResourceException;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import info.chili.gwt.resources.ChiliImages;
 import java.util.Collections;
@@ -118,6 +119,11 @@ public class Utils {
         sb.append(" <img src=\"").append(image.getUrl()).append("\"/>");
         sb.append(" </a>  </span>");
         return sb.toString();
+    }
+
+    public static HTML getLineSeperatorTag(String title) {
+        HTML lineSeperator = new HTML("<fieldset class=\"lineSeperator\">" + "<legend align=\"center\">" + title + "</legend></fieldset>");
+        return lineSeperator;
     }
 
     public static Map sortByComparator(Map unsortMap) {
