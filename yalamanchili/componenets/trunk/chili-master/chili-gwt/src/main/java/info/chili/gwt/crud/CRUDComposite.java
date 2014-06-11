@@ -181,7 +181,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
             FileuploadField fileUploadPanel = new FileuploadField(constants, attributeName, entityName,
                     "name", isRequired) {
                         @Override
-                        public void onUploadComplete() {
+                        public void onUploadComplete(String res) {
                         }
                     };
             entityFieldsPanel.add(fileUploadPanel);

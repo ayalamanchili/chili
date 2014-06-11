@@ -3,8 +3,6 @@
  */
 package info.chili.gwt.fields;
 
-import info.chili.gwt.composite.ALComposite;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
@@ -22,6 +20,7 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
+import info.chili.gwt.composite.ALComposite;
 import info.chili.gwt.config.ChiliClientConfig;
 import info.chili.gwt.utils.FileUtils;
 import info.chili.gwt.utils.JSONUtils;
@@ -31,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 //TODO extend from BaseField
+
 public abstract class FileuploadField extends ALComposite implements ClickHandler, SubmitHandler, SubmitCompleteHandler {
 
     private static Logger logger = Logger.getLogger(FileuploadField.class.getName());
@@ -120,7 +120,7 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
             formPanel.submit();
             formPanel.clear();
         } else {
-            onUploadComplete();
+            onUploadComplete("");
         }
     }
 
@@ -131,7 +131,7 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
             formPanel.submit();
             formPanel.clear();
         } else {
-            onUploadComplete();
+            onUploadComplete("");
         }
     }
 
@@ -198,23 +198,22 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
         return instance;
     }
 
-    public abstract void onUploadComplete();
+    public abstract void onUploadComplete(String res);
 
     @Override
     public void onSubmitComplete(SubmitCompleteEvent event) {
-        logger.info("onSubmitComplete");
-        if (event.getResults() != null) {
-            onUploadComplete();
+        if (event.getResults().contains("Error")) {
+            onFileUploadError(event.getResults());
         } else {
-            onFileUploadError();
+            onUploadComplete(event.getResults());
         }
     }
     /*
      * override this to change the error message
      */
 
-    protected void onFileUploadError() {
-        Window.alert("Error uploading file");
+    protected void onFileUploadError(String err) {
+        Window.alert(err);
     }
 
     @Override
