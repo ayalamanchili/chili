@@ -204,9 +204,8 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
     public void onSubmitComplete(SubmitCompleteEvent event) {
         if (event.getResults().contains("Error")) {
             onFileUploadError(event.getResults());
-        } else {
-            onUploadComplete(event.getResults());
         }
+        onUploadComplete(event.getResults());
     }
     /*
      * override this to change the error message
