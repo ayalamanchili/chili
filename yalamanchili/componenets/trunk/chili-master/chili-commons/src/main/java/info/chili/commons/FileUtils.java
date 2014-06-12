@@ -4,6 +4,10 @@
  */
 package info.chili.commons;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 /**
  *
  * @author ayalamanchili
@@ -13,13 +17,23 @@ public class FileUtils {
 
     public enum DOC_EXTENSIONS {
 
-        PDF, DOC, DOCX, TXT, RTF
+        PDF, DOC, DOCX, TXT, RTF, XLS, XLSX
     };
 
     public enum IMG_EXTENSIONS {
 
         JPG, JPEG, GIF, PNG
     };
+
+    public static String getFileContentType(File file) {
+        try {
+            return Files.probeContentType(Paths.get(file.getCanonicalPath()));
+        } catch (Exception ex) {
+            //making fail safe for java version <7 and unsupporeted patforms
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
     public static String getFileExtension(String filename) {
         return filename.substring(filename.lastIndexOf(".") + 1, filename.length());
