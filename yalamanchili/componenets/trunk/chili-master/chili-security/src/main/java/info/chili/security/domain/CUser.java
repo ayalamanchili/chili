@@ -28,8 +28,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Audited
 @XmlRootElement
 @XmlType
-@Table(uniqueConstraints =
-        @UniqueConstraint(columnNames = {"username"}))
+@Table(uniqueConstraints
+        = @UniqueConstraint(columnNames = {"username"}))
 @Unique(entity = CUser.class, fields = {"username"}, message = "{user.name.not.unique.msg}", idName = "userId")
 public class CUser implements Serializable {
 
@@ -81,9 +81,9 @@ public class CUser implements Serializable {
 
     @ManyToMany(targetEntity = CRole.class, fetch = FetchType.EAGER)
     @ForeignKey(name = "FK_CRoles_CUsers")
-    @JoinTable(name = "UserRoles", joinColumns =
-            @JoinColumn(name = "UserId"), inverseJoinColumns =
-            @JoinColumn(name = "RoleId"))
+    @JoinTable(name = "UserRoles", joinColumns
+            = @JoinColumn(name = "UserId"), inverseJoinColumns
+            = @JoinColumn(name = "RoleId"))
     @XmlElement
     public Set<CRole> getRoles() {
         if (roles == null) {
@@ -98,6 +98,10 @@ public class CUser implements Serializable {
 
     public void addRole(CRole role) {
         this.getRoles().add(role);
+    }
+
+    public void removeRole(CRole role) {
+        this.getRoles().remove(role);
     }
 
     @Override
