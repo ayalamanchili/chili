@@ -4,9 +4,9 @@
  */
 package info.chili.commons;
 
+import info.chili.spring.SpringContext;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import org.apache.tika.Tika;
 
 /**
  *
@@ -27,7 +27,8 @@ public class FileUtils {
 
     public static String getFileContentType(File file) {
         try {
-            return Files.probeContentType(Paths.get(file.getCanonicalPath()));
+            Tika tika = (Tika) SpringContext.getBean("tika");
+            return tika.detect(file);
         } catch (Exception ex) {
             //making fail safe for java version <7 and unsupporeted patforms
             ex.printStackTrace();

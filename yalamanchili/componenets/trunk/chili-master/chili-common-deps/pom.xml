@@ -244,6 +244,12 @@
             <artifactId>itext</artifactId>
             <version>${itext.version}</version>
         </dependency>
+        <!--apache tika for content type guess from file-->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>${apache.tika.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -349,5 +355,6 @@
         <poi.version>3.9</poi.version>
         <pdfbox.version>1.7.0</pdfbox.version>
         <flying.saucer.version>9.0.1</flying.saucer.version>
+        <apache.tika.version>1.5</apache.tika.version>
     </properties>
 </project>
