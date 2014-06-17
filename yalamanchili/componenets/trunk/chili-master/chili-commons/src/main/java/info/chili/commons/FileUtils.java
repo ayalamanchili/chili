@@ -27,6 +27,7 @@ public class FileUtils {
 
     public static String getFileContentType(File file) {
         try {
+            //TODO use java 7 Files.probeContentType(path).
             Tika tika = (Tika) SpringContext.getBean("tika");
             return tika.detect(file);
         } catch (Exception ex) {
