@@ -8,7 +8,9 @@ import java.util.logging.Logger;
 import com.google.gwt.user.client.ui.ListBox;
 import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.Utils;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 // TODO: Auto-generated Javadoc
@@ -18,7 +20,7 @@ import java.util.Map;
 public class EnumField extends BaseField {
 
     Logger logger = Logger.getLogger(EnumField.class.getName());
-    protected final ListBox listBox = new ListBox();
+    protected ListBox listBox;
     protected ConstantsWithLookup constants;
 
     public EnumField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired,
@@ -30,9 +32,22 @@ public class EnumField extends BaseField {
         setReadOnly(readOnly);
     }
 
+    @Deprecated
     public EnumField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired,
             String[] values) {
         super(constants, attributeName, className, readOnly, isRequired);
+        this.constants = constants;
+        configureAddMainWidget();
+        addValues(values);
+        setReadOnly(readOnly);
+    }
+    protected boolean isMultiSelect = false;
+
+    public EnumField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired, boolean multiSelect,
+            String[] values, Alignment alignment) {
+        super(constants, attributeName, className, readOnly, isRequired, alignment);
+        logger.info("1111" + isMultiSelect);
+        this.isMultiSelect = multiSelect;
         this.constants = constants;
         configureAddMainWidget();
         addValues(values);
@@ -81,8 +96,26 @@ public class EnumField extends BaseField {
         }
     }
 
+    public List<String> getValues() {
+        List<String> res = new ArrayList<String>();
+        if (listBox.getSelectedIndex() > 0) {
+            for (int i = 0; i < listBox.getItemCount(); i++) {
+                if (listBox.isItemSelected(i)) {
+                    res.add(listBox.getValue(i));
+                }
+            }
+            return res;
+        } else {
+            return null;
+        }
+    }
+
     @Override
     protected void configureAddMainWidget() {
+        listBox = new ListBox(isMultiSelect);
+        if (isMultiSelect) {
+            listBox.setVisibleItemCount(5);
+        }
         listBox.insertItem("Select", 0);
         listBox.ensureDebugId(className + "_" + attributeName + "_LB");
         fieldPanel.insert(listBox, 0);

@@ -22,6 +22,7 @@ public class LongField extends BaseFieldWithTextBox {
     }
 
     @UiConstructor
+    @Deprecated
     public LongField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
         super(constants, attributeName, className, readOnly, isRequired);
     }

@@ -18,6 +18,7 @@ public class IntegerField extends BaseFieldWithTextBox {
     }
 
     @UiConstructor
+    @Deprecated
     public IntegerField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
         super(constants, attributeName, className, readOnly, isRequired);
     }

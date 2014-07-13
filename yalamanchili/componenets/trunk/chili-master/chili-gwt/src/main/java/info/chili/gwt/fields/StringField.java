@@ -26,6 +26,7 @@ public class StringField extends BaseFieldWithTextBox {
     }
     //TODO depreciate this
     @UiConstructor
+    @Deprecated
     public StringField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
         super(constants, attributeName, className, readOnly, isRequired);
     }

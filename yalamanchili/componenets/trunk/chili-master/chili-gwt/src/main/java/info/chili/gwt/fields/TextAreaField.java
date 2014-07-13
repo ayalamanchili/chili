@@ -34,6 +34,7 @@ public class TextAreaField extends BaseField implements KeyPressHandler, KeyUpHa
         setReadOnly(readOnly);
     }
 
+    @Deprecated
     public TextAreaField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean required) {
         super(constants, attributeName, className, readOnly, required);
         configureAddMainWidget();

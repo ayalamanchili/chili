@@ -21,6 +21,7 @@ public class CurrencyField extends BaseFieldWithTextBox {
         super(constants, attributeName, className, readOnly, isRequired, alignment);
     }
 
+    @Deprecated
     public CurrencyField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
         super(constants, attributeName, className, readOnly, isRequired);
     }

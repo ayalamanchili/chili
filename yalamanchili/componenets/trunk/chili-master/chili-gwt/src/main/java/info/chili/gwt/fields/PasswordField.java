@@ -18,6 +18,7 @@ public class PasswordField extends BaseField {
     }
 
     @UiConstructor
+    @Deprecated
     public PasswordField(ConstantsWithLookup constants, String attributeName, String className, boolean required) {
         super(constants, attributeName, className, false, required);
         fieldPanel.insert(password, 0);

@@ -41,6 +41,7 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
     }
 
     @UiConstructor
+    @Deprecated
     public DateField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
         super(constants, attributeName, className, readOnly, isRequired);
         configureAddMainWidget();

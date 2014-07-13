@@ -3,8 +3,10 @@ package info.chili.gwt.utils;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class JSONUtils {
@@ -79,6 +81,16 @@ public class JSONUtils {
             values.put(key, value);
         }
         return values;
+    }
+
+    public static JSONArray toJSONArray(List<String> strs) {
+        JSONArray res = new JSONArray();
+        int i = 0;
+        for (String str : strs) {
+            res.set(i, new JSONString(str));
+            i++;
+        }
+        return res;
     }
 
     public static String formatEnumString(JSONObject entity, String propertyName) {

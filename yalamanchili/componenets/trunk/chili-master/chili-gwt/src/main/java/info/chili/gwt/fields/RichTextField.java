@@ -40,6 +40,7 @@ public class RichTextField extends BaseField {
 
     //TODO depreciate this 
     @UiConstructor
+    @Deprecated
     public RichTextField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
         super(constants, attributeName, className, readOnly, isRequired);
         configureAddMainWidget();
