@@ -4,6 +4,14 @@
  */
 package info.chili.gwt.utils;
 
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.URL;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.user.client.Window;
+import info.chili.gwt.config.ChiliClientConfig;
+
 /**
  *
  * @author anuyalamanchili
@@ -42,5 +50,30 @@ public class FileUtils {
         }
         //means file not valid or present
         return "file";
+    }
+
+    public static void openFile(JSONObject entity, String url) {
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+        builder.setHeader("Content-Type", "application/json");
+
+        try {
+            builder.sendRequest(entity.toString(), new RequestCallback() {
+                @Override
+                public void onResponseReceived(com.google.gwt.http.client.Request request, com.google.gwt.http.client.Response response) {
+                    if (200 == response.getStatusCode()) {
+                        Window.open(ChiliClientConfig.instance().getFileDownloadUrl() + response.getText(), "_blank", "");
+                    } else {
+                        Window.alert("error downloading file");
+                    }
+                }
+
+                @Override
+                public void onError(com.google.gwt.http.client.Request request, Throwable exception) {
+                    Window.alert(exception.getLocalizedMessage());
+                }
+            });
+        } catch (RequestException e) {
+            Window.alert(e.getLocalizedMessage());
+        }
     }
 }
