@@ -131,6 +131,14 @@ public class DateUtils {
         return calendarEnd.getTime();
     }
 
+    public static Date getFirstDayOfYear(Date year) {
+        Calendar calendarStart = Calendar.getInstance();
+        calendarStart.setTime(year);
+        calendarStart.set(Calendar.MONTH, 0);
+        calendarStart.set(Calendar.DAY_OF_MONTH, 1);
+        return calendarStart.getTime();
+    }
+
     public static Date getLastDayOfYear(Date year) {
         Calendar calendarEnd = Calendar.getInstance();
         calendarEnd.setTime(year);
