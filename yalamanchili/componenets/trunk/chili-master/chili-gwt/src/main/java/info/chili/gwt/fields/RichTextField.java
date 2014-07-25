@@ -93,9 +93,15 @@ public class RichTextField extends BaseField {
         clearMessage();
     }
 
+    public void setWidth(String width) {
+        fieldPanel.setWidth(width);
+        area.setWidth(width);
+    }
+
     public void setHeightAndWidth(String height, String width) {
         area.setHeight(height);
         area.setWidth(width);
+        fieldPanel.setWidth(width);
     }
 
     @Override
