@@ -250,6 +250,18 @@
             <artifactId>tika-core</artifactId>
             <version>${apache.tika.version}</version>
         </dependency>
+        <!-- convert html to string for Activiti task doc-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
+        </dependency>
+        <!-- Clean up email html for rich text -->
+        <dependency>
+            <groupId>jtidy</groupId>
+            <artifactId>jtidy</artifactId>
+            <version>${jtidy.version}</version>
+        </dependency> 
     </dependencies>
     <build>
         <plugins>
@@ -354,6 +366,8 @@
         <itext.version>2.0.8</itext.version>
         <poi.version>3.9</poi.version>
         <pdfbox.version>1.7.0</pdfbox.version>
+        <jtidy.version>r938</jtidy.version>
+        <jsoup.version>1.7.3</jsoup.version>
         <flying.saucer.version>9.0.1</flying.saucer.version>
         <apache.tika.version>1.5</apache.tika.version>
     </properties>

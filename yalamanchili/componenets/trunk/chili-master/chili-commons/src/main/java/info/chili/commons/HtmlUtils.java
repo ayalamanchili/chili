@@ -8,6 +8,8 @@ package info.chili.commons;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.w3c.tidy.Tidy;
 
 /**
@@ -32,5 +34,10 @@ public class HtmlUtils {
         } catch (UnsupportedEncodingException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public static String htmlToText(String html) {
+        Document doc = Jsoup.parse(html);
+        return doc.body().text();
     }
 }
