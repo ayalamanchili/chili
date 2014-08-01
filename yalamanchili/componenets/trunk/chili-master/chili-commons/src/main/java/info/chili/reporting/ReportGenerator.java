@@ -96,7 +96,7 @@ public class ReportGenerator {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        return Response.ok("consultant-ts-report.pdf".getBytes()).header("content-disposition", "inline; filename = " + reportName + ".pdf")
+        return Response.ok(reportName + ".pdf".getBytes()).header("content-disposition", "inline; filename = " + reportName + ".pdf")
                 .header("Content-Length", reportName + ".pdf".length()).build();
     }
 
