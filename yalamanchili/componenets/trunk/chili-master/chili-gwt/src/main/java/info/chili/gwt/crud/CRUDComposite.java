@@ -418,7 +418,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
 
     protected abstract String getURI();
 
-    protected void clearMessages() {
+    public void clearMessages() {
         for (String fieldKey : fields.keySet()) {
             if (fields.get(fieldKey) instanceof BaseField) {
                 BaseField field = fields.get(fieldKey);
@@ -433,7 +433,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
     protected void disableSubmitButtons() {
     }
 
-    protected void handleErrorResponse(Throwable err) {
+    public void handleErrorResponse(Throwable err) {
         //TODO enhance to show generic error messages
         logger.info(err.getMessage());
         if (!err.getMessage().isEmpty() && err.getMessage().contains("Error")) {
@@ -449,7 +449,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         enableSubmitButtons();
     }
 
-    protected void processValidationErrors(JSONValue errorsObj) {
+    public void processValidationErrors(JSONValue errorsObj) {
         clearMessages();
         JSONArray errorsArray = JSONUtils.toJSONArray(errorsObj.isObject().get("Error"));
         String genericErrorMessage = null;
