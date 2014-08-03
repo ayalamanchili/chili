@@ -128,4 +128,11 @@ public abstract class CreateComposite extends CRUDComposite implements ClickHand
     protected boolean processClientSideValidations(JSONObject entity) {
         return true;
     }
+
+    /**
+     * invoke validate on server side explictly
+     */
+    public void validate() {
+
+    }
 }

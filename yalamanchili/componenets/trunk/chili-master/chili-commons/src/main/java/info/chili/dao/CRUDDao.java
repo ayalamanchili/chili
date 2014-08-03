@@ -7,17 +7,19 @@ package info.chili.dao;
 import info.chili.jpa.QueryUtils;
 import info.chili.service.jrs.exception.ServiceException;
 import info.chili.jpa.AbstractEntity;
-import java.util.Arrays;
 import info.chili.commons.BeanMapper;
 import info.chili.commons.DataType;
 import info.chili.commons.ReflectionUtils;
 import info.chili.commons.SearchUtils;
+import info.chili.jpa.validation.ValidationUtils;
+import info.chili.service.jrs.ServiceMessages;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.validation.ConstraintViolation;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -100,6 +102,17 @@ public abstract class CRUDDao<T> {
     public void deleteAll(List<T> entities) {
         for (T t : entities) {
             delete(t);
+        }
+    }
+
+    public void validate(T entity) {
+        ServiceMessages serviceMessages = new ServiceMessages();
+        for (ConstraintViolation<Object> violation : ValidationUtils.validate(entity)) {
+            serviceMessages.addError(new info.chili.service.jrs.types.Error(violation.getPropertyPath()
+                    .toString(), "INVALID_INPUT", violation.getMessage()));
+        }
+        if (serviceMessages.isNotEmpty()) {
+            throw new ServiceException(ServiceException.StatusCode.INVALID_REQUEST, serviceMessages.getErrors());
         }
     }
 
