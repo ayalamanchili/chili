@@ -9,6 +9,8 @@ import info.chili.spring.SpringContext;
 import java.io.FileInputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
+import java.security.Provider;
+import java.security.Security;
 import java.security.cert.Certificate;
 import java.util.HashMap;
 import org.springframework.stereotype.Component;
@@ -44,6 +46,11 @@ public class SecurityService {
         } else {
             throw new RuntimeException("no keystore loaded. please call initKeystore before the call:" + keyStoreName);
         }
+    }
+
+//Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+    public void initSecurityProvider(Provider provider) {
+        Security.addProvider(provider);
     }
 
     public void initKeyStore(String name, char[] keyStorePassword, String keyStoreFilePath) {
