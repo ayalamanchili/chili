@@ -10,7 +10,7 @@ import ar.com.fdvs.dj.domain.DynamicReport;
 import ar.com.fdvs.dj.domain.builders.ReflectiveReportBuilder;
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
-import info.chili.commons.FileIOUtils;
+import info.chili.commons.PDFUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -71,7 +71,7 @@ public class ReportGenerator {
      * @return
      */
     public static Response generatePDFReportFromHtml(String html, String reportName) {
-        byte[] pdf = FileIOUtils.convertToPDF(html);
+        byte[] pdf = PDFUtils.convertToPDF(html);
         return Response
                 .ok(pdf)
                 .header("content-disposition", "filename = " + reportName + ".pdf")
@@ -89,7 +89,7 @@ public class ReportGenerator {
      * @return
      */
     public static Response createPDFReportFromHtml(String html, String reportName, String reportLocation) {
-        byte[] pdf = FileIOUtils.convertToPDF(html);
+        byte[] pdf = PDFUtils.convertToPDF(html);
         File file = new File(reportLocation + reportName + ".pdf");
         try {
             Files.write(pdf, file);
