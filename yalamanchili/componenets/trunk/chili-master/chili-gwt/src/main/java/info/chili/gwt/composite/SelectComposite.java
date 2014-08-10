@@ -35,6 +35,7 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         super(constants, info.chili.gwt.utils.Utils.getStringCamelCase(className), className, readOnly, isRequired, alignment);
         configureAddMainWidget();
         setReadOnly(readOnly);
+        //TODO should this be called in constructor or wait for child to invoke it on setting some url params?
         fetchDropDownData();
     }
 
