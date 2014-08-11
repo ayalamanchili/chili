@@ -7,6 +7,7 @@ package info.chili.security;
 
 import info.chili.spring.SpringContext;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.Provider;
@@ -53,11 +54,23 @@ public class SecurityService {
         Security.addProvider(provider);
     }
 
-    public void initKeyStore(String name, char[] keyStorePassword, String keyStoreFilePath) {
+    public void initKeyStore(String name, String keyStorePassword, String keyStoreFilePath) {
         try {
             KeyStore ks = KeyStore.getInstance(name);
-            ks.load(new FileInputStream(keyStoreFilePath), keyStorePassword);
+            ks.load(new FileInputStream(keyStoreFilePath), keyStorePassword.toCharArray());
             keyStores.put(name, ks);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void createKeyStore(String keyStoreType, String storeName, String keyStorePassword) {
+        try {
+            KeyStore ks = KeyStore.getInstance(keyStoreType);
+            ks.load(null, keyStorePassword.toCharArray());
+            FileOutputStream fos = new FileOutputStream(storeName);
+            ks.store(fos, keyStorePassword.toCharArray());
+            fos.close();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
