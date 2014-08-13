@@ -27,7 +27,7 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
  */
 public class PDFUtils {
 
-    public void signPdf(byte[] pdfIn, String keyStoreName, String certName, String pkAlias, char[] keyPassword) {
+    public void signPdf(byte[] pdfIn, String keyStoreName, String certName, String pkAlias, String keyPassword) {
         try {
             PdfReader reader = new FdfReader(pdfIn);
             FileOutputStream os = new FileOutputStream("signed.pdf");

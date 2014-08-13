@@ -25,9 +25,9 @@ public class SecurityService {
 
     protected HashMap<String, KeyStore> keyStores = new HashMap<String, KeyStore>();
 
-    public PrivateKey getPrivateKey(String keyStoreName, String keyAlias, char[] keyPassword) {
+    public PrivateKey getPrivateKey(String keyStoreName, String keyAlias, String keyPassword) {
         try {
-            return (PrivateKey) keyStores.get(keyStoreName).getKey(keyAlias, keyPassword);
+            return (PrivateKey) keyStores.get(keyStoreName).getKey(keyAlias, keyPassword.toCharArray());
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -35,7 +35,7 @@ public class SecurityService {
 
     public Certificate[] getCertificateChain(String keyStoreName, String certName) {
         try {
-            return keyStores.get(keyStoreName).getCertificateChain("test-cert");
+            return keyStores.get(keyStoreName).getCertificateChain(certName);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -54,9 +54,9 @@ public class SecurityService {
         Security.addProvider(provider);
     }
 
-    public void initKeyStore(String name, String keyStorePassword, String keyStoreFilePath) {
+    public void initKeyStore(String keyStoreType, String name, String keyStorePassword, String keyStoreFilePath) {
         try {
-            KeyStore ks = KeyStore.getInstance(name);
+            KeyStore ks = KeyStore.getInstance(keyStoreType);
             ks.load(new FileInputStream(keyStoreFilePath), keyStorePassword.toCharArray());
             keyStores.put(name, ks);
         } catch (Exception ex) {
