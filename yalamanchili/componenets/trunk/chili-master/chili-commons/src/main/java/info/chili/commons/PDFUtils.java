@@ -6,6 +6,7 @@
 package info.chili.commons;
 
 import com.google.common.base.Strings;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
@@ -21,7 +22,6 @@ import java.io.ByteArrayOutputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
-import java.util.Arrays;
 import java.util.Calendar;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
@@ -47,7 +47,9 @@ public class PDFUtils {
             if (signatureDate != null) {
                 appearance.setSignDate(signatureDate);
             }
-            appearance.setVisibleSignature(new Rectangle(72, 732, 144, 780), 1, "first");
+//            appearance.setRenderingMode(PdfSignatureAppearance.RenderingMode.GRAPHIC_AND_DESCRIPTION);
+//            appearance.setSignatureGraphic(Image.getInstance("http://sstech.us/images/systemsoft-logo.jpg"));
+            appearance.setVisibleSignature(new Rectangle(100, 250, 300, 200), 1, null);
             ExternalSignature es = new PrivateKeySignature(pk, "SHA-256", "BC");
             ExternalDigest digest = new BouncyCastleDigest();
             MakeSignature.signDetached(appearance, digest, es, chain, null, null, null, 0, CryptoStandard.CMS);
@@ -55,6 +57,7 @@ public class PDFUtils {
         } catch (Exception ex) {
             ex.printStackTrace();
             return pdfIn;
+            //TODO
 //            throw new RuntimeException(ex);
         }
     }

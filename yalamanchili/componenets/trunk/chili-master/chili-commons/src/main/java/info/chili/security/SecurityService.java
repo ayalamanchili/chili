@@ -58,8 +58,13 @@ public class SecurityService {
         try {
             KeyStore ks = KeyStore.getInstance(keyStoreType);
             ks.load(new FileInputStream(keyStoreFilePath), keyStorePassword.toCharArray());
+            if (keyStores.containsKey(name)) {
+                keyStores.remove(name);
+            }
             keyStores.put(name, ks);
         } catch (Exception ex) {
+            //TODO 
+            ex.printStackTrace();
 //            throw new RuntimeException(ex);
         }
     }
