@@ -14,6 +14,7 @@ import info.chili.commons.PDFUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import javax.ws.rs.core.Response;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -90,7 +91,7 @@ public class ReportGenerator {
      */
     public static Response createPDFReportFromHtml(String html, String reportName, String reportLocation) {
         byte[] pdf = PDFUtils.convertToPDF(html);
-        File file = new File(reportLocation + reportName + ".pdf");
+        File file = new File(reportLocation + reportName + UUID.randomUUID().toString() + ".pdf");
         try {
             Files.write(pdf, file);
         } catch (IOException ex) {

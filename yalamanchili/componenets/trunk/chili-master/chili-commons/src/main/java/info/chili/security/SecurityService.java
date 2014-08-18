@@ -41,7 +41,7 @@ public class SecurityService {
         }
     }
 
-    protected KeyStore getKeyStore(String keyStoreName) {
+    public KeyStore getKeyStore(String keyStoreName) {
         if (keyStores.containsKey(keyStoreName)) {
             return keyStores.get(keyStoreName);
         } else {
@@ -60,7 +60,7 @@ public class SecurityService {
             ks.load(new FileInputStream(keyStoreFilePath), keyStorePassword.toCharArray());
             keyStores.put(name, ks);
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+//            throw new RuntimeException(ex);
         }
     }
 

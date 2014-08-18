@@ -5,8 +5,8 @@
  */
 package info.chili.commons;
 
+import com.google.common.base.Strings;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.FdfReader;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 import com.itextpdf.text.pdf.PdfStamper;
@@ -18,7 +18,11 @@ import com.itextpdf.text.pdf.security.MakeSignature.CryptoStandard;
 import com.itextpdf.text.pdf.security.PrivateKeySignature;
 import info.chili.security.SecurityService;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.cert.Certificate;
+import java.util.Arrays;
+import java.util.Calendar;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 /**
@@ -27,22 +31,36 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
  */
 public class PDFUtils {
 
-    public void signPdf(byte[] pdfIn, String keyStoreName, String certName, String pkAlias, String keyPassword) {
+    public static byte[] signPdf(byte[] pdfIn, String location, Calendar signatureDate, String keyStoreName, String certName, String pkAlias, String keyPassword) {
         try {
-            PdfReader reader = new FdfReader(pdfIn);
-            FileOutputStream os = new FileOutputStream("signed.pdf");
-            PdfStamper.createSignature(reader, os, '\0');
-            PdfStamper stamper = PdfStamper.createSignature(reader, os, '\0');
+            SecurityService securityService = SecurityService.instance();
+            KeyStore keyStore = securityService.getKeyStore(keyStoreName);
+            PrivateKey pk = (PrivateKey) keyStore.getKey(pkAlias, keyPassword.toCharArray());
+            Certificate[] chain = keyStore.getCertificateChain(certName);
+            PdfReader reader = new PdfReader(pdfIn);
+            ByteArrayOutputStream pdfOut = new ByteArrayOutputStream();
+            PdfStamper stamper = PdfStamper.createSignature(reader, pdfOut, '\0');
             PdfSignatureAppearance appearance = stamper.getSignatureAppearance();
-            appearance.setReason("I've written this.");
-            appearance.setLocation("Foobar");
-            appearance.setVisibleSignature(new Rectangle(100, 100, 200, 200), 1, "first");
-            ExternalSignature es = new PrivateKeySignature(SecurityService.instance().getPrivateKey(keyStoreName, pkAlias, keyPassword), "SHA-256", "BC");
+            if (!Strings.isNullOrEmpty(location)) {
+                appearance.setLocation(location);
+            }
+            if (signatureDate != null) {
+                appearance.setSignDate(signatureDate);
+            }
+            appearance.setVisibleSignature(new Rectangle(72, 732, 144, 780), 1, "first");
+            ExternalSignature es = new PrivateKeySignature(pk, "SHA-256", "BC");
             ExternalDigest digest = new BouncyCastleDigest();
-            MakeSignature.signDetached(appearance, digest, es, SecurityService.instance().getCertificateChain(keyStoreName, keyStoreName), null, null, null, 0, CryptoStandard.CMS);
+            MakeSignature.signDetached(appearance, digest, es, chain, null, null, null, 0, CryptoStandard.CMS);
+            return pdfOut.toByteArray();
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            ex.printStackTrace();
+            return pdfIn;
+//            throw new RuntimeException(ex);
         }
+    }
+
+    public static byte[] convertToSignedPDF(String html, String location, Calendar signatureDate, String keyStoreName, String certName, String pkAlias, String keyPassword) {
+        return signPdf(convertToPDF(html), location, signatureDate, keyStoreName, certName, pkAlias, keyPassword);
     }
 
     public static byte[] convertToPDF(String html) {
