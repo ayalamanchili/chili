@@ -10,6 +10,15 @@ import java.util.TimeZone;
 
 public class DateUtils {
 
+    public static Calendar dateToCalendar(Date date) {
+        if (date == null) {
+            return null;
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
+
     public static String removeTimeZoneCodeFromDate(String dateStr) {
         int start = dateStr.indexOf("GMT");
         if (start < 0) {
