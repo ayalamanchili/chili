@@ -11,6 +11,8 @@ import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import info.chili.gwt.composite.BaseField;
 import java.util.Collection;
@@ -91,6 +93,22 @@ public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandl
             }
         }
         return getValue();
+    }
+
+    public JSONObject getSelectedObject() {
+        String value = null;
+        for (String key : map.keySet()) {
+            if (map.get(key).equalsIgnoreCase(getValue())) {
+                value = key;
+            }
+        }
+        if (value == null) {
+            return null;
+        } else {
+            JSONObject obj = new JSONObject();
+            obj.put("id", new JSONString(value));
+            return obj;
+        }
     }
 
     public com.google.gwt.user.client.ui.SuggestBox getSuggestBox() {

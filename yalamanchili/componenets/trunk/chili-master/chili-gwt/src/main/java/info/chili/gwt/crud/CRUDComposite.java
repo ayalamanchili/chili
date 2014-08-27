@@ -48,6 +48,7 @@ import info.chili.gwt.listeners.KeyPressListener;
 import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.FormatUtils;
 import info.chili.gwt.utils.Utils;
+import info.chili.gwt.widgets.SuggestBox;
 
 public abstract class CRUDComposite extends Composite implements KeyPressListener {
 
@@ -205,11 +206,6 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
             fields.put(attributeName, currencyField);
             entityFieldsPanel.add(currencyField);
         }
-        if (DataType.SUGGEST_FIELD.equals(type)) {
-            info.chili.gwt.widgets.SuggestBox suggestBox = new info.chili.gwt.widgets.SuggestBox(constants, attributeName, entityName, readOnly, isRequired);
-            fields.put(attributeName, suggestBox);
-            entityFieldsPanel.add(suggestBox);
-        }
     }
 
     protected void addEnumField(String key, Boolean readOnly, Boolean isRequired, String[] values) {
@@ -233,6 +229,11 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
     protected void addDropDown(String key, SelectComposite widget) {
         fields.put(key, widget);
         widget.getListBox().setEnabled(!readOnly);
+        entityFieldsPanel.add(widget);
+    }
+
+    protected void addSuggestField(String key, SuggestBox widget) {
+        fields.put(key, widget);
         entityFieldsPanel.add(widget);
     }
 
@@ -309,6 +310,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
                 entity.put(fieldKey, null);
             }
         }
+
         //Currency Field
         if (fields.get(fieldKey) instanceof CurrencyField) {
             CurrencyField field = (CurrencyField) fields.get(fieldKey);
@@ -335,10 +337,10 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
                 entity.put(fieldKey, null);
             }
         }
-        if (fields.get(fieldKey) instanceof info.chili.gwt.widgets.SuggestBox) {
-            info.chili.gwt.widgets.SuggestBox field = (info.chili.gwt.widgets.SuggestBox) fields.get(fieldKey);
-            if (field.getValue() != null && !field.getValue().trim().isEmpty()) {
-                entity.put(fieldKey, new JSONString(field.getValue()));
+        if (fields.get(fieldKey) instanceof SuggestBox) {
+            SuggestBox field = (SuggestBox) fields.get(fieldKey);
+            if (field.getSelectedObject() != null && !field.getValue().trim().isEmpty()) {
+                entity.put(fieldKey, field.getSelectedObject());
             } else {
                 entity.put(fieldKey, null);
             }
