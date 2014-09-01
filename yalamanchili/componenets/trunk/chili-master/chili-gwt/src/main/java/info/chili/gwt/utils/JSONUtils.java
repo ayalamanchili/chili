@@ -93,6 +93,13 @@ public class JSONUtils {
         return res;
     }
 
+    public static JSONObject merge(JSONObject object1, JSONObject object2) {
+        for(String key:object2.keySet()){
+            object1.put(key, object2.get(key));
+        }
+        return object1;
+    }
+
     public static String formatEnumString(JSONObject entity, String propertyName) {
         return formatEnumString(JSONUtils.toString(entity, propertyName));
     }
