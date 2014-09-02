@@ -196,6 +196,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         if (DataType.RICH_TEXT_AREA.equals(type)) {
             RichTextField richTextField = new RichTextField(constants, attributeName, entityName, readOnly, isRequired, alignment);
             richTextField.addStyleName("y-gwt-RichTextField");
+            richTextField.setHeightAndWidth("35%", "100%");
             fields.put(attributeName, richTextField);
             entityFieldsPanel.add(richTextField);
         }
