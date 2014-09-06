@@ -34,26 +34,56 @@ public abstract class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
     }
 
     @Validate
-    public T save(T source, Long id, String targetClassName) {
-        source.setTargetEntityName(targetClassName);
-        source.setTargetEntityId(id);
+    public T save(T entity, Long id, String targetClassName) {
+        entity.setTargetEntityName(targetClassName);
+        entity.setTargetEntityId(id);
         //TODO use bean mapper for merge
-        return (T) getEntityManager().merge(source);
+        return (T) getEntityManager().merge(entity);
     }
 
     @Validate
-    public T save(T source, AbstractEntity target) {
+    public T save(T entity, AbstractEntity target) {
         if (target.getId() == null) {
             throw new RuntimeException("target id cannot be null");
         }
-        source.setTargetEntityName(target.getClass().getCanonicalName());
-        source.setTargetEntityId(target.getId());
+        entity.setTargetEntityName(target.getClass().getCanonicalName());
+        entity.setTargetEntityId(target.getId());
         //TODO use bean mapper for merge
-        return (T) getEntityManager().merge(source);
+        return (T) getEntityManager().merge(entity);
+    }
+
+    @Validate
+    public T save(T entity, AbstractEntity source, AbstractEntity target) {
+        if (source.getId() == null) {
+            throw new RuntimeException("source id cannot be null");
+        }
+        if (target.getId() == null) {
+            throw new RuntimeException("target id cannot be null");
+        }
+        entity.setSourceEntityName(source.getClass().getCanonicalName());
+        entity.setSourceEntityId(source.getId());
+        entity.setTargetEntityName(source.getClass().getCanonicalName());
+        entity.setTargetEntityId(source.getId());
+        //TODO use bean mapper for merge
+        return (T) getEntityManager().merge(entity);
     }
 
     public T find(AbstractEntity target) {
         TypedQuery<T> query = getEntityManager().createQuery("from " + entityCls.getCanonicalName() + " where targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
+        query.setParameter("targetEntityNameParam", target.getClass().getCanonicalName());
+        query.setParameter("targetEntityIdParam", target.getId());
+        if (query.getResultList().size() > 0) {
+            return query.getResultList().get(0);
+        } else {
+            //TODO throw exception
+            return null;
+        }
+    }
+
+    public T find(AbstractEntity source, AbstractEntity target) {
+        TypedQuery<T> query = getEntityManager().createQuery("from " + entityCls.getCanonicalName() + " where sourceEntityName=:sourceEntityNameParam and sourceEntityId=:sourceEntityIdParam and targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
+        query.setParameter("sourceEntityNameParam", source.getClass().getCanonicalName());
+        query.setParameter("sourceEntityIdParam", source.getId());
         query.setParameter("targetEntityNameParam", target.getClass().getCanonicalName());
         query.setParameter("targetEntityIdParam", target.getId());
         if (query.getResultList().size() > 0) {
@@ -71,8 +101,10 @@ public abstract class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
         return query.getResultList();
     }
 
-    public List<T> findAll(AbstractEntity target) {
-        TypedQuery<T> query = getEntityManager().createQuery("from " + entityCls.getCanonicalName() + " where targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
+    public List<T> findAll(AbstractEntity source, AbstractEntity target) {
+        TypedQuery<T> query = getEntityManager().createQuery("from " + entityCls.getCanonicalName() + " where sourceEntityName=:sourceEntityNameParam and sourceEntityId=:sourceEntityIdParam and targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
+        query.setParameter("sourceEntityNameParam", source.getClass().getCanonicalName());
+        query.setParameter("sourceEntityIdParam", source.getId());
         query.setParameter("targetEntityNameParam", target.getClass().getCanonicalName());
         query.setParameter("targetEntityIdParam", target.getId());
         return query.getResultList();

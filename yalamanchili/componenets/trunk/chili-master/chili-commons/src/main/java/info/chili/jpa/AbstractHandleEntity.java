@@ -57,6 +57,17 @@ public abstract class AbstractHandleEntity implements Serializable {
     @NotNull
     protected Long targetEntityId;
 
+    /**
+     *
+     */
+    @Index(name = "SRC_ENTY_NM")
+    protected String sourceEntityName;
+    /**
+     *
+     */
+    @Index(name = "SRC_ENTY_ID")
+    protected Long sourceEntityId;
+
     public AbstractHandleEntity() {
     }
 
@@ -92,5 +103,21 @@ public abstract class AbstractHandleEntity implements Serializable {
 
     public void setTargetEntityId(Long targetEntityId) {
         this.targetEntityId = targetEntityId;
+    }
+
+    public String getSourceEntityName() {
+        return sourceEntityName;
+    }
+
+    public void setSourceEntityName(String sourceEntityName) {
+        this.sourceEntityName = sourceEntityName;
+    }
+
+    public Long getSourceEntityId() {
+        return sourceEntityId;
+    }
+
+    public void setSourceEntityId(Long sourceEntityId) {
+        this.sourceEntityId = sourceEntityId;
     }
 }
