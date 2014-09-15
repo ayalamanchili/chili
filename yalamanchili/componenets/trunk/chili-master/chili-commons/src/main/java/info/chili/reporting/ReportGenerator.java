@@ -27,13 +27,14 @@ import net.sf.jasperreports.engine.export.JRXlsExporter;
  * @author anuyalamanchili
  */
 public class ReportGenerator {
+//TODO support for email report
 
     public static <T> Response generateReport(List<T> data, String reportName, String format, String location) {
         DynamicReport dynamicReport = null;
         if (Strings.isNullOrEmpty(reportName)) {
             reportName = "report";
         }
-        String filename = reportName + "." + format;
+        String filename = reportName + UUID.randomUUID().toString() + "." + format;
         if (data.size() > 0) {
             dynamicReport = new ReflectiveReportBuilder(data).build();
             try {
@@ -50,7 +51,7 @@ public class ReportGenerator {
                 }
                 if (format.equalsIgnoreCase("xls")) {
                     JRXlsExporter exporter = new JRXlsExporter();
-                    exporter.setParameter(JRExporterParameter.INPUT_FILE_NAME,
+                    exporter.setParameter(JRExporterParameter.JASPER_PRINT,
                             jasperPrint);
                     exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
                             location + filename);
