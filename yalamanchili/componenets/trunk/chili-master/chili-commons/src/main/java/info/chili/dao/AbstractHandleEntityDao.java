@@ -62,8 +62,8 @@ public abstract class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
         }
         entity.setSourceEntityName(source.getClass().getCanonicalName());
         entity.setSourceEntityId(source.getId());
-        entity.setTargetEntityName(source.getClass().getCanonicalName());
-        entity.setTargetEntityId(source.getId());
+        entity.setTargetEntityName(target.getClass().getCanonicalName());
+        entity.setTargetEntityId(target.getId());
         //TODO use bean mapper for merge
         return (T) getEntityManager().merge(entity);
     }
