@@ -33,6 +33,14 @@ public abstract class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
         this.entityCls = cls;
     }
 
+    public T save(T entity) {
+        return getEntityManager().merge(entity);
+    }
+
+    public T find(Long id) {
+        return (T) getEntityManager().find(entityCls, id);
+    }
+
     @Validate
     public T save(T entity, Long id, String targetClassName) {
         entity.setTargetEntityName(targetClassName);
