@@ -65,6 +65,27 @@ public class ReportGenerator {
         return Response.ok(filename.getBytes()).build();
     }
 
+    public static <T> String generateExcelReport(List<T> data, String reportName, String location) {
+        DynamicReport dynamicReport = null;
+        String filename = reportName + UUID.randomUUID().toString() + ".xls";
+        if (data.size() > 0) {
+            dynamicReport = new ReflectiveReportBuilder(data).build();
+            try {
+                dynamicReport.setTitle(data.get(0).getClass().getSimpleName());
+                JasperPrint jasperPrint = DynamicJasperHelper.generateJasperPrint(dynamicReport, new ClassicLayoutManager(), data);
+                JRXlsExporter exporter = new JRXlsExporter();
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT,
+                        jasperPrint);
+                exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
+                        location + filename);
+                exporter.exportReport();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        return filename;
+    }
+
     /**
      * converts html generated from templating service or other to pdf
      *
