@@ -15,6 +15,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.stereotype.Component;
 
@@ -25,7 +27,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UniqueIDValidator implements ConstraintValidator<Unique, Serializable> {
 
-    private final static Logger logger = Logger.getLogger(UniqueIDValidator.class.getName());
+    private static final Log log = LogFactory.getLog(UniqueIDValidator.class);
     private static boolean enabled = true;
     private Class<?> entityClass;
     private String[] uniqueFields;
@@ -78,7 +80,7 @@ public class UniqueIDValidator implements ConstraintValidator<Unique, Serializab
         if (id != null) {
             queryString.append(" and id !=").append(id.toString());
         }
-        logger.log(Level.INFO, "unique validator query:{0}", queryString.toString());
+        log.debug("unique validator query:" + queryString.toString());
         return queryString.toString();
     }
 
