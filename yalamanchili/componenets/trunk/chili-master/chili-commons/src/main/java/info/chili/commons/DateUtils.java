@@ -164,6 +164,16 @@ public class DateUtils {
         return null;
     }
 
+    public static Integer getYearFromDate(Date date) {
+        Integer result = -1;
+        if (date != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            result = cal.get(Calendar.YEAR);
+        }
+        return result;
+    }
+
     /**
      *
      * @param totalChuck eg: 40 hours
