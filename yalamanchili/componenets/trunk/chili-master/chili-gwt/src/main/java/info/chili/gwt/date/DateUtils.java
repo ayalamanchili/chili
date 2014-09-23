@@ -9,6 +9,8 @@ public class DateUtils {
 
     private static final String DEFAULT_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZ";
     private static final String DEFAULT_FORMAT2 = "yyyy-MM-dd'T'HH:mm:ssZZZ";
+    private static final String DEFAULT_FORMAT3 = "dd-MMM-YYYY'T'HH:mm:ss.SSSZZZ";
+    private static final String DEFAULT_FORMAT4 = "dd-MMM-YYYY'T'HH:mm:ssZZZ";
     private static final String DEFAULT_FORMAT_TZ = "yyyy-MM-dd";
 
     public static String toDateString(Date date) {
@@ -29,6 +31,10 @@ public class DateUtils {
             formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT);
         } else if (dateString.length() == 25) {
             formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT2);
+        } else if (dateString.length() == 30) {
+            formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT3);
+        } else if (dateString.length() == 26) {
+            formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT4);
         } else {
             throw new RuntimeException(dateString + " : is not supported date string format vaid ones are 1.yyyy-MM-dd'T'HH:mm:ss.SSSZZZ and 2.yyyy-MM-dd'T'HH:mm:ssZZZ:");
         }
