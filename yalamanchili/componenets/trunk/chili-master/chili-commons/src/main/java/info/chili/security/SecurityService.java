@@ -6,14 +6,26 @@
 package info.chili.security;
 
 import info.chili.spring.SpringContext;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.math.BigInteger;
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.KeyStore;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.Provider;
+import java.security.SecureRandom;
 import java.security.Security;
+import java.security.SignatureException;
 import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
+import java.util.Date;
 import java.util.HashMap;
+import org.bouncycastle.jce.X509Principal;
+import org.bouncycastle.x509.X509V3CertificateGenerator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -79,6 +91,50 @@ public class SecurityService {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public void test() {
+        X509Principal issuer = new X509Principal("CN=cn, O=o, L=L, ST=il, C= c");
+        X509Principal subject = new X509Principal("CN=cn, O=o, L=L, ST=il, C= c");
+        String signatureAlgorithm = "SHA256WithRSAEncryption";
+        String keyAlgorithm = "RSA";
+        Integer keySize = 1024;
+    }
+
+    public void createAndSaveCertToKS(String keyStoreName, String keyStoreFilePath, String certAlias, Date notBefore, Date notAfter, String keyStorePW, X509Principal issuer, X509Principal subject, String signatureAlgorithm, String keyAlgorithm, Integer keySize) {
+        try {
+            KeyStore keyStore = getKeyStore(keyStoreName);
+            Certificate existingCert = keyStore.getCertificate(certAlias);
+            if (existingCert != null) {
+                return;
+            }
+            KeyPair keyPair = generateKeyPair(keyAlgorithm, keySize);
+            X509Certificate cert = generateCertificate(keyPair, issuer, subject, signatureAlgorithm, notBefore, notAfter);
+            keyStore.setKeyEntry(certAlias, keyPair.getPrivate(), keyStorePW.toCharArray(), new java.security.cert.Certificate[]{cert});
+            File file = new File(keyStoreFilePath);
+            keyStore.store(new FileOutputStream(file), keyStorePW.toCharArray());
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public X509Certificate generateCertificate(KeyPair keyPair, X509Principal issuer, X509Principal subject, String signatureAlgorithm, Date notBefore, Date notAfter) throws SecurityException, SignatureException, InvalidKeyException {
+        X509V3CertificateGenerator v3CertGen = new X509V3CertificateGenerator();
+        v3CertGen.setSerialNumber(BigInteger.valueOf(System.currentTimeMillis()));
+        v3CertGen.setIssuerDN(issuer);
+        //TODO 
+        v3CertGen.setNotBefore(notBefore);
+        v3CertGen.setNotAfter(notAfter);
+        v3CertGen.setSubjectDN(subject);
+        v3CertGen.setPublicKey(keyPair.getPublic());
+        v3CertGen.setSignatureAlgorithm(signatureAlgorithm);
+        return v3CertGen.generateX509Certificate(keyPair.getPrivate());
+    }
+
+    public KeyPair generateKeyPair(String algorithm, Integer keySize) throws NoSuchAlgorithmException {
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(algorithm);
+        keyPairGenerator.initialize(keySize, new SecureRandom());
+        return keyPairGenerator.generateKeyPair();
     }
 
     public static SecurityService instance() {
