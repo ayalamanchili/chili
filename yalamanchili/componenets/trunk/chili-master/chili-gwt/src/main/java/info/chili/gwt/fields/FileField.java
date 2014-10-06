@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class FileField extends ClickableLink implements ClickHandler {
 
     private static Logger logger = Logger.getLogger(FileField.class.getName());
-    protected String fileUrl;
+    public String fileUrl;
 
     public FileField(String name, String fileUrl) {
         super(name);
