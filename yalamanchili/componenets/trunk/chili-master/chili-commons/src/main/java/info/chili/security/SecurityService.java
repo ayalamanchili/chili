@@ -93,14 +93,6 @@ public class SecurityService {
         }
     }
 
-    public void test() {
-        X509Principal issuer = new X509Principal("CN=cn, O=o, L=L, ST=il, C= c");
-        X509Principal subject = new X509Principal("CN=cn, O=o, L=L, ST=il, C= c");
-        String signatureAlgorithm = "SHA256WithRSAEncryption";
-        String keyAlgorithm = "RSA";
-        Integer keySize = 1024;
-    }
-
     public void createAndSaveCertToKS(String keyStoreName, String keyStoreFilePath, String certAlias, Date notBefore, Date notAfter, String keyStorePW, X509Principal issuer, X509Principal subject, String signatureAlgorithm, String keyAlgorithm, Integer keySize) {
         try {
             KeyStore keyStore = getKeyStore(keyStoreName);
