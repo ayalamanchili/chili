@@ -19,6 +19,14 @@ public class JSONUtils {
         }
     }
 
+    public static Boolean toBoolean(JSONValue entity, String property) {
+        if ("true".equalsIgnoreCase(JSONUtils.toString(entity, property))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static JSONArray toJSONArray(JSONValue jsonValue) {
         if (null == jsonValue) {
             return new JSONArray();
@@ -94,7 +102,7 @@ public class JSONUtils {
     }
 
     public static JSONObject merge(JSONObject object1, JSONObject object2) {
-        for(String key:object2.keySet()){
+        for (String key : object2.keySet()) {
             object1.put(key, object2.get(key));
         }
         return object1;

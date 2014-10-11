@@ -372,6 +372,10 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
             LongField field = (LongField) fields.get(fieldKey);
             field.setValue(JSONUtils.toString(entity, fieldKey));
         }
+        if (DataType.INTEGER_FIELD.equals(type)) {
+            IntegerField field = (IntegerField) fields.get(fieldKey);
+            field.setValue(JSONUtils.toString(entity, fieldKey));
+        }
         if (DataType.ENUM_FIELD.equals(type)) {
             EnumField field = (EnumField) fields.get(fieldKey);
             field.selectValue(JSONUtils.toString(entity, fieldKey));
