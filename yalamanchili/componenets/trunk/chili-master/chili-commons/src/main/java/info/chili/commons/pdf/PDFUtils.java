@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package info.chili.commons;
+package info.chili.commons.pdf;
 
 import com.google.common.base.Strings;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.security.BouncyCastleDigest;
 import com.itextpdf.text.pdf.security.ExternalDigest;
 import com.itextpdf.text.pdf.security.ExternalSignature;
 import com.itextpdf.text.pdf.security.MakeSignature;
 import com.itextpdf.text.pdf.security.MakeSignature.CryptoStandard;
 import com.itextpdf.text.pdf.security.PrivateKeySignature;
+import info.chili.commons.DateUtils;
 import info.chili.security.SecurityService;
 import info.chili.security.Signature;
 import java.io.ByteArrayOutputStream;
@@ -23,6 +25,7 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.util.Date;
+import java.util.Map;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 /**
@@ -30,6 +33,63 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
  * @author ayalamanchili
  */
 public class PDFUtils {
+
+    public static byte[] generatePdf(PdfDocumentData data) {
+        byte[] pdfWithSignature = generatePdfWithFields(data);
+        for (Signature signature : data.getSignatures()) {
+            pdfWithSignature = signDocument(pdfWithSignature, data.getKeyStoreName(), signature);
+        }
+        return pdfWithSignature;
+    }
+
+    public static byte[] signDocument(byte[] input, String keyStoreName, Signature signature) {
+        ByteArrayOutputStream pdfOut = new ByteArrayOutputStream();
+        try {
+            SecurityService securityService = SecurityService.instance();
+            KeyStore keyStore = securityService.getKeyStore(keyStoreName);
+            PdfReader reader = new PdfReader(input);
+            PdfStamper stamper = PdfStamper.createSignature(reader, pdfOut, '\0');
+            PdfSignatureAppearance appearance = stamper.getSignatureAppearance();
+            appearance.setContact(signature.getContact());
+            if (!Strings.isNullOrEmpty(signature.getLocation())) {
+                appearance.setLocation(signature.getLocation());
+            }
+            if (signature.getSignatureDate() != null) {
+                appearance.setSignDate(signature.getSignatureDate());
+            } else {
+                appearance.setSignDate(DateUtils.dateToCalendar(new Date()));
+            }
+            if (signature.getVisible()) {
+                appearance.setVisibleSignature(signature.getSignatureField());
+//                appearance.setVisibleSignature(2, signature.getSignatureField());
+            }
+            PrivateKey pk = (PrivateKey) keyStore.getKey(signature.getPrivateKeyAlias(), signature.getPrivateKeyPassword().toCharArray());
+            ExternalSignature es = new PrivateKeySignature(pk, "SHA-256", "BC");
+            ExternalDigest digest = new BouncyCastleDigest();
+            Certificate[] chain = keyStore.getCertificateChain(signature.getCertAlias());
+            MakeSignature.signDetached(appearance, digest, es, chain, null, null, null, 0, CryptoStandard.CMS);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return pdfOut.toByteArray();
+    }
+
+    public static byte[] generatePdfWithFields(PdfDocumentData data) {
+        ByteArrayOutputStream pdfOut = new ByteArrayOutputStream();
+        try {
+            PdfReader pdfTemplate = new PdfReader(data.getTemplateUrl());
+            PdfStamper stamper = new PdfStamper(pdfTemplate, pdfOut);
+//            stamper.setFormFlattening(true);
+            for (Map.Entry<String, String> fieldName : data.getData().entrySet()) {
+                stamper.getAcroFields().setField(fieldName.getKey(), fieldName.getValue());
+            }
+            stamper.close();
+            pdfTemplate.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return pdfOut.toByteArray();
+    }
 
     public static byte[] signPdf(byte[] pdfIn, String keyStoreName, Signature signature) {
         try {

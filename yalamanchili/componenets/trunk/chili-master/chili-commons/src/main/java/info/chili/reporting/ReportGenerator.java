@@ -10,7 +10,7 @@ import ar.com.fdvs.dj.domain.DynamicReport;
 import ar.com.fdvs.dj.domain.builders.ReflectiveReportBuilder;
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
-import info.chili.commons.PDFUtils;
+import info.chili.commons.pdf.PDFUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
