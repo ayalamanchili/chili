@@ -2,6 +2,8 @@ package info.chili.gwt.fields;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import info.chili.gwt.composite.BaseField;
 
 import java.util.Date;
@@ -24,7 +26,7 @@ import org.zenika.widget.client.datePicker.DatePicker;
 /**
  * The Class DateField.
  */
-public class DateField extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler, ClickHandler {
+public class DateField extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler, ClickHandler, FocusHandler {
 
     private static Logger logger = Logger.getLogger(DateField.class.getName());
     final DatePicker datePicker = new DatePicker();
@@ -40,13 +42,30 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
         datePicker.addBlurHandler(this);
     }
 
+    public DateField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired, boolean dufaultText, Alignment alignment) {
+        this(constants, attributeName, className, readOnly, isRequired, alignment);
+
+    }
+
     @UiConstructor
     @Deprecated
     public DateField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
-        super(constants, attributeName, className, readOnly, isRequired);
-        configureAddMainWidget();
-        setReadOnly(readOnly);
-        datePicker.addBlurHandler(this);
+        this(constants, attributeName, className, readOnly, isRequired, Alignment.HORIZONTAL);
+    }
+
+    public void setBackgroundText() {
+        datePicker.setText(moreInfoText);
+        datePicker.addStyleName(backgroundTextStyle);
+    }
+
+    public void hidePrompt() {
+        datePicker.setText(null);
+        datePicker.removeStyleName(backgroundTextStyle);
+    }
+
+    @Override
+    public void onFocus(FocusEvent event) {
+        datePicker.setCursorPos(0);
     }
 
     public Date getDate() {
@@ -105,6 +124,9 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
 
     @Override
     public void onClick(ClickEvent event) {
+        if (moreInfoText.equals(datePicker.getText())) {
+            hidePrompt();
+        }
     }
 
     @Override

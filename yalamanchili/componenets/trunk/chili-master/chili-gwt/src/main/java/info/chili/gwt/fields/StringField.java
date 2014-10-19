@@ -24,6 +24,11 @@ public class StringField extends BaseFieldWithTextBox {
     public StringField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired, Alignment alignment) {
         super(constants, attributeName, className, readOnly, isRequired, alignment);
     }
+
+    public StringField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired, boolean defaultText, Alignment alignment) {
+        super(constants, attributeName, className, readOnly, isRequired, defaultText, alignment);
+    }
+
     //TODO depreciate this
     @UiConstructor
     @Deprecated

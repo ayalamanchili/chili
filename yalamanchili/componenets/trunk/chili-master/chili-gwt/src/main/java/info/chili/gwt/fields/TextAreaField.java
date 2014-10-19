@@ -4,6 +4,11 @@
  */
 package info.chili.gwt.fields;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
@@ -19,7 +24,7 @@ import info.chili.gwt.utils.Alignment;
  *
  * @author ayalamanchili
  */
-public class TextAreaField extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler {
+public class TextAreaField extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler, FocusHandler, ClickHandler {
 
     protected TextArea textArea = new TextArea();
 
@@ -34,12 +39,36 @@ public class TextAreaField extends BaseField implements KeyPressHandler, KeyUpHa
         setReadOnly(readOnly);
     }
 
+    public TextAreaField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean required, boolean defaultText, Alignment alignment) {
+        this(constants, attributeName, className, readOnly, required, alignment);
+
+    }
+
     @Deprecated
     public TextAreaField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean required) {
-        super(constants, attributeName, className, readOnly, required);
-        configureAddMainWidget();
-        textArea.ensureDebugId(className + "_" + attributeName + "_TB");
-        setReadOnly(readOnly);
+        this(constants, attributeName, className, readOnly, required, Alignment.HORIZONTAL);
+    }
+
+    public void setBackgroundText() {
+        textArea.setText(moreInfoText);
+        textArea.addStyleName(backgroundTextStyle);
+    }
+
+    public void hidePrompt() {
+        textArea.setText(null);
+        textArea.removeStyleName(backgroundTextStyle);
+    }
+
+    @Override
+    public void onFocus(FocusEvent event) {
+        textArea.setCursorPos(0);
+    }
+
+    @Override
+    public void onClick(ClickEvent event) {
+        if (moreInfoText.equals(textArea.getText())) {
+            hidePrompt();
+        }
     }
 
     protected void configureAddMainWidget() {
@@ -53,6 +82,8 @@ public class TextAreaField extends BaseField implements KeyPressHandler, KeyUpHa
         textArea.addKeyUpHandler(this);
         textArea.addKeyDownHandler(this);
         textArea.addBlurHandler(this);
+        textArea.addFocusHandler(this);
+        textArea.addClickHandler(this);
     }
 
     public void setReadOnly(Boolean readlOnly) {
@@ -75,7 +106,7 @@ public class TextAreaField extends BaseField implements KeyPressHandler, KeyUpHa
 
     public String getValue() {
         //TODO use getValue() insted of getText() since getText return blaml stirng if nothing is entered
-        if (textArea.getValue() != null) {
+        if (textArea.getValue() != null && !textArea.getValue().equals(moreInfoText)) {
             return textArea.getValue();
         } else {
             return null;
@@ -84,6 +115,10 @@ public class TextAreaField extends BaseField implements KeyPressHandler, KeyUpHa
 
     @Override
     public void onKeyPress(KeyPressEvent event) {
+        if (moreInfoText.equals(textArea.getText())
+                && !(event.getNativeEvent().getKeyCode() == KeyCodes.KEY_TAB)) {
+            hidePrompt();
+        }
     }
 
     @Override

@@ -32,28 +32,17 @@ public abstract class BaseField extends Composite implements BlurHandler {
         addWidgets();
         configure();
         initWidget(panel);
-        //TODO
+        moreInfoText = Utils.getMoreInfoLabel(attributeName, className, constants);
         setMoreInfoDescription(Utils.getMoreInfoLabel(attributeName, className, constants));
     }
 //TODO depreciate this
 
     public BaseField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean required) {
-        this.constants = constants;
-        this.readOnly = readOnly;
-        this.required = required;
-        this.attributeName = attributeName;
-        this.className = className;
-        if (required) {
-            label.setHTML(Utils.getAttributeLabel(attributeName, className, constants) + "<em class='tfRequired'>*</em>");
-        } else {
-            label.setHTML(Utils.getAttributeLabel(attributeName, className, constants));
-        }
-        addWidgets();
-        configure();
-        initWidget(panel);
-        //TODO
-        setMoreInfoDescription(Utils.getMoreInfoLabel(attributeName, className, constants));
+        this(constants, attributeName, className, readOnly, required, Alignment.HORIZONTAL);
     }
+
+    public String backgroundTextStyle = "backgroundTextStyle";
+    public String moreInfoText;
 
     protected void configure() {
         label.addStyleName("tfFieldHeader");
@@ -145,7 +134,7 @@ public abstract class BaseField extends Composite implements BlurHandler {
     }
 
     public abstract void focus(boolean focus);
-    
+
     public abstract void setReadOnly(Boolean readOnly);
 
     protected void setMoreInfoDescription(String moreInfo) {

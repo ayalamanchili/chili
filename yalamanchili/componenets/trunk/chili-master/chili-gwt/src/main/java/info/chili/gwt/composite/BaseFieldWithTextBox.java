@@ -1,5 +1,9 @@
 package info.chili.gwt.composite;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
@@ -16,7 +20,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 //TODO move commons stuff to base field
-public abstract class BaseFieldWithTextBox extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler {
+public abstract class BaseFieldWithTextBox extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler, FocusHandler, ClickHandler {
 
     private Logger logger = Logger.getLogger(BaseFieldWithTextBox.class.getName());
     protected List<KeyPressListener> enterKeyPressedListeners = new ArrayList<KeyPressListener>();
@@ -34,19 +38,32 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
         textbox.ensureDebugId(className + "_" + attributeName + "_TB");
         setReadOnly(readOnly);
     }
-//TODO depreciate this
+
+    public BaseFieldWithTextBox(ConstantsWithLookup constants,
+            String attributeName, String className, Boolean readOnly,
+            Boolean required, boolean defaultText, Alignment alignment) {
+        this(constants, attributeName, className, readOnly, required, alignment);
+        setBackgroundText();
+    }
 
     public BaseFieldWithTextBox(ConstantsWithLookup constants,
             String attributeName, String className, Boolean readOnly,
             Boolean required) {
-        super(constants, attributeName, className, readOnly, required);
-        configureAddMainWidget();
-        textbox.ensureDebugId(className + "_" + attributeName + "_TB");
-        setReadOnly(readOnly);
+        this(constants, attributeName, className, readOnly, required, Alignment.HORIZONTAL);
     }
 
+    public void setBackgroundText() {
+        textbox.setText(moreInfoText);
+        textbox.addStyleName(backgroundTextStyle);
+    }
+
+    public void hidePrompt() {
+        textbox.setText(null);
+        textbox.removeStyleName(backgroundTextStyle);
+    }
+
+    @Override
     protected void configureAddMainWidget() {
-        textbox.addStyleName("tfTextBox");
         fieldPanel.insert(textbox, 0);
         addListeners();
     }
@@ -56,8 +73,23 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
         textbox.addKeyUpHandler(this);
         textbox.addKeyDownHandler(this);
         textbox.addBlurHandler(this);
+        textbox.addFocusHandler(this);
+        textbox.addClickHandler(this);
     }
 
+    @Override
+    public void onFocus(FocusEvent event) {
+        textbox.setCursorPos(0);
+    }
+
+    @Override
+    public void onClick(ClickEvent event) {
+        if (moreInfoText.equals(textbox.getText())) {
+            hidePrompt();
+        }
+    }
+
+    @Override
     public void setReadOnly(Boolean readlOnly) {
         textbox.setReadOnly(readOnly);
         if (readOnly) {
@@ -74,7 +106,7 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
 
     public String getValue() {
         //TODO use getValue() insted of getText() since getText return blaml stirng if nothing is entered
-        if (textbox.getValue() != null) {
+        if (textbox.getValue() != null && !textbox.getValue().equals(moreInfoText)) {
             return textbox.getValue().trim();
         } else {
             return null;
@@ -83,6 +115,11 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
 
     @Override
     public void onKeyPress(KeyPressEvent event) {
+        //for default text
+        if (moreInfoText.equals(textbox.getText())
+                && !(event.getNativeEvent().getKeyCode() == KeyCodes.KEY_TAB)) {
+            hidePrompt();
+        }
         if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER) {
             enterKeyPressed(event);
         }

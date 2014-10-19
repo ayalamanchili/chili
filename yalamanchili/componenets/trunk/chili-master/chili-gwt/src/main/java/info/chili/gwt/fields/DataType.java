@@ -10,6 +10,8 @@ public enum DataType {
      * The STRIN g_ field.
      */
     STRING_FIELD,
+    
+    PROMPTED_STRING_FIELD,
     /**
      * The INTEGE r_ field.
      */
