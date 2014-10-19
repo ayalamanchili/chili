@@ -10,7 +10,6 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 import com.itextpdf.text.pdf.PdfStamper;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.security.BouncyCastleDigest;
 import com.itextpdf.text.pdf.security.ExternalDigest;
 import com.itextpdf.text.pdf.security.ExternalSignature;
@@ -36,10 +35,20 @@ public class PDFUtils {
 
     public static byte[] generatePdf(PdfDocumentData data) {
         byte[] pdfWithSignature = generatePdfWithFields(data);
+        int i = 1;
         for (Signature signature : data.getSignatures()) {
             pdfWithSignature = signDocument(pdfWithSignature, data.getKeyStoreName(), signature);
         }
-        return pdfWithSignature;
+        ByteArrayOutputStream pdfOut = new ByteArrayOutputStream();
+        try {
+            PdfReader reader = new PdfReader(pdfWithSignature);
+            PdfStamper stamper = new PdfStamper(reader, pdfOut);
+            stamper.setFormFlattening(true);
+            stamper.close();
+            reader.close();
+        } catch (Exception e) {
+        }
+        return pdfOut.toByteArray();
     }
 
     public static byte[] signDocument(byte[] input, String keyStoreName, Signature signature) {
@@ -61,7 +70,6 @@ public class PDFUtils {
             }
             if (signature.getVisible()) {
                 appearance.setVisibleSignature(signature.getSignatureField());
-//                appearance.setVisibleSignature(2, signature.getSignatureField());
             }
             PrivateKey pk = (PrivateKey) keyStore.getKey(signature.getPrivateKeyAlias(), signature.getPrivateKeyPassword().toCharArray());
             ExternalSignature es = new PrivateKeySignature(pk, "SHA-256", "BC");
@@ -79,7 +87,6 @@ public class PDFUtils {
         try {
             PdfReader pdfTemplate = new PdfReader(data.getTemplateUrl());
             PdfStamper stamper = new PdfStamper(pdfTemplate, pdfOut);
-//            stamper.setFormFlattening(true);
             for (Map.Entry<String, String> fieldName : data.getData().entrySet()) {
                 stamper.getAcroFields().setField(fieldName.getKey(), fieldName.getValue());
             }
