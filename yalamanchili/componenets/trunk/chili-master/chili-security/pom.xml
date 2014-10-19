@@ -37,7 +37,7 @@
         <repository>
             <id>yalamanchili.info</id>
             <name>yalamanchili.info</name>
-            <url>http://cac.yalamanchili.info/nexus/content/groups/public</url>
+            <url>http://tools.yalamanchili.info/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -52,7 +52,7 @@
         <pluginRepository>
             <id>yalamanchili.info</id>
             <name>yalamanchili.info</name>
-            <url>http://cac.yalamanchili.info/nexus/content/groups/public</url>
+            <url>http://tools.yalamanchili.info/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -67,14 +67,14 @@
         <repository>
             <id>yalamanchili.info</id>
             <name>yalamanchili.info</name>
-            <url>http://cac.yalamanchili.info/nexus/content/repositories/releases</url>
+            <url>http://tools.yalamanchili.info/nexus/content/repositories/releases</url>
         </repository>
 
         <!-- Publish the versioned releases here -->
         <snapshotRepository>
             <id>yalamanchili.info</id>
             <name>yalamanchili.info</name>
-            <url>http://cac.yalamanchili.info/nexus/content/repositories/snapshots</url>
+            <url>http://tools.yalamanchili.info/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
