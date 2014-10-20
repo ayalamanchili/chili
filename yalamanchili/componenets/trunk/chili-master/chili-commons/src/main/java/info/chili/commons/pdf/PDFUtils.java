@@ -35,7 +35,6 @@ public class PDFUtils {
 
     public static byte[] generatePdf(PdfDocumentData data) {
         byte[] pdfWithSignature = generatePdfWithFields(data);
-        int i = 1;
         for (Signature signature : data.getSignatures()) {
             pdfWithSignature = signDocument(pdfWithSignature, data.getKeyStoreName(), signature);
         }
@@ -47,6 +46,7 @@ public class PDFUtils {
             stamper.close();
             reader.close();
         } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return pdfOut.toByteArray();
     }
