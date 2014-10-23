@@ -50,7 +50,7 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
     @UiConstructor
     @Deprecated
     public DateField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
-        this(constants, attributeName, className, readOnly, isRequired, Alignment.HORIZONTAL);
+        this(constants, attributeName, className, readOnly, isRequired, Alignment.VERTICAL);
     }
 
     public void setBackgroundText() {

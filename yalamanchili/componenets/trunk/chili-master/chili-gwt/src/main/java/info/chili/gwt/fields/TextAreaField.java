@@ -46,7 +46,7 @@ public class TextAreaField extends BaseField implements KeyPressHandler, KeyUpHa
 
     @Deprecated
     public TextAreaField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean required) {
-        this(constants, attributeName, className, readOnly, required, Alignment.HORIZONTAL);
+        this(constants, attributeName, className, readOnly, required, Alignment.VERTICAL);
     }
 
     public void setBackgroundText() {

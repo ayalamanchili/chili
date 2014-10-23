@@ -49,7 +49,7 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
     public BaseFieldWithTextBox(ConstantsWithLookup constants,
             String attributeName, String className, Boolean readOnly,
             Boolean required) {
-        this(constants, attributeName, className, readOnly, required, Alignment.HORIZONTAL);
+        this(constants, attributeName, className, readOnly, required, Alignment.VERTICAL);
     }
 
     public void setBackgroundText() {
