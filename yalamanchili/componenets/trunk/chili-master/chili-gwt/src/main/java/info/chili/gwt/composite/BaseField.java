@@ -38,7 +38,7 @@ public abstract class BaseField extends Composite implements BlurHandler {
 //TODO depreciate this
 
     public BaseField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean required) {
-        this(constants, attributeName, className, readOnly, required, Alignment.HORIZONTAL);
+        this(constants, attributeName, className, readOnly, required, Alignment.VERTICAL);
     }
 
     public String backgroundTextStyle = "backgroundTextStyle";

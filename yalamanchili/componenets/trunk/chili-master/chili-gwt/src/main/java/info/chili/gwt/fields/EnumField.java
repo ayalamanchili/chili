@@ -46,7 +46,6 @@ public class EnumField extends BaseField {
     public EnumField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired, boolean multiSelect,
             String[] values, Alignment alignment) {
         super(constants, attributeName, className, readOnly, isRequired, alignment);
-        logger.info("1111" + isMultiSelect);
         this.isMultiSelect = multiSelect;
         this.constants = constants;
         configureAddMainWidget();
