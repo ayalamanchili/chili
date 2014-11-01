@@ -185,6 +185,11 @@ public class DateUtils {
         return totalChuck.divide(totalPortaion).multiply(proratedPortion);
     }
 
+    public String formatDate(Date date, String format) {
+        SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(format);
+        return DATE_FORMAT.format(date);
+    }
+
     public static boolean isLeapYear(int year) {
         if ((year % 4) == 0) {
             if ((year % 100) == 0) {
