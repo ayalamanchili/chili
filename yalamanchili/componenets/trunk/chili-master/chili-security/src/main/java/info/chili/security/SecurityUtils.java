@@ -8,7 +8,6 @@ import info.chili.commons.EntityQueryUtils;
 import info.chili.security.domain.acl.AclClass;
 import info.chili.security.domain.acl.AclSid;
 import info.chili.spring.SpringContext;
-import java.security.PrivateKey;
 import javax.persistence.EntityManager;
 import org.jasypt.digest.StringDigester;
 import org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor;
