@@ -26,10 +26,13 @@ import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import info.chili.gwt.composite.ALComposite;
+import info.chili.gwt.composite.LocalStorage;
 import info.chili.gwt.fields.ListBoxField;
 import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.JSONUtils;
 import info.chili.gwt.utils.Utils;
+import info.chili.gwt.widgets.DocumentationWidget;
+import info.chili.gwt.widgets.GenericPopup;
 import info.chili.gwt.widgets.ResponseStatusWidget;
 import java.util.HashMap;
 import java.util.Map;
@@ -222,6 +225,9 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
             fillData(entities);
             addRowStyles(entities.size());
         }
+        if (autoShowDocumentation()) {
+            showDocumentationFrame();
+        }
     }
 
     //TODO improve this do this with css
@@ -354,6 +360,20 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
 
     protected String getDocumentationLink() {
         return "";
+    }
+
+    protected boolean autoShowDocumentation() {
+        return false;
+    }
+
+    protected String getHideDocKey() {
+        return "ReadAll" + classCanonicalName + "_hideDoc";
+    }
+
+    protected void showDocumentationFrame() {
+        if (LocalStorage.getValue(getHideDocKey()) == null || !LocalStorage.getValue(getHideDocKey()).equals("true")) {
+            new GenericPopup(new DocumentationWidget(getHideDocKey(), getDocumentationLink())).show();
+        }
     }
 
     /**
