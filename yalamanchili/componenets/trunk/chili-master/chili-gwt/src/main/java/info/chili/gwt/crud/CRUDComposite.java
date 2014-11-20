@@ -460,12 +460,17 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         clearMessages();
         JSONArray errorsArray = JSONUtils.toJSONArray(errorsObj.isObject().get("Error"));
         String genericErrorMessage = null;
+        boolean focus = true;
         for (int i = 0; i < errorsArray.size(); i++) {
             JSONObject err = (JSONObject) errorsArray.get(i);
             JSONString errSource = err.get("source").isString();
             BaseField field = fields.get(getErrorProperty(errSource.stringValue()));
             if (errSource != null && fields.get(getErrorProperty(errSource.stringValue())) != null) {
                 field.setMessage(err.get("description").isString().stringValue());
+                if (focus) {
+                    field.focus(true);
+                    focus = false;
+                }
             } else {
                 //Generic error not specific to any field / class level error
                 if (genericErrorMessage == null) {
