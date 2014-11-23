@@ -21,6 +21,7 @@ import info.chili.security.SecurityService;
 import info.chili.security.Signature;
 import java.io.ByteArrayOutputStream;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.util.Date;
@@ -56,6 +57,12 @@ public class PDFUtils {
         try {
             SecurityService securityService = SecurityService.instance();
             KeyStore keyStore = securityService.getKeyStore(keyStoreName);
+            //check is cert exists
+            try {
+                keyStore.getCertificate(signature.getCertAlias());
+            } catch (KeyStoreException e) {
+                return input;
+            }
             PdfReader reader = new PdfReader(input);
             PdfStamper stamper = PdfStamper.createSignature(reader, pdfOut, '\0');
             PdfSignatureAppearance appearance = stamper.getSignatureAppearance();
