@@ -9,6 +9,7 @@ package info.chili.service.jrs;
 
 import info.chili.service.jrs.types.Entry;
 import info.chili.dao.CRUDDao;
+import info.chili.jpa.validation.Validate;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -33,31 +34,32 @@ import org.springframework.transaction.annotation.Transactional;
 @Consumes("application/json")
 @Transactional
 public abstract class CRUDResource<T> {
-    
+
     @GET
     @Path("/{id}")
     @Transactional(readOnly = true)
     public T read(@PathParam("id") Long id) {
         return (T) getDao().findById(id);
     }
-    
+
     @PUT
+    @Validate
     public T save(T entity) {
         return (T) getDao().save(entity);
     }
-    
+
     @PUT
     @Path("/delete/{id}")
     public void delete(@PathParam("id") Long id) {
         getDao().delete(id);
     }
-    
+
     @PUT
     @Path("/validate")
     public void validate(T entity) {
         getDao().validate(entity);
     }
-    
+
     @GET
     @Path("/dropdown/{start}/{limit}")
     @Transactional(propagation = Propagation.NEVER)
@@ -70,14 +72,14 @@ public abstract class CRUDResource<T> {
         }
         return result;
     }
-    
+
     @GET
     @Path("/size")
     @Transactional(propagation = Propagation.NEVER)
     public long size() {
         return getDao().size();
     }
-    
+
     @GET
     @Path("/search/{searchText}/{start}/{limit}")
     @Transactional(propagation = Propagation.NEVER)
@@ -85,27 +87,27 @@ public abstract class CRUDResource<T> {
             @PathParam("limit") int limit, @QueryParam("column") List<String> columns) {
         return getDao().search(searchText, start, limit, columns, true);
     }
-    
+
     @GET
     @Path("/search_size/{searchText}")
     @Transactional(propagation = Propagation.NEVER)
     public String searchSize(@PathParam("searchText") String searchText) {
         return getDao().searchSize(searchText).toString();
     }
-    
+
     @PUT
     @Path("/search/{start}/{limit}")
     @Transactional(propagation = Propagation.NEVER)
     public List<T> search(T entity, @PathParam("start") int start, @PathParam("limit") int limit) {
         return getDao().search(entity, start, limit);
     }
-    
+
     @PUT
     @Path("/search_size")
     @Transactional(propagation = Propagation.NEVER)
     public String searchSize(T entity) {
         return getDao().searchSize(entity).toString();
     }
-    
+
     public abstract CRUDDao getDao();
 }

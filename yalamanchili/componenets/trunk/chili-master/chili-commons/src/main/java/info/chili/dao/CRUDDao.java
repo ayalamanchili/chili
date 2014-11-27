@@ -11,6 +11,7 @@ import info.chili.commons.BeanMapper;
 import info.chili.commons.DataType;
 import info.chili.commons.ReflectionUtils;
 import info.chili.commons.SearchUtils;
+import info.chili.jpa.validation.Validate;
 import info.chili.jpa.validation.ValidationUtils;
 import info.chili.service.jrs.ServiceMessages;
 import java.util.Collections;
