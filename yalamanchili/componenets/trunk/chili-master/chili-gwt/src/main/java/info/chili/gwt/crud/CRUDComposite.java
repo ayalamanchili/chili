@@ -464,13 +464,16 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         for (int i = 0; i < errorsArray.size(); i++) {
             JSONObject err = (JSONObject) errorsArray.get(i);
             JSONString errSource = err.get("source").isString();
+            int childIndex = getChildEntityIndex(errSource.stringValue());
             BaseField field = fields.get(getErrorProperty(errSource.stringValue()));
-            if (errSource != null && fields.get(getErrorProperty(errSource.stringValue())) != null) {
+            if (field != null && childIndex == -1) {
                 field.setMessage(err.get("description").isString().stringValue());
                 if (focus) {
                     field.focus(true);
                     focus = false;
                 }
+            } else if (childIndex >= 0) {
+                setChildErrorMsg(getChildWidget(childIndex).fields, err, errSource);
             } else {
                 //Generic error not specific to any field / class level error
                 if (genericErrorMessage == null) {
@@ -485,12 +488,43 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         }
     }
 
+    protected void setErrorMessage(Map<String, BaseField> fields, JSONObject err, JSONString errSource) {
+        boolean focus = true;
+        BaseField field = fields.get(getErrorProperty(errSource.stringValue()));
+        if (field != null) {
+            field.setMessage(err.get("description").isString().stringValue());
+            if (focus) {
+                field.focus(true);
+                focus = false;
+            }
+        }
+
+    }
+
+    protected int getChildEntityIndex(String str) {
+        if (str.contains("[") && str.contains("]")) {
+            return Integer.valueOf(str.substring(str.indexOf("[") + 1, str.indexOf("]")));
+        }
+        return -1;
+    }
+
+    protected void setChildErrorMsg(Map<String, BaseField> fields, JSONObject err, JSONString errSource) {
+        BaseField field = fields.get(getErrorProperty(errSource.stringValue()));
+        if (field != null) {
+            field.setMessage(err.get("description").isString().stringValue());
+        }
+    }
+
     protected String getErrorProperty(String str) {
         if (str.contains(".")) {
             return str.substring(str.indexOf(".") + 1);
         } else {
             return str;
         }
+    }
+
+    protected CreateComposite getChildWidget(int childIndexWidget) {
+        return null;
     }
 
     /**
