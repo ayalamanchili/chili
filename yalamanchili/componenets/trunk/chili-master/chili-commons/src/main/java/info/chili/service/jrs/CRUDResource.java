@@ -22,6 +22,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +34,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Produces("application/json")
 @Consumes("application/json")
+@Component
 @Transactional
+@Scope("request")
 public abstract class CRUDResource<T> {
 
     @GET
