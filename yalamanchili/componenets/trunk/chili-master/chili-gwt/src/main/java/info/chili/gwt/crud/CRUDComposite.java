@@ -502,7 +502,8 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
     }
 
     protected int getChildEntityIndex(String str) {
-        if (str.contains("[") && str.contains("]")) {
+        //phones[0].
+        if (str.contains("].")) {
             return Integer.valueOf(str.substring(str.indexOf("[") + 1, str.indexOf("]")));
         }
         return -1;
@@ -523,7 +524,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         }
     }
 
-    protected CreateComposite getChildWidget(int childIndexWidget) {
+    protected CRUDComposite getChildWidget(int childIndexWidget) {
         return null;
     }
 
