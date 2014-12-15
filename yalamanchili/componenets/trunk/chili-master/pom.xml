@@ -21,6 +21,7 @@
         <module>chili-commons</module>
         <module>chili-gwt</module>
         <module>chili-security</module>
+        <module>chili-analytics</module>
     </modules>
     <build>
         <plugins>
