@@ -7,9 +7,9 @@ package info.chili.analytics.service;
 
 import com.google.common.collect.ImmutableList;
 import info.chili.analytics.model.Event;
+import info.chili.analytics.model.Event.EventsTable;
 import info.chili.analytics.utils.CachedUserAgentStringParser;
 import net.sf.uadetector.ReadableUserAgent;
-import net.sf.uadetector.service.UADetectorServiceFactory;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -39,5 +39,11 @@ public class EventsService {
             event.setUserAgentInfo(ReflectionToStringBuilder.toString(agent));
         }
         mongoTemplate.insertAll(ImmutableList.copyOf(events));
+    }
+
+    public EventsTable getEvents(int start, int limit) {
+        EventsTable res = new EventsTable();
+        res.setEntities(mongoTemplate.findAll(Event.class, "events"));
+        return res;
     }
 }

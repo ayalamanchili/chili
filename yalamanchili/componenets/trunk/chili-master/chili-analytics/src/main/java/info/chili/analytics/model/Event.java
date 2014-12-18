@@ -6,6 +6,10 @@
 package info.chili.analytics.model;
 
 import java.util.Date;
+import java.util.List;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -13,6 +17,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author anuyalamanchili
  */
 @Document(collection = "events")
+@XmlRootElement
+@XmlType
 public class Event {
 
     /**
@@ -101,5 +107,35 @@ public class Event {
 
     public void setUserAgentInfo(String userAgentInfo) {
         this.userAgentInfo = userAgentInfo;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" + "user=" + user + ", evenTimeStamp=" + evenTimeStamp + ", name=" + name + ", type=" + type + ", input=" + input + ", output=" + output + ", userAgentInfo=" + userAgentInfo + '}';
+    }
+
+    @XmlRootElement
+    @XmlType
+    public static class EventsTable implements java.io.Serializable {
+
+        protected Long size;
+        protected List<Event> entities;
+
+        public Long getSize() {
+            return size;
+        }
+
+        public void setSize(Long size) {
+            this.size = size;
+        }
+
+        @XmlElement
+        public List<Event> getEntities() {
+            return entities;
+        }
+
+        public void setEntities(List<Event> entities) {
+            entities = entities;
+        }
     }
 }

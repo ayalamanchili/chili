@@ -19,7 +19,7 @@ public final class CachedUserAgentStringParser implements UserAgentStringParser 
             .getCachingAndUpdatingParser();
     private final Cache<String, ReadableUserAgent> cache = CacheBuilder.newBuilder()
             .maximumSize(100)
-            .expireAfterWrite(2, TimeUnit.HOURS)
+            .expireAfterWrite(168, TimeUnit.HOURS)
             .build();
 
     @Override
