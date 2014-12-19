@@ -12,7 +12,9 @@ import info.chili.analytics.utils.CachedUserAgentStringParser;
 import net.sf.uadetector.ReadableUserAgent;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +29,6 @@ public class EventsService {
 
     @Autowired
     protected MongoOperations mongoTemplate;
-
     @Autowired
     protected CachedUserAgentStringParser cachedUserAgentStringParser;
 
@@ -46,9 +47,19 @@ public class EventsService {
         res.setEntities(mongoTemplate.findAll(Event.class, "events"));
         return res;
     }
-    public EventsTable searchByName(String name){
-        EventsTable res=new EventsTable();
+
+    public EventsTable searchByName(String name) {
+        EventsTable res = new EventsTable();
         res.setEntities(mongoTemplate.findAll(Event.class, "events"));
         return res;
     }
- }
+
+    public EventsTable getEventTimeStamp(int start, int limit) {
+        EventsTable res = new EventsTable();
+        Query query = new Query();
+        query.skip(start).limit(limit).with(new Sort(Sort.Direction.ASC, "pdate"));
+        res.setEntities(mongoTemplate.find(query, Event.class));
+        res.setSize(mongoTemplate.count(query, Event.class));
+        return res;
+    }
+}
