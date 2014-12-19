@@ -14,6 +14,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -50,7 +51,12 @@ public class EventsService {
 
     public EventsTable searchByName(String name) {
         EventsTable res = new EventsTable();
-        res.setEntities(mongoTemplate.findAll(Event.class, "events"));
+        String tagName = "apple";
+        Query query = new Query();
+        query.limit(10);
+        query.addCriteria(Criteria.where("tagName").regex(tagName));
+        mongoTemplate.find(query, Event.class);
+        res.setEntities(mongoTemplate.findAll(Event.class, "type"));
         return res;
     }
 
