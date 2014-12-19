@@ -46,4 +46,9 @@ public class EventsService {
         res.setEntities(mongoTemplate.findAll(Event.class, "events"));
         return res;
     }
-}
+    public EventsTable searchByName(String name){
+        EventsTable res=new EventsTable();
+        res.setEntities(mongoTemplate.findAll(Event.class, "events"));
+        return res;
+    }
+ }
