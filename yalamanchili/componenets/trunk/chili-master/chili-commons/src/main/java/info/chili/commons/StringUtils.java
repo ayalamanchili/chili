@@ -76,8 +76,13 @@ public class StringUtils {
         return S[similar1.length()][similar2.length()];
     }
 
-    public static void main(String args[]) {
-        System.out.println(stringSimilarity("NYSC", "New york stock exchange"));
-
+    public static String convertToUTF8(String s) {
+        String out = null;
+        try {
+            out = new String(s.getBytes("UTF-8"));
+        } catch (java.io.UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return out;
     }
 }
