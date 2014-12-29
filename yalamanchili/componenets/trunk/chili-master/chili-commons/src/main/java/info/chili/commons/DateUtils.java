@@ -1,6 +1,7 @@
 package info.chili.commons;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -138,6 +139,11 @@ public class DateUtils {
         return diffMonth;
     }
 
+    public static long differenceInDays(Date startDate, Date endDate) {
+        long diff = endDate.getTime() - startDate.getTime();
+        return diff / (1000 * 60 * 60 * 24);
+    }
+
     public static Date getFirstDayOfCurrentYear() {
         Calendar calendarStart = Calendar.getInstance();
         calendarStart.set(Calendar.MONTH, 0);
@@ -194,7 +200,7 @@ public class DateUtils {
      * @return eg: 19.1 hours
      */
     public static BigDecimal getProratedHours(BigDecimal totalChuck, BigDecimal totalPortaion, BigDecimal proratedPortion) {
-        return totalChuck.divide(totalPortaion).multiply(proratedPortion);
+        return totalChuck.divide(totalPortaion, 4, RoundingMode.HALF_UP).multiply(proratedPortion);
     }
 
     public String formatDate(Date date, String format) {
