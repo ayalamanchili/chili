@@ -21,6 +21,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @XmlType
 public class Event {
 
+    public String _id;
     /**
      *
      */
@@ -135,7 +136,7 @@ public class Event {
         }
 
         public void setEntities(List<Event> entities) {
-            entities = entities;
+            this.entities = entities;
         }
     }
 }

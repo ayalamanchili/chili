@@ -255,11 +255,15 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
     protected JSONObject getEntity(String entityId) {
         for (int i = 0; i < entities.size(); i++) {
             JSONObject entity = (JSONObject) entities.get(i);
-            if (entityId.equals(JSONUtils.toString(entity, "id"))) {
+            if (entityId.equals(JSONUtils.toString(entity, getEnitityIDAttribute()))) {
                 return entity;
             }
         }
         return null;
+    }
+
+    protected String getEnitityIDAttribute() {
+        return "id";
     }
 
     public abstract void fillData(JSONArray entities);
