@@ -7,9 +7,11 @@ package info.chili.analytics.jrs;
 
 import info.chili.analytics.model.Event.EventsTable;
 import info.chili.analytics.service.EventsService;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,8 @@ import org.springframework.stereotype.Component;
 @Path("secured/chili/analytics")
 @Component
 @Scope("request")
+@Produces("application/json")
+@Consumes("application/json")
 public class AnalytisResource {
 
     @Autowired
