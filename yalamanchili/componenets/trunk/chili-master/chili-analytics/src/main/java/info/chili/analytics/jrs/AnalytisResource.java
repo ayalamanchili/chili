@@ -26,7 +26,7 @@ public class AnalytisResource {
     @Autowired
     protected EventsService eventsService;
 
-    @Path("/events")
+    @Path("/events/{start}/{limit}")
     @GET
     public EventsTable events(@PathParam("start") int start, @PathParam("limit") int limit) {
         return eventsService.getEvents(start, limit);

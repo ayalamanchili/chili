@@ -45,7 +45,7 @@ public class EventsService {
 
     public EventsTable getEvents(int start, int limit) {
         EventsTable res = new EventsTable();
-        res.setEntities(mongoTemplate.findAll(Event.class));
+        res.setEntities(mongoTemplate.find(new Query().limit(limit).skip(start), Event.class));
         res.setSize(mongoTemplate.count(new Query(), Event.class));
         return res;
     }
