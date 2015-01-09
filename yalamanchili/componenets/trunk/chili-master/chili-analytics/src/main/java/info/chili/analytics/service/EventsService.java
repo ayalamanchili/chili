@@ -6,6 +6,10 @@
 package info.chili.analytics.service;
 
 import com.google.common.collect.ImmutableList;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.QueryBuilder;
 import info.chili.analytics.model.Event;
 import info.chili.analytics.model.Event.EventsTable;
 import info.chili.analytics.utils.CachedUserAgentStringParser;
@@ -50,7 +54,7 @@ public class EventsService {
         return res;
     }
 
-    public EventsTable searchByName(String name) {
+    public EventsTable searchByEventName(String name) {
         EventsTable res = new EventsTable();
         String tagName = "apple";
         Query query = new Query();
@@ -67,6 +71,15 @@ public class EventsService {
         query.skip(start).limit(limit).with(new Sort(Sort.Direction.ASC, "pdate"));
         res.setEntities(mongoTemplate.find(query, Event.class));
         res.setSize(mongoTemplate.count(query, Event.class));
+        return res;
+    }
+
+    public EventsTable searchByEventTimeStamp(int start, int limit) {
+        EventsTable res = new EventsTable();
+//        Query query = new Query();
+       
+//        db.collection.find({ timestamp: { $gte:ISODate("startDate"), $lt: ISODate("endDate") } })
+        
         return res;
     }
 }
