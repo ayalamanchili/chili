@@ -5,14 +5,12 @@
  */
 package info.chili.analytics.service;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.QueryBuilder;
 import info.chili.analytics.model.Event;
 import info.chili.analytics.model.Event.EventsTable;
 import info.chili.analytics.utils.CachedUserAgentStringParser;
+import java.util.List;
 import net.sf.uadetector.ReadableUserAgent;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,37 +47,28 @@ public class EventsService {
 
     public EventsTable getEvents(int start, int limit) {
         EventsTable res = new EventsTable();
-        res.setEntities(mongoTemplate.find(new Query().limit(limit).skip(start), Event.class));
-        res.setSize(mongoTemplate.count(new Query(), Event.class));
-        return res;
-    }
-
-    public EventsTable searchByEventName(String name) {
-        EventsTable res = new EventsTable();
-        String tagName = "apple";
         Query query = new Query();
-        query.limit(10);
-        query.addCriteria(Criteria.where("tagName").regex(tagName));
-        mongoTemplate.find(query, Event.class);
-        res.setEntities(mongoTemplate.findAll(Event.class, "type"));
-        return res;
-    }
-
-    public EventsTable getEventTimeStamp(int start, int limit) {
-        EventsTable res = new EventsTable();
-        Query query = new Query();
-        query.skip(start).limit(limit).with(new Sort(Sort.Direction.ASC, "pdate"));
-        res.setEntities(mongoTemplate.find(query, Event.class));
+        query.with(new Sort(Sort.Direction.DESC, "evenTimeStamp"));
+        res.setEntities(mongoTemplate.find(query.limit(limit).skip(start), Event.class));
         res.setSize(mongoTemplate.count(query, Event.class));
         return res;
     }
 
-    public EventsTable searchByEventTimeStamp(int start, int limit) {
-        EventsTable res = new EventsTable();
-//        Query query = new Query();
-       
-//        db.collection.find({ timestamp: { $gte:ISODate("startDate"), $lt: ISODate("endDate") } })
-        
-        return res;
+    public List<Event> searchEvents(SearchEventDto search) {
+        Query query = new Query();
+        if (!Strings.isNullOrEmpty(search.getUser())) {
+            query.addCriteria(Criteria.where("user").is(search.getUser()));
+        }
+        if (!Strings.isNullOrEmpty(search.getName())) {
+            query.addCriteria(Criteria.where("name").regex(search.getName().trim()));
+        }
+        if (!Strings.isNullOrEmpty(search.getInput())) {
+            query.addCriteria(Criteria.where("input").regex(search.getInput().trim()));
+        }
+        if (!Strings.isNullOrEmpty(search.getOutput())) {
+            query.addCriteria(Criteria.where("output").regex(search.getOutput().trim()));
+        }
+        query.with(new Sort(Sort.Direction.DESC, "evenTimeStamp"));
+        return mongoTemplate.find(query.limit(100), Event.class);
     }
 }
