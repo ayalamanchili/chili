@@ -57,7 +57,7 @@ public class EventsService {
     public List<Event> searchEvents(SearchEventDto search) {
         Query query = new Query();
         if (!Strings.isNullOrEmpty(search.getUser())) {
-            query.addCriteria(Criteria.where("user").is(search.getUser()));
+            query.addCriteria(Criteria.where("user").is(search.getUser().trim()));
         }
         if (!Strings.isNullOrEmpty(search.getName())) {
             query.addCriteria(Criteria.where("name").regex(search.getName().trim()));
