@@ -39,8 +39,10 @@ public class EventsService {
     @Transactional
     public void saveEvents(Event... events) {
         for (Event event : events) {
-            ReadableUserAgent agent = cachedUserAgentStringParser.parse(event.getUserAgentInfo());
-            event.setUserAgentInfo(ReflectionToStringBuilder.toString(agent));
+            if (!Strings.isNullOrEmpty(event.getUserAgentInfo())) {
+                ReadableUserAgent agent = cachedUserAgentStringParser.parse(event.getUserAgentInfo());
+                event.setUserAgentInfo(ReflectionToStringBuilder.toString(agent));
+            }
         }
         mongoTemplate.insertAll(ImmutableList.copyOf(events));
     }
