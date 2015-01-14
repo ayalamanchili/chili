@@ -105,6 +105,9 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         if (enableAudit()) {
             addAuditWidgets();
         }
+        if (enableViewTasks()) {
+            addReadAllTasksWidgets();
+        }
     }
 
     protected abstract void addListeners();
@@ -570,6 +573,32 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
             @Override
             public void onOpen(OpenEvent<DisclosurePanel> event) {
                 auditDP.setContent(new ReadAllAuditDataPanel(entityName, getAuditUrl(), constants));
+            }
+        });
+
+    }
+    // view task support
+
+    protected boolean enableViewTasks() {
+        return false;
+    }
+
+    /**
+     * override to display related taks
+     */
+    protected void displayTasks() {
+//tasksDP.setContent(ReadAllTasksPanel();
+    }
+    protected DisclosurePanel tasksDP;
+
+    protected void addReadAllTasksWidgets() {
+        tasksDP = new DisclosurePanel("Related Tasks");
+        tasksDP.setWidth("100%");
+        basePanel.add(tasksDP);
+        tasksDP.addOpenHandler(new OpenHandler<DisclosurePanel>() {
+            @Override
+            public void onOpen(OpenEvent<DisclosurePanel> event) {
+                displayTasks();
             }
         });
 
