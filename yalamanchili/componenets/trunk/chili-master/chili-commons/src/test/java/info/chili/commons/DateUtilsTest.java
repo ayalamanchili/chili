@@ -6,6 +6,7 @@
 package info.chili.commons;
 
 import java.util.Calendar;
+import java.util.Date;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 

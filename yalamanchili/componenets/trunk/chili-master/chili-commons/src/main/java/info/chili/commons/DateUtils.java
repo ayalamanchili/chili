@@ -174,6 +174,20 @@ public class DateUtils {
         return calendarEnd.getTime();
     }
 
+    public static Date getFirstDayOfMonth(Date year) {
+        Calendar calendarStart = Calendar.getInstance();
+        calendarStart.setTime(year);
+        calendarStart.set(Calendar.DAY_OF_MONTH, calendarStart.getActualMinimum(Calendar.DAY_OF_MONTH));
+        return calendarStart.getTime();
+    }
+
+    public static Date getLastDayOfMonth(Date year) {
+        Calendar calendarStart = Calendar.getInstance();
+        calendarStart.setTime(year);
+        calendarStart.set(Calendar.DAY_OF_MONTH, calendarStart.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return calendarStart.getTime();
+    }
+
     public static Integer getDaysCompletedInYear(Date date) {
         return null;
     }
