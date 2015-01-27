@@ -33,7 +33,7 @@ import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.JSONUtils;
 import info.chili.gwt.utils.Utils;
 import info.chili.gwt.widgets.DocumentationWidget;
-import info.chili.gwt.widgets.NewWindowPanel;
+import info.chili.gwt.widgets.GenericPopup;
 import info.chili.gwt.widgets.ResponseStatusWidget;
 import java.util.HashMap;
 import java.util.Map;
@@ -377,7 +377,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
 
     protected void showDocumentationFrame() {
         if (LocalStorage.getValue(getHideDocKey()) == null || !LocalStorage.getValue(getHideDocKey()).equals("true")) {
-            new NewWindowPanel(new DocumentationWidget(getHideDocKey(), getDocumentationLink()), Window.getClientWidth() / 5, Window.getClientHeight() / 3).show();
+            new GenericPopup(new DocumentationWidget(getHideDocKey(), getDocumentationLink()), Window.getClientWidth() / 6, Window.getClientHeight() / 4).show();
         }
     }
 
