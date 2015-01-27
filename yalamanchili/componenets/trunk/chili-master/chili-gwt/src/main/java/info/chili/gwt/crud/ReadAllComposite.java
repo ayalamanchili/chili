@@ -377,7 +377,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
 
     protected void showDocumentationFrame() {
         if (LocalStorage.getValue(getHideDocKey()) == null || !LocalStorage.getValue(getHideDocKey()).equals("true")) {
-            new GenericPopup(new DocumentationWidget(getHideDocKey(), getDocumentationLink()), Window.getClientWidth() / 6, Window.getClientHeight() / 4).show();
+            new GenericPopup(new DocumentationWidget(getHideDocKey(), getDocumentationLink()), Window.getClientWidth() / 5, Window.getClientHeight() / 4).show();
         }
     }
 
