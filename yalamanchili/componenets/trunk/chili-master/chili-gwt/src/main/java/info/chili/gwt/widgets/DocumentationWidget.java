@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
 import info.chili.gwt.composite.ALComposite;
-import info.chili.gwt.widgets.GenericPopup;
 
 /**
  *
@@ -49,7 +48,7 @@ public class DocumentationWidget extends ALComposite implements ClickHandler {
         panel.add(doNotShowMsg);
         Frame docPanel = new Frame(docUrl);
         docPanel.setHeight("35em");
-        docPanel.setWidth("70em");
+        docPanel.setWidth("89em");
         panel.add(docPanel);
         cp.setContentWidget(panel);
     }

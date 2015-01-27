@@ -17,6 +17,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -32,7 +33,7 @@ import info.chili.gwt.utils.Alignment;
 import info.chili.gwt.utils.JSONUtils;
 import info.chili.gwt.utils.Utils;
 import info.chili.gwt.widgets.DocumentationWidget;
-import info.chili.gwt.widgets.GenericPopup;
+import info.chili.gwt.widgets.NewWindowPanel;
 import info.chili.gwt.widgets.ResponseStatusWidget;
 import java.util.HashMap;
 import java.util.Map;
@@ -376,7 +377,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
 
     protected void showDocumentationFrame() {
         if (LocalStorage.getValue(getHideDocKey()) == null || !LocalStorage.getValue(getHideDocKey()).equals("true")) {
-            new GenericPopup(new DocumentationWidget(getHideDocKey(), getDocumentationLink())).show();
+            new NewWindowPanel(new DocumentationWidget(getHideDocKey(), getDocumentationLink()), Window.getClientWidth() / 5, Window.getClientHeight() / 3).show();
         }
     }
 
