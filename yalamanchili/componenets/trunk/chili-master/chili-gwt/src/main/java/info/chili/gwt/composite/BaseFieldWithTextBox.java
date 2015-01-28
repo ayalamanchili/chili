@@ -143,7 +143,9 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
         if (event.getUnicodeCharCode() == 0) {
             return;
         }
-        if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE || event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER || event.getNativeEvent().getKeyCode() == KeyCodes.KEY_TAB || event.getNativeEvent().getKeyCode() == 46) {
+        if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE || event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER || event.getNativeEvent().getKeyCode() == KeyCodes.KEY_TAB
+                || event.getNativeEvent().getKeyCode() == 46/*dot symbol*/ || event.getUnicodeCharCode() == 46/*firefox dot symbol*/
+                || event.getNativeEvent().getKeyCode() == 45/*minus symbol*/ || event.getUnicodeCharCode() == 45/*firefox minus symbol*/) {
             return;
         }
         if (!Character.isDigit(event.getCharCode())) {
