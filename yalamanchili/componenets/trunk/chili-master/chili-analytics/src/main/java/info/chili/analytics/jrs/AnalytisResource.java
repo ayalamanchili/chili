@@ -35,6 +35,12 @@ public class AnalytisResource {
     @Autowired
     protected EventsService eventsService;
 
+    @PUT
+    @Path("/events")
+    public void saveEvents(Event... events) {
+        eventsService.saveEvents(events);
+    }
+
     @Path("/events/{start}/{limit}")
     @GET
     public EventsTable events(@PathParam("start") int start, @PathParam("limit") int limit) {
