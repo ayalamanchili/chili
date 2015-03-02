@@ -40,7 +40,7 @@ public class GenericPopup extends PopupPanel {
 
     public GenericPopup(Widget widget) {
         instance = this;
-        addWidgets(widget, Window.getClientWidth() / 3, Window.getClientHeight() / 3);
+        addWidgets(widget, Window.getClientWidth() / 4, Window.getClientHeight() / 3);
         configure();
     }
 
