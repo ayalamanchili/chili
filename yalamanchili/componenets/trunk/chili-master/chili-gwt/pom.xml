@@ -38,6 +38,12 @@
             <artifactId>chili-commons</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwtVersion}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <build>
         <resources>
@@ -80,7 +86,7 @@
         <url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-gwt</url>
     </scm>     
     <properties>
-        <gwtVersion>2.6.1</gwtVersion>
+        <gwtVersion>2.7.0</gwtVersion>
         <spring.version>3.1.1.RELEASE</spring.version>
     </properties>
     <!-- download artifacts from this repo -->

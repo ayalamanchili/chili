@@ -4,13 +4,13 @@
  */
 package info.chili.gwt.server;
 
+import com.google.gwt.thirdparty.json.JSONObject;
 import info.chili.gwt.rpc.HttpService;
 import info.chili.http.SyncHttp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.apache.commons.codec.binary.Base64;
-import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -50,7 +50,6 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
     }
     
     protected Map<String, String> addHeaders(Map<String, String> headers, String url) {
-        System.out.println("dddd" + headers);
         for (String attr : headers.keySet()) {
             headers.put(attr, headers.get(attr));
         }
