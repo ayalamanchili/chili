@@ -12,7 +12,11 @@ import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.ui.Button;
 import info.chili.gwt.composite.BaseField;
+import info.chili.gwt.composite.BaseFieldWithTextBox;
+import info.chili.gwt.fields.DateField;
+import info.chili.gwt.fields.TextAreaField;
 import info.chili.gwt.utils.Utils;
+import java.util.Map;
 
 public abstract class CreateComposite extends CRUDComposite implements ClickHandler {
 
@@ -127,5 +131,24 @@ public abstract class CreateComposite extends CRUDComposite implements ClickHand
      */
     protected boolean processClientSideValidations(JSONObject entity) {
         return true;
+    }
+
+    protected void setBackgroundText() {
+        for (Map.Entry entry : fields.entrySet()) {
+            if (entry.getValue() instanceof BaseFieldWithTextBox) {
+                BaseFieldWithTextBox field = (BaseFieldWithTextBox) entry.getValue();
+                field.setBackgroundText();
+            }
+            if (entry.getValue() instanceof TextAreaField) {
+                TextAreaField textAreaField = (TextAreaField) entry.getValue();
+                textAreaField.setBackgroundText();
+                textAreaField.getTextbox().setCharacterWidth(75);
+                textAreaField.getTextbox().setVisibleLines(4);
+            }
+            if (entry.getValue() instanceof DateField) {
+                DateField field = (DateField) entry.getValue();
+                field.setBackgroundText();
+            }
+        }
     }
 }
