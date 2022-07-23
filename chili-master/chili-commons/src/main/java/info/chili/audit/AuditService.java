@@ -69,13 +69,14 @@ public class AuditService {
 
     public Object mostRecentVersion(Class cls, Long id) {
         List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
-        logger.info("Versionnnnnnnnnn222222" + revNumbers);
+        logger.info("Versionnnnnnnnnn1111111" + revNumbers);
         if (revNumbers.size() > 1) {
             return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 2));
         } else {
             return null;
         }
     }
+
     public Object mostRecentVersion2(Class cls, Long id) {
        List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
        logger.info("Versionnnnnnnnnn222222" + revNumbers);
@@ -85,7 +86,18 @@ public class AuditService {
            return null;
        }
    }
-     public Object previousVersion(Class cls, Long id) {
+
+    public Object mostRecentVersion3(Class cls, Long id) {
+        List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
+        logger.info("Versionnnnnnnnnn33333" + revNumbers);
+        if (revNumbers.size() > 0) {
+            return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 1));
+        } else {
+            return null;
+        }
+    }
+
+    public Object previousVersion(Class cls, Long id) {
         List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
         logger.info("previousVersion" + revNumbers);
         if (revNumbers.size() >= 2) {
@@ -195,7 +207,6 @@ public class AuditService {
                         dto.setPropertyName(entry.getKey());
                         Date oldDate = (Date) previousValuesMap.get(entry.getKey());
                         dto.setOldValue(sdf.format(oldDate));
-                          
                         Date newDate = (Date) entry.getValue();
                         if (addStyle) {
                             dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + sdf.format(newDate) + "</font>");
