@@ -230,7 +230,7 @@
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
-             <version>5.5.1</version>
+            <version>5.5.1</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
@@ -382,7 +382,7 @@
         <repository>
             <id>tools.sstech.mobi</id>
             <name>tools.sstech.mobi</name>
-            <url>http://tools.sstech.mobi/nexus/content/groups/public</url>
+            <url>http://192.168.0.33/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -395,7 +395,7 @@
         <repository>
             <id>tools.sstech.mobi.snapshots</id>
             <name>tools.sstech.mobi</name>
-            <url>http://tools.sstech.mobi/nexus/content/repositories/snapshots</url>
+            <url>http://192.168.0.33/nexus/content/repositories/snapshots</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -410,7 +410,7 @@
         <pluginRepository>
             <id>tools.sstech.mobi</id>
             <name>tools.sstech.mobi</name>
-            <url>http://tools.sstech.mobi/nexus/content/groups/public</url>
+            <url>http://192.168.0.33/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -425,13 +425,13 @@
         <repository>
             <id>sstech.us</id>
             <name>tools.sstech.mobi</name>
-            <url>http://tools.sstech.mobi/nexus/content/repositories/releases</url>
+            <url>http://192.168.0.33/nexus/content/repositories/releases</url>
         </repository>
         <!-- Publish the versioned releases here -->
         <snapshotRepository>
             <id>sstech.us</id>
             <name>tools.sstech.mobi</name>
-            <url>http://tools.sstech.mobi/nexus/content/repositories/snapshots</url>
+            <url>http://192.168.0.33/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
     <properties>
