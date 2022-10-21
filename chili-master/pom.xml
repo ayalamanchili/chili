@@ -70,7 +70,7 @@
         <repository>
             <id>sstech.us</id>
             <name>sstech.us</name>
-            <url>http://tools.sstech.mobi/nexus/content/groups/public</url>
+            <url>http://192.168.0.33/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -84,7 +84,7 @@
         <pluginRepository>
             <id>sstech.us</id>
             <name>sstech.us</name>
-            <url>http://tools.sstech.mobi/nexus/content/groups/public</url>
+            <url>http://192.168.0.33/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -98,14 +98,14 @@
         <repository>
             <id>sstech.us</id>
             <name>sstech.us</name>
-            <url>http://tools.sstech.mobi/nexus/content/repositories/releases</url>
+            <url>http://192.168.0.33/nexus/content/repositories/releases</url>
         </repository>
 
         <!-- Publish the versioned releases here -->
         <snapshotRepository>
             <id>sstech.us</id>
             <name>sstech.us</name>
-            <url>http://tools.sstech.mobi/nexus/content/repositories/snapshots</url>
+            <url>http://192.168.0.33/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
     <properties>
