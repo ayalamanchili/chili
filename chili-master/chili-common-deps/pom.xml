@@ -439,7 +439,7 @@
         <spring.security.version>4.1.0.RELEASE</spring.security.version>
         <apacheds.server.jndi.version>1.5.5</apacheds.server.jndi.version>
         <!-- hibernate version-->
-        <hibernate.version>3.6.10.Final</hibernate.version>
+        <hibernate.version>5.3.20.Final</hibernate.version>
         <hibernate.commons.annotations.verion>3.2.0.Final</hibernate.commons.annotations.verion>
         <hibernate.jpa.api.version>1.0.1.Final</hibernate.jpa.api.version>
         <hibernate.validator.version>4.3.0.Final</hibernate.validator.version>
