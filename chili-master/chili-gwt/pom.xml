@@ -83,6 +83,6 @@
     </build>  
     <properties>
         <gwtVersion>2.8.0-beta1</gwtVersion>
-        <spring.version>4.1.5.RELEASE</spring.version>
+        <spring.version>5.2.20.RELEASE</spring.version>
     </properties>
 </project>
