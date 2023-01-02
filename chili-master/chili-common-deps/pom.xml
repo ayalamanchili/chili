@@ -454,7 +454,7 @@
         <itext.version>2.0.8</itext.version>
         <poi.version>3.9</poi.version>
         <xdocreport.version>1.0.5</xdocreport.version>
-        <pdfbox.version>1.7.0</pdfbox.version>
+        <pdfbox.version>2.0.15</pdfbox.version>
         <jtidy.version>r938</jtidy.version>
         <jsoup.version>1.7.3</jsoup.version>
         <flying.saucer.version>9.0.1</flying.saucer.version>
