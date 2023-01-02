@@ -452,7 +452,7 @@
         <jersey.version>1.19</jersey.version>
         <guava.version>17.0</guava.version>
         <itext.version>2.0.8</itext.version>
-        <poi.version>3.9</poi.version>
+        <poi.version>4.1.2</poi.version>
         <xdocreport.version>1.0.5</xdocreport.version>
         <pdfbox.version>1.7.0</pdfbox.version>
         <jtidy.version>r938</jtidy.version>
