@@ -436,7 +436,7 @@
     </distributionManagement>
     <properties>
         <spring.version>4.1.5.RELEASE</spring.version>
-        <spring.security.version>4.1.0.RELEASE</spring.security.version>
+        <spring.security.version>5.2.10.RELEASE</spring.security.version>
         <apacheds.server.jndi.version>1.5.5</apacheds.server.jndi.version>
         <!-- hibernate version-->
         <hibernate.version>3.6.10.Final</hibernate.version>
