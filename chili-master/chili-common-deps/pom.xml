@@ -446,7 +446,7 @@
         <hibernate.search.version>3.4.2.Final</hibernate.search.version>
         <liquibase.version>3.0.1</liquibase.version>
         <hsqldb.version>1.8.0.7</hsqldb.version>
-        <spring.mongodb>1.7.0.RELEASE</spring.mongodb>
+        <spring.mongodb>3.3.5</spring.mongodb>
         <jasper.version>4.5.1</jasper.version>
         <dynamic.jasper.version>4.0.0</dynamic.jasper.version>
         <jersey.version>1.19</jersey.version>
